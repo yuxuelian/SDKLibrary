@@ -1,8 +1,10 @@
 package com.kaibo.base.activity
 
+import com.kaibo.base.mvp.BasePresenter
 import com.kaibo.base.mvp.BaseView
-import com.kaibo.base.mvp.abs.AbstractMvpPresenter
+import com.kaibo.base.util.ToastUtil
 import java.lang.reflect.ParameterizedType
+
 
 /**
  * @author Administrator
@@ -11,7 +13,7 @@ import java.lang.reflect.ParameterizedType
  * email：
  * description：完成对Presenter的实例化  以及  绑定View
  */
-abstract class BaseMvpActivity<out P : AbstractMvpPresenter<BaseMvpActivity<P>>> : BaseActivity(), BaseView<P> {
+abstract class BaseMvpActivity<out P : BasePresenter<BaseMvpActivity<P>>> : BaseActivity(), BaseView<P> {
 
     override val mPresenter: P by lazy {
         findPresenterClass()
@@ -37,7 +39,7 @@ abstract class BaseMvpActivity<out P : AbstractMvpPresenter<BaseMvpActivity<P>>>
     }
 
     override fun showToast(msg: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        ToastUtil.showToast(msg)
     }
 
     private fun findPresenterClass(): Class<P> {
@@ -50,4 +52,6 @@ abstract class BaseMvpActivity<out P : AbstractMvpPresenter<BaseMvpActivity<P>>>
             }
         }
     }
+
+
 }

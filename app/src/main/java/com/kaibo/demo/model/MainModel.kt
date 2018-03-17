@@ -7,6 +7,6 @@ package com.kaibo.demo.model
  * email：
  * description：
  */
-class MainModel {
+class MainModel{
 
 }

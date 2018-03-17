@@ -9,6 +9,6 @@ package com.kaibo.base.mvp
  */
 interface BasePresenter<out V : BaseView<BasePresenter<V>>> {
 
-    val view: V?
+    var view: @UnsafeVariance V?
 
 }

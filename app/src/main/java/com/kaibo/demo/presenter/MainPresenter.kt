@@ -15,6 +15,8 @@ class MainPresenter : AbstractMvpPresenter<MainActivity>() {
 
     fun queryOrderById(id: Long) {
         view?.showToast("查询到了订单  id是 $id")
+
+        view?.showToast2()
     }
 
 }
