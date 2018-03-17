@@ -7,7 +7,9 @@ package com.kaibo.base.mvp
  * email：
  * description：
  */
-interface BaseView {
+interface BaseView<out P: BasePresenter<BaseView<P>>> {
+    val mPresenter:P
+
     fun showLoadView()
 
     fun hideLoadView()

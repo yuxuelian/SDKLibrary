@@ -7,9 +7,8 @@ package com.kaibo.base.mvp
  * email：
  * description：
  */
-interface BasePresenter<in T : BaseView> {
+interface BasePresenter<out V : BaseView<BasePresenter<V>>> {
 
-    fun attachView(view: T)
+    val view: V?
 
-    fun detachView()
 }
