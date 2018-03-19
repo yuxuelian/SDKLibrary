@@ -1,24 +1,22 @@
 package com.kaibo.demo.activity
 
-import android.os.Bundle
 import com.kaibo.base.activity.BaseMvpActivity
-import com.kaibo.base.util.ToastUtil
-import com.kaibo.demo.R
-import com.kaibo.demo.presenter.MainPresenter
-import kotlinx.android.synthetic.main.activity_main.*
+import com.kaibo.demo.mvp.model.MainModel
+import com.kaibo.demo.mvp.presenter.MainPresenter
+import com.kaibo.demo.mvp.view.MainFragment
 
-class MainActivity : BaseMvpActivity<MainPresenter>() {
+class MainActivity : BaseMvpActivity<MainFragment, MainPresenter>() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+//    override val mView by lazy {
+//        MainFragment.newInstance()
+//    }
 
-        this.queryOrderBtn.setOnClickListener {
-            mPresenter.queryOrderById(123)
-        }
-    }
+//    override val mPresenter by lazy {
+//        MainPresenter(MainModel())
+//    }
 
-    fun showToast2() {
-        ToastUtil.showToast("123")
-    }
+
+    override val mView = MainFragment.newInstance()
+    override val mPresenter = MainPresenter(MainModel())
+
 }

@@ -1,4 +1,6 @@
-package com.kaibo.base.mvp
+package com.kaibo.base.mvp.view
+
+import com.kaibo.base.mvp.presenter.BasePresenter
 
 /**
  * @author Administrator
@@ -7,8 +9,9 @@ package com.kaibo.base.mvp
  * email：
  * description：
  */
-interface BaseView<out P: BasePresenter<BaseView<P>>> {
-    val mPresenter:P
+interface BaseView<out P : BasePresenter<BaseView<P>>> {
+
+    fun setPresenter(presenter: @UnsafeVariance P)
 
     fun showLoadView()
 

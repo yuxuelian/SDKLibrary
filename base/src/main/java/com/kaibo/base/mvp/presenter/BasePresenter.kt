@@ -1,4 +1,6 @@
-package com.kaibo.base.mvp
+package com.kaibo.base.mvp.presenter
+
+import com.kaibo.base.mvp.view.BaseView
 
 /**
  * @author Administrator
@@ -9,6 +11,10 @@ package com.kaibo.base.mvp
  */
 interface BasePresenter<out V : BaseView<BasePresenter<V>>> {
 
-    var view: @UnsafeVariance V?
+    fun setView(view: @UnsafeVariance V)
+
+    fun onResume()
+
+    fun onDestroy()
 
 }

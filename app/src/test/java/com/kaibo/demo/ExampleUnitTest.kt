@@ -14,4 +14,28 @@ class ExampleUnitTest {
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
     }
+
+    private val aaa = Aaa()
+
+    @Test
+    fun testByLazy() {
+        println("testByLazy1")
+        aaa.test()
+        println("testByLazy2")
+        aaa.test()
+        aaa.test()
+        aaa.test()
+    }
+
+
+    class Aaa() {
+        init {
+            println("执行构造")
+        }
+
+        fun test() {
+            println("测试----")
+        }
+    }
+
 }
