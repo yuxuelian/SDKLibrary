@@ -21,9 +21,8 @@ abstract class AbstractFragment<out P : BasePresenter<BaseView<P>>> : Fragment()
     protected lateinit var mPresenter: @UnsafeVariance P
 
     override fun setPresenter(presenter: @UnsafeVariance P) {
-        this.mPresenter = presenter
         //给 Presenter 设置 View
-        mPresenter.setView(this)
+        this.mPresenter = presenter
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?) = inflater?.inflate(getLayoutRes(), container, false)

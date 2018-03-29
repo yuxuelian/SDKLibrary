@@ -5,7 +5,4 @@ import com.kaibo.demo.mvp.model.MainModel
 import com.kaibo.demo.mvp.presenter.MainPresenter
 import com.kaibo.demo.mvp.view.MainFragment
 
-class MainActivity : BaseMvpActivity<MainFragment, MainPresenter, MainModel>() {
-
-
-}
+class MainActivity : BaseMvpActivity<MainModel, MainFragment, MainPresenter>()

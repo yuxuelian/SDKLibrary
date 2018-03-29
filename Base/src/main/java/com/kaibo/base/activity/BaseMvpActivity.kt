@@ -17,7 +17,7 @@ import java.lang.reflect.ParameterizedType
  */
 
 
-abstract class BaseMvpActivity<V : AbstractFragment<*>, P : AbstractPresenter<*, *>, M : AbstractModel> : BaseActivity() {
+abstract class BaseMvpActivity<M : AbstractModel, V : AbstractFragment<*>, P : AbstractPresenter<*, *>> : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,20 +26,22 @@ abstract class BaseMvpActivity<V : AbstractFragment<*>, P : AbstractPresenter<*,
 
     override fun getLayoutRes() = R.layout.activity_mvp_layout
 
+    @SuppressWarnings("unchecked")
     private fun bindViewPresenter() {
         var thisClass: Class<*> = this.javaClass
         while (true) {
             (thisClass.genericSuperclass as? ParameterizedType)?.actualTypeArguments?.let {
                 if (it.size == 3) {
                     //创建model实例
-                    val modelClass = it[2] as Class<M>
+                    val modelClass = it[0] as Class<M>
                     val model = modelClass.newInstance()
 
                     //创建view实例
-                    val view = (it[0] as Class<V>).newInstance()
+                    val viewClass = it[1] as Class<V>
+                    val view = viewClass.newInstance()
 
                     //创建presenter实例  使用带model参数的构造方法
-                    val presenter = (it[1] as Class<P>).getConstructor(modelClass).newInstance(model)
+                    val presenter = (it[2] as Class<P>).getConstructor(modelClass, viewClass).newInstance(model, view)
 
                     //给view设置presenter
                     view.setPresenter(presenter)

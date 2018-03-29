@@ -11,8 +11,6 @@ import com.kaibo.base.mvp.view.BaseView
  */
 interface BasePresenter<out V : BaseView<BasePresenter<V>>> {
 
-    fun setView(view: @UnsafeVariance V)
-
     fun onResume()
 
     fun onDestroy()

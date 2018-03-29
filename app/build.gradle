@@ -4,18 +4,6 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
-apply plugin: 'kotlin-noarg'
-
-apply plugin: 'kotlin-allopen'
-
-noArg {
-    annotation("com.kaibo.roomdemo.annotations.PoKo")
-}
-
-allOpen {
-    annotation("com.kaibo.roomdemo.annotations.PoKo")
-}
-
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"

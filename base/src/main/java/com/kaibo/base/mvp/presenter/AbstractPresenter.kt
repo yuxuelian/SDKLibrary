@@ -12,13 +12,7 @@ import com.kaibo.base.mvp.view.BaseView
  * 要求子类必须要有一个无参的构造方法   否则会报错
  */
 
-abstract class AbstractPresenter<out V : BaseView<BasePresenter<V>>, M : BaseModel>(protected val mModel: M) : BasePresenter<V> {
-
-    protected lateinit var mView: @UnsafeVariance V
-
-    override fun setView(view: @UnsafeVariance V) {
-        this.mView = view
-    }
+abstract class AbstractPresenter<out V : BaseView<BasePresenter<V>>, out M : BaseModel>(protected val mModel: M, protected val mView:V) : BasePresenter<V> {
 
     override fun onResume() {
         mView.showToast("执行了  onResume")
