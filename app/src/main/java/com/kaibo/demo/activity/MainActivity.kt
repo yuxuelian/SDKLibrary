@@ -7,16 +7,6 @@ import com.kaibo.demo.mvp.view.MainFragment
 
 class MainActivity : BaseMvpActivity<MainFragment, MainPresenter>() {
 
-//    override val mView by lazy {
-//        MainFragment.newInstance()
-//    }
-
-//    override val mPresenter by lazy {
-//        MainPresenter(MainModel())
-//    }
-
-
-    override val mView = MainFragment.newInstance()
-    override val mPresenter = MainPresenter(MainModel())
+    override fun createVP() = Pair(MainFragment.newInstance(), MainPresenter(MainModel()))
 
 }

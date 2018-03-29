@@ -27,17 +27,17 @@ abstract class BaseMvpActivity<out V : AbstractFragment<*>, out P : AbstractPres
     /**
      * 创建V和P
      */
-    abstract val mView: V
-    abstract val mPresenter: P
+    protected abstract fun createVP(): Pair<V, P>
 
     /**
      * 初始化MVP
      */
     private fun initMvp() {
+        val (view, presenter) = createVP()
         supportFragmentManager.findFragmentById(R.id.mvpViewContainer)
                 ?: {
-                    ActivityUtils.addFragmentToActivity(supportFragmentManager, mView, R.id.mvpViewContainer)
-                    mView
-                }.invoke().setPresenter(mPresenter)
+                    ActivityUtils.addFragmentToActivity(supportFragmentManager, view, R.id.mvpViewContainer)
+                    view
+                }.invoke().setPresenter(presenter)
     }
 }
