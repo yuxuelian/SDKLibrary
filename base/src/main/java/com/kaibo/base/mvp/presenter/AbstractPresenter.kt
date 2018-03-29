@@ -1,5 +1,6 @@
 package com.kaibo.base.mvp.presenter
 
+import com.kaibo.base.mvp.model.BaseModel
 import com.kaibo.base.mvp.view.BaseView
 
 /**
@@ -11,7 +12,7 @@ import com.kaibo.base.mvp.view.BaseView
  * 要求子类必须要有一个无参的构造方法   否则会报错
  */
 
-abstract class AbstractPresenter<out V : BaseView<BasePresenter<V>>> : BasePresenter<V> {
+abstract class AbstractPresenter<out V : BaseView<BasePresenter<V>>, M : BaseModel>(protected val mModel: M) : BasePresenter<V> {
 
     protected lateinit var mView: @UnsafeVariance V
 

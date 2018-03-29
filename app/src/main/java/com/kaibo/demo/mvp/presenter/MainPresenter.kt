@@ -2,6 +2,8 @@ package com.kaibo.demo.mvp.presenter
 
 import com.kaibo.base.mvp.presenter.AbstractPresenter
 import com.kaibo.demo.mvp.contract.MainContract
+import com.kaibo.demo.mvp.model.MainModel
+import com.kaibo.roomdemo.annotation.PoKo
 
 /**
  * @author Administrator
@@ -11,10 +13,13 @@ import com.kaibo.demo.mvp.contract.MainContract
  * description：
  */
 
-class MainPresenter(private val mModel: MainContract.Model) : AbstractPresenter<MainContract.View>(), MainContract.Presenter {
+@PoKo
+class MainPresenter(mModel: MainModel) : AbstractPresenter<MainContract.View, MainContract.Model>(mModel), MainContract.Presenter {
 
     override fun queryOrderById(id: Long) {
-        mView.showToast("查询到订单  id是 $id")
+//        mView.showToast("查询到订单  id是 $id")
+        mView.showToast(mModel.getTestStr())
+
     }
 
 }

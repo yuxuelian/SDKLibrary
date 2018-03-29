@@ -5,6 +5,7 @@ import android.view.View
 import com.kaibo.base.mvp.view.AbstractFragment
 import com.kaibo.demo.R
 import com.kaibo.demo.mvp.contract.MainContract
+import com.kaibo.roomdemo.annotation.PoKo
 import kotlinx.android.synthetic.main.fragment_main.*
 
 /**
@@ -14,11 +15,8 @@ import kotlinx.android.synthetic.main.fragment_main.*
  * email：
  * description：
  */
-class MainFragment : AbstractFragment<MainContract.Presenter>(), MainContract.View {
 
-    companion object {
-        fun newInstance() = MainFragment()
-    }
+class MainFragment : AbstractFragment<MainContract.Presenter>(), MainContract.View {
 
     override fun getLayoutRes() = R.layout.fragment_main
 

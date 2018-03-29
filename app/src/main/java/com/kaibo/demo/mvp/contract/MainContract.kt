@@ -19,7 +19,7 @@ interface MainContract {
         fun queryOrderById(id: Long)
     }
 
-    interface Model : BaseModel{
-
+    interface Model : BaseModel {
+        fun getTestStr(): String
     }
 }
