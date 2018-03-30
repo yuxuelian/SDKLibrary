@@ -9,7 +9,6 @@ import com.kaibo.base.annotation.PoKo
  * email：
  * description：
  */
-@PoKo
 abstract class AbstractModel:BaseModel{
 
 }

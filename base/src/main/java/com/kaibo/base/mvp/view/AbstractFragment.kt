@@ -17,7 +17,6 @@ import com.kaibo.base.util.ToastUtil
  * email：
  * description：
  */
-@PoKo
 abstract class AbstractFragment<out P : BasePresenter<BaseView<P>, *>> : Fragment(), BaseView<P> {
 
     override lateinit var mPresenter: @UnsafeVariance P

@@ -12,7 +12,6 @@ import com.kaibo.base.mvp.view.BaseView
  * description：完成View 的绑定
  * 要求子类必须要有一个无参的构造方法   否则会报错
  */
-@PoKo
 abstract class AbstractPresenter<out V : BaseView<*>, out M : BaseModel>(override val mModel: M, override val mView: V) : BasePresenter<V, M> {
 
     override fun onResume() {
