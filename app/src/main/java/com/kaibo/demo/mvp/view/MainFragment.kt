@@ -5,7 +5,6 @@ import android.view.View
 import com.kaibo.base.mvp.view.AbstractFragment
 import com.kaibo.demo.R
 import com.kaibo.demo.mvp.contract.MainContract
-import com.kaibo.roomdemo.annotation.PoKo
 import kotlinx.android.synthetic.main.fragment_main.*
 
 /**

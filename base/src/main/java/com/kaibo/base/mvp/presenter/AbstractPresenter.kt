@@ -1,5 +1,6 @@
 package com.kaibo.base.mvp.presenter
 
+import com.kaibo.base.annotation.PoKo
 import com.kaibo.base.mvp.model.BaseModel
 import com.kaibo.base.mvp.view.BaseView
 
@@ -11,8 +12,8 @@ import com.kaibo.base.mvp.view.BaseView
  * description：完成View 的绑定
  * 要求子类必须要有一个无参的构造方法   否则会报错
  */
-
-abstract class AbstractPresenter<out V : BaseView<BasePresenter<V>>, out M : BaseModel>(protected val mModel: M, protected val mView:V) : BasePresenter<V> {
+@PoKo
+abstract class AbstractPresenter<out V : BaseView<*>, out M : BaseModel>(override val mModel: M, override val mView: V) : BasePresenter<V, M> {
 
     override fun onResume() {
         mView.showToast("执行了  onResume")

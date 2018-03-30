@@ -26,32 +26,34 @@ abstract class BaseMvpActivity<M : AbstractModel, V : AbstractFragment<*>, P : A
 
     override fun getLayoutRes() = R.layout.activity_mvp_layout
 
-    @SuppressWarnings("unchecked")
+    @Suppress("UNCHECKED_CAST")
     private fun bindViewPresenter() {
         var thisClass: Class<*> = this.javaClass
         while (true) {
             (thisClass.genericSuperclass as? ParameterizedType)?.actualTypeArguments?.let {
                 if (it.size == 3) {
-                    //创建model实例
+                    //创建 model 实例
                     val modelClass = it[0] as Class<M>
                     val model = modelClass.newInstance()
 
-                    //创建view实例
+                    //创建 view 实例
                     val viewClass = it[1] as Class<V>
                     val view = viewClass.newInstance()
 
-                    //创建presenter实例  使用带model参数的构造方法
-                    val presenter = (it[2] as Class<P>).getConstructor(modelClass, viewClass).newInstance(model, view)
+                    //创建 presenter 实例  使用带 model view 参数的构造方法
+                    val presenter = (it[2] as Class<P>)
+                            .getConstructor(modelClass, viewClass)
+                            .newInstance(model, view)
 
-                    //给view设置presenter
-                    view.setPresenter(presenter)
+                    //给 view 设置 presenter
+                    view.mPresenter = presenter
 
                     //将view实例添加到activity
                     supportFragmentManager.findFragmentById(R.id.mvpViewContainer)
                             ?: ActivityUtils.addFragmentToActivity(supportFragmentManager, view, R.id.mvpViewContainer)
                     return
                 } else {
-                    throw IllegalArgumentException("泛型参数有误")
+                    throw IllegalArgumentException("泛型参数个数有误")
                 }
             } ?: run {
                 thisClass = thisClass.superclass ?: throw IllegalArgumentException("始终没有找到泛型参数")

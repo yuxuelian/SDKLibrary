@@ -1,5 +1,6 @@
 package com.kaibo.base.mvp.presenter
 
+import com.kaibo.base.mvp.model.BaseModel
 import com.kaibo.base.mvp.view.BaseView
 
 /**
@@ -9,7 +10,10 @@ import com.kaibo.base.mvp.view.BaseView
  * email：
  * description：
  */
-interface BasePresenter<out V : BaseView<BasePresenter<V>>> {
+interface BasePresenter<out V : BaseView<*>, out M : BaseModel> {
+
+    val mView: V
+    val mModel: M
 
     fun onResume()
 

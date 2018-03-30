@@ -1,4 +1,6 @@
-package com.kaibo.roomdemo.annotation
+package com.kaibo.base.annotation
+
+import java.lang.annotation.Inherited
 
 
 /**
@@ -8,7 +10,7 @@ package com.kaibo.roomdemo.annotation
  * email：
  * description：
  */
-
+@Inherited
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.SOURCE)
 annotation class PoKo

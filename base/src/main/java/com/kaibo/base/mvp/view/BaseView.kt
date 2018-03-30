@@ -9,9 +9,9 @@ import com.kaibo.base.mvp.presenter.BasePresenter
  * email：
  * description：
  */
-interface BaseView<out P : BasePresenter<BaseView<P>>> {
+interface BaseView<out P : BasePresenter<BaseView<P>, *>> {
 
-    fun setPresenter(presenter: @UnsafeVariance P)
+    var mPresenter: @UnsafeVariance P
 
     fun showLoadView()
 

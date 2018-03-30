@@ -4,7 +4,7 @@ import com.kaibo.base.mvp.presenter.AbstractPresenter
 import com.kaibo.demo.mvp.contract.MainContract
 import com.kaibo.demo.mvp.model.MainModel
 import com.kaibo.demo.mvp.view.MainFragment
-import com.kaibo.roomdemo.annotation.PoKo
+import com.kaibo.base.annotation.PoKo
 
 /**
  * @author Administrator
@@ -14,7 +14,6 @@ import com.kaibo.roomdemo.annotation.PoKo
  * description：
  */
 
-@PoKo
 class MainPresenter(mModel: MainModel, mView: MainFragment) : AbstractPresenter<MainContract.View, MainContract.Model>(mModel, mView), MainContract.Presenter {
 
     override fun queryOrderById(id: Long) {

@@ -15,7 +15,7 @@ interface MainContract {
 
     interface View : BaseView<Presenter>
 
-    interface Presenter : BasePresenter<View> {
+    interface Presenter : BasePresenter<View, Model> {
         fun queryOrderById(id: Long)
     }
 
