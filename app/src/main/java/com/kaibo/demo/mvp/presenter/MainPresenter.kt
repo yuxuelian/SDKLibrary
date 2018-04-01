@@ -20,6 +20,7 @@ class MainPresenter(mModel: MainModel, mView: MainFragment) : AbstractPresenter<
 //        mView.showToast("查询到订单  id是 $id")
         mView.showToast(mModel.getTestStr())
 
+        
     }
 
 }
