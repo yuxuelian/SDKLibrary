@@ -4,6 +4,8 @@ import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Streaming
+import retrofit2.http.Url
 
 /**
  * @author Administrator
@@ -14,7 +16,8 @@ import retrofit2.http.POST
  */
 interface TestApi {
 
-    @POST("https://qd.myapp.com/myapp/qqteam/Androidlite/qqlite_3.6.3.697_android_r110028_GuanWang_537055374_release_10000484.apk")
-    fun downLoadFile(): Observable<ResponseBody>
+    @Streaming
+    @GET
+    fun downLoadFile(@Url url: String): Observable<ResponseBody>
 
 }

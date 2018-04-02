@@ -13,7 +13,7 @@ import okio.*
  * email：
  * description：下载文件下载进度监听
  */
-internal class ProgressResponseBody(private val response: ResponseBody, private val progressListener: (progress: Double, isFinish: Boolean) -> Unit) : ResponseBody() {
+class ProgressResponseBody(private val response: ResponseBody, private val progressListener: (progress: Double, isFinish: Boolean) -> Unit) : ResponseBody() {
 
     /**
      * 总进度

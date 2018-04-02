@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BaseSDK/Base.iml" filepath="$PROJECT_DIR$/BaseSDK/Base.iml" />
       <module fileurl="file://$PROJECT_DIR$/BaseSDK/BaseSDK.iml" filepath="$PROJECT_DIR$/BaseSDK/BaseSDK.iml" />
-      <module fileurl="file://$PROJECT_DIR$/BaseSDK/BaseSDK.iml" filepath="$PROJECT_DIR$/BaseSDK/BaseSDK.iml" />
       <module fileurl="file://$PROJECT_DIR$/MVPDemo.iml" filepath="$PROJECT_DIR$/MVPDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

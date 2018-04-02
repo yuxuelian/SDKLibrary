@@ -46,38 +46,34 @@ object HttpRequestManager {
     /**
      * 全局唯一一个 OkHttpClient  实例
      */
-    val okHttpClient: OkHttpClient by lazy {
-        OkHttpClient
-                .Builder()
-                .addNetworkInterceptor(ProgressInterceptor)
-                .addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-                //失败重连
-                .retryOnConnectionFailure(false)
-                .connectTimeout(CONNECT_TIMEOUT_TIME, TimeUnit.SECONDS)
-                .readTimeout(READ_TIMEOUT_TIME, TimeUnit.SECONDS)
-                .writeTimeout(WRITE_TIMEOUT_TIME, TimeUnit.SECONDS)
+    val okHttpClient = OkHttpClient
+            .Builder()
+            .addInterceptor(ProgressInterceptor())
+//            .addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            //失败重连
+            .retryOnConnectionFailure(false)
+            .connectTimeout(CONNECT_TIMEOUT_TIME, TimeUnit.SECONDS)
+            .readTimeout(READ_TIMEOUT_TIME, TimeUnit.SECONDS)
+            .writeTimeout(WRITE_TIMEOUT_TIME, TimeUnit.SECONDS)
 //                .cache(Cache(File("${BaseApplication.INSTANCE.cacheDir.absolutePath}${File.separator}okHttpCaches"), CACHE_SIZE))
-                .build()
-    }
+            .build()
 
     /**
      * Retrofit   实例
      */
-    val retrofit: Retrofit by lazy {
-        Retrofit
-                .Builder()
-                .client(okHttpClient)
-                .baseUrl(BASE_URL)
+    val retrofit = Retrofit
+            .Builder()
+            .client(okHttpClient)
+            .baseUrl(BASE_URL)
 //                .addConverterFactory(FastJsonConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                //同步发出请求
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                //使用okhttp的线程池
+            .addConverterFactory(GsonConverterFactory.create())
+            //同步发出请求
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            //使用okhttp的线程池
 //                .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
-                //指定在RxJava的线程池发出请求
+            //指定在RxJava的线程池发出请求
 //                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
-                .build()
-    }
+            .build()
 
     /**
      * 将路径列表转换成  List<MultipartBody.Part>

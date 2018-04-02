@@ -10,7 +10,7 @@ import okhttp3.Response
  * email：
  * description：
  */
-object ProgressInterceptor : Interceptor {
+class ProgressInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val response = chain.proceed(chain.request())
