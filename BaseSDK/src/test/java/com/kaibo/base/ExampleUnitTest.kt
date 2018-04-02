@@ -1,6 +1,7 @@
 package com.kaibo.base
 
-import com.kaibo.base.http.HttpClientUtils
+import com.kaibo.base.http.HttpRequestManager
+import io.reactivex.schedulers.Schedulers
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -23,7 +24,7 @@ class ExampleUnitTest {
     @Test
     fun test() {
 
-        val file = File("""D:\\qq.jpg""")
+        val file = File("""H:\\qq.apk""")
 
         if (file.exists()) {
             file.createNewFile()
@@ -31,15 +32,24 @@ class ExampleUnitTest {
 
         val outputStream = FileOutputStream(file)
 
-        HttpClientUtils.retrofit.create(TestApi::class.java).downLoadFile().subscribe({
-            val buff = ByteArray(1024)
-            val byteStream = it.byteStream()
-            while (byteStream.read(buff) != -1) {
-                outputStream.write(buff)
-            }
-            outputStream.flush()
-            byteStream.close()
-            outputStream.close()
-        })
+        HttpRequestManager
+                .retrofit
+                .create(TestApi::class.java)
+                .downLoadFile()
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    val buff = ByteArray(2048)
+                    val byteStream = it.byteStream()
+                    while (byteStream.read(buff) != -1) {
+                        outputStream.write(buff)
+                    }
+                    outputStream.flush()
+                    byteStream.close()
+                    outputStream.close()
+                })
+
+        while (true){
+
+        }
     }
 }

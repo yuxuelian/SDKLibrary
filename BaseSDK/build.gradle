@@ -118,9 +118,9 @@ dependencies {
 //    api 'com.trello.rxlifecycle2:rxlifecycle-kotlin:2.2.1'
 //    api 'com.trello.rxlifecycle2:rxlifecycle-android-lifecycle-kotlin:2.2.1'
 
-    api('com.hwangjr.rxbus:rxbus:1.0.6') {
-        exclude group: 'com.jakewharton.timber', module: 'timber'
-    }
+//    api('com.hwangjr.rxbus:rxbus:1.0.6') {
+//        exclude group: 'com.jakewharton.timber', module: 'timber'
+//    }
     //-----------------------------retrofit-----------------------------------
     api 'com.squareup.okhttp3:okhttp:3.9.1'
     api 'com.squareup.okhttp3:logging-interceptor:3.9.1'

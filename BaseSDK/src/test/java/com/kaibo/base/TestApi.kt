@@ -3,6 +3,7 @@ package com.kaibo.base
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.http.GET
+import retrofit2.http.POST
 
 /**
  * @author Administrator
@@ -13,7 +14,7 @@ import retrofit2.http.GET
  */
 interface TestApi {
 
-    @GET("https://qd.myapp.com/myapp/qqteam/Androidlite/qqlite_3.6.3.697_android_r110028_GuanWang_537055374_release_10000484.apk")
+    @POST("https://qd.myapp.com/myapp/qqteam/Androidlite/qqlite_3.6.3.697_android_r110028_GuanWang_537055374_release_10000484.apk")
     fun downLoadFile(): Observable<ResponseBody>
 
 }

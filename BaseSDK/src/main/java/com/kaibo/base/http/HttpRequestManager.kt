@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit
  * email：
  * description：
  */
-object HttpClientUtils {
+object HttpRequestManager {
 
     private const val BASE_URL = "http://localhost:8080/"
 

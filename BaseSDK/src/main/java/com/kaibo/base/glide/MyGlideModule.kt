@@ -13,7 +13,7 @@ import com.bumptech.glide.load.engine.executor.GlideExecutor
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.module.AppGlideModule
 import com.bumptech.glide.request.RequestOptions
-import com.kaibo.base.http.HttpClientUtils
+import com.kaibo.base.http.HttpRequestManager
 import java.io.InputStream
 
 
@@ -60,7 +60,7 @@ class MyGlideModule : AppGlideModule() {
         super.registerComponents(context, glide, registry)
 
         //更换网络请求为okHttp
-        registry.replace(GlideUrl::class.java, InputStream::class.java, OkHttpUrlLoader.Factory(HttpClientUtils.okHttpClient))
+        registry.replace(GlideUrl::class.java, InputStream::class.java, OkHttpUrlLoader.Factory(HttpRequestManager.okHttpClient))
     }
 
     /**

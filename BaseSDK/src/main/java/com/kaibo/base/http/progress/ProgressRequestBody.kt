@@ -1,6 +1,6 @@
 package com.kaibo.base.http.progress
 
-import com.kaibo.base.http.HttpClientUtils
+import com.kaibo.base.http.HttpRequestManager
 import com.kaibo.base.util.leaveTwoDecimal
 import okhttp3.MediaType
 import okhttp3.RequestBody
@@ -30,7 +30,7 @@ class ProgressRequestBody : RequestBody {
 
     constructor(file: File, progressListener: (progress: Double, isFinish: Boolean) -> Unit) {
         this.progressListener = progressListener
-        this.requestBody = RequestBody.create(HttpClientUtils.FORM_DATA, file)
+        this.requestBody = RequestBody.create(HttpRequestManager.FORM_DATA, file)
     }
 
     constructor(requestBody: RequestBody, progressListener: (progress: Double, isFinish: Boolean) -> Unit) {

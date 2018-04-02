@@ -20,7 +20,7 @@ internal class ProgressResponseBody(private val response: ResponseBody, private 
      */
     private var total: Long = 0
 
-    private var bufferedSource: BufferedSource? = Okio.buffer(source(response.source()))
+    private var bufferedSource: BufferedSource? = null
 
     override fun contentType(): MediaType? {
         return response.contentType()
@@ -32,6 +32,9 @@ internal class ProgressResponseBody(private val response: ResponseBody, private 
     }
 
     override fun source(): BufferedSource? {
+        if (bufferedSource == null) {
+            bufferedSource = Okio.buffer(source(response.source()))
+        }
         return bufferedSource
     }
 
@@ -43,20 +46,15 @@ internal class ProgressResponseBody(private val response: ResponseBody, private 
             //记录上一次的进度值
             private var lastProgress = 0.0
 
-            //记录是否已经完成
-            private var isFinish = false
-
             override fun read(sink: Buffer, byteCount: Long): Long {
                 val bytesRead = super.read(sink, byteCount)
-                currentTotal += if (bytesRead < 0L) 0L else bytesRead
 
-                val currentProgress = (currentTotal / total.toDouble()).leaveTwoDecimal()
-
-                if (currentTotal == total && !isFinish) {
-                    isFinish = true
-                    //下载完成了
-                    progressListener(currentProgress, true)
+                if (bytesRead == -1L) {
+                    //读取结束
+                    progressListener(1.0, true)
                 } else {
+                    currentTotal += bytesRead
+                    val currentProgress = (currentTotal / total.toDouble()).leaveTwoDecimal()
                     //过滤相同的进度值
                     if (currentProgress > lastProgress) {
                         //回调lambda表达式
@@ -64,7 +62,6 @@ internal class ProgressResponseBody(private val response: ResponseBody, private 
                         lastProgress = currentProgress
                     }
                 }
-
                 return bytesRead
             }
         }
