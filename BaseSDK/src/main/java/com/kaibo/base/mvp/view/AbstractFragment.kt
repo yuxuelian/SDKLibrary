@@ -1,13 +1,12 @@
 package com.kaibo.base.mvp.view
 
+import android.content.Context
 import android.os.Bundle
-import android.support.annotation.LayoutRes
-import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import com.kaibo.base.annotation.PoKo
+import android.support.annotation.CallSuper
+import android.view.View
+import com.kaibo.base.fragment.base.BaseFragment
 import com.kaibo.base.mvp.presenter.BasePresenter
-import com.kaibo.base.util.ToastUtil
+import com.kaibo.base.util.ToastUtils
 
 
 /**
@@ -15,25 +14,64 @@ import com.kaibo.base.util.ToastUtil
  * @date 2018/3/19 0019 上午 10:55
  * GitHub：
  * email：
- * description：
+ * description：将Fragment的生命周期传递到Presenter中去
  */
-abstract class AbstractFragment<out P : BasePresenter<BaseView<P>, *>> : Fragment(), BaseView<P> {
+abstract class AbstractFragment<out P : BasePresenter<BaseView<P>, *>> : BaseFragment(), BaseView<P> {
 
+    /**
+     * 当Fragment实例创建后,请立即对  Presenter  进行赋值
+     */
     override lateinit var mPresenter: @UnsafeVariance P
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?) = inflater?.inflate(getLayoutRes(), container, false)
+    @CallSuper
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        mPresenter.onAttach()
+    }
 
-    @LayoutRes
-    abstract fun getLayoutRes(): Int
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mPresenter.onCreate()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mPresenter.onViewCreated()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mPresenter.onStart()
+    }
 
     override fun onResume() {
         super.onResume()
         mPresenter.onResume()
     }
 
+    override fun onPause() {
+        mPresenter.onPause()
+        super.onPause()
+    }
+
+    override fun onStop() {
+        mPresenter.onStop()
+        super.onStop()
+    }
+
+    override fun onDestroyView() {
+        mPresenter.onDestroyView()
+        super.onDestroyView()
+    }
+
     override fun onDestroy() {
-        super.onDestroy()
         mPresenter.onDestroy()
+        super.onDestroy()
+    }
+
+    override fun onDetach() {
+        mPresenter.onDetach()
+        super.onDetach()
     }
 
     override fun showLoadView() {
@@ -45,6 +83,6 @@ abstract class AbstractFragment<out P : BasePresenter<BaseView<P>, *>> : Fragmen
     }
 
     override fun showToast(msg: String) {
-        ToastUtil.showToast(msg)
+        ToastUtils.showToast(msg)
     }
 }

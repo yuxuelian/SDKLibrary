@@ -10,12 +10,12 @@ import com.kaibo.base.BaseApplication
  * email：
  * description：
  */
-object ToastUtil {
+object ToastUtils {
 
     private val toast = Toast.makeText(BaseApplication.INSTANCE, "", Toast.LENGTH_SHORT)
 
     fun showToast(msg: String) {
-        toast.apply {
+        with(toast){
             setText(msg)
             show()
         }

@@ -19,7 +19,7 @@ class MainFragment : AbstractFragment<MainContract.Presenter>(), MainContract.Vi
 
     override fun getLayoutRes() = R.layout.fragment_main
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         button.setOnClickListener {
             mPresenter.queryOrderById(123)

@@ -3,7 +3,7 @@ package com.kaibo.base.activity
 import android.os.Bundle
 import com.kaibo.base.R
 import com.kaibo.base.mvp.model.AbstractModel
-import com.kaibo.base.mvp.presenter.AbstractPresenter
+import com.kaibo.base.mvp.presenter.AbstractRxPresenter
 import com.kaibo.base.mvp.view.AbstractFragment
 import com.kaibo.base.util.ActivityUtils
 import java.lang.reflect.ParameterizedType
@@ -16,8 +16,7 @@ import java.lang.reflect.ParameterizedType
  * description：使用MVP的Activity继承
  */
 
-
-abstract class BaseMvpActivity<M : AbstractModel, V : AbstractFragment<*>, P : AbstractPresenter<*, *>> : BaseActivity() {
+abstract class BaseMvpActivity<M : AbstractModel, V : AbstractFragment<*>, P : AbstractRxPresenter<*, *>> : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,12 +1,23 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-noarg'
+apply plugin: 'kotlin-allopen'
+
+noArg {
+    annotation("com.kaibo.base.annotation.PoKo")
+}
+
+allOpen {
+    annotation("com.kaibo.base.annotation.PoKo")
+}
 
 android {
     compileSdkVersion 27
     buildToolsVersion "27.0.3"
+
+    dataBinding.enabled true
 
     defaultConfig {
         applicationId "com.kaibo.mvp_demo"
@@ -16,17 +27,37 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    signingConfigs {
+        configuration {
+            keyAlias "kaibo"
+            keyPassword "kaibo123"
+            storeFile file("my1.jks")
+            storePassword "kaibo123"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.configuration
         }
+
+        debug {
+            signingConfig signingConfigs.configuration
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:27.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'

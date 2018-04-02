@@ -1,7 +1,5 @@
 package com.kaibo.base.annotation
 
-import java.lang.annotation.Inherited
-
 
 /**
  * @author Administrator
@@ -10,7 +8,7 @@ import java.lang.annotation.Inherited
  * email：
  * description：
  */
-@Inherited
+
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.SOURCE)
 annotation class PoKo

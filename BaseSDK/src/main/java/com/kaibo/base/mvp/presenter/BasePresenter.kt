@@ -15,8 +15,14 @@ interface BasePresenter<out V : BaseView<*>, out M : BaseModel> {
     val mView: V
     val mModel: M
 
+    fun onAttach()
+    fun onCreate()
+    fun onViewCreated()
+    fun onStart()
     fun onResume()
-
+    fun onPause()
+    fun onStop()
+    fun onDestroyView()
     fun onDestroy()
-
+    fun onDetach()
 }

@@ -1,6 +1,10 @@
 package com.kaibo.base
 
 import android.app.Application
+import android.content.Context
+import android.support.multidex.MultiDex
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
 
 /**
  * @author Administrator
@@ -9,7 +13,7 @@ import android.app.Application
  * email：
  * description：
  */
-open class BaseApplication : Application() {
+abstract class BaseApplication : Application() {
 
     companion object {
         val INSTANCE by lazy {
@@ -18,9 +22,15 @@ open class BaseApplication : Application() {
         private lateinit var tempInstance: BaseApplication
     }
 
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        MultiDex.install(this)
+    }
+
     override fun onCreate() {
         super.onCreate()
         tempInstance = this
 
+        Logger.addLogAdapter(AndroidLogAdapter())
     }
 }

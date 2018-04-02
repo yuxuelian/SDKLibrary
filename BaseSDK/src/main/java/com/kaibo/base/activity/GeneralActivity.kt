@@ -8,4 +8,4 @@ package com.kaibo.base.activity
  * description：非MVP继承
  */
 
-abstract class GeneralActivity : BaseActivity()
+abstract class GeneralActivity : RxActivity()
