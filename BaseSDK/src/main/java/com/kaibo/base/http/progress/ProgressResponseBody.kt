@@ -38,13 +38,13 @@ internal class ProgressResponseBody(private val response: ResponseBody, private 
     private fun source(source: Source): Source {
         return object : ForwardingSource(source) {
             //当前读取的字节数
-            internal var currentTotal: Long = 0L
+            private var currentTotal: Long = 0L
 
             //记录上一次的进度值
-            internal var lastProgress = 0.0
+            private var lastProgress = 0.0
 
             //记录是否已经完成
-            internal var isFinish = false
+            private var isFinish = false
 
             override fun read(sink: Buffer, byteCount: Long): Long {
                 val bytesRead = super.read(sink, byteCount)
