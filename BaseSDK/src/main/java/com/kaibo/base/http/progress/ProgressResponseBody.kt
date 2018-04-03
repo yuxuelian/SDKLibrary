@@ -1,6 +1,5 @@
 package com.kaibo.base.http.progress
 
-import com.kaibo.base.util.leaveTwoDecimal
 import okhttp3.MediaType
 import okhttp3.ResponseBody
 import okio.*
@@ -13,12 +12,16 @@ import okio.*
  * email：
  * description：下载文件下载进度监听
  */
-class ProgressResponseBody(private val response: ResponseBody, private val progressListener: (progress: Double, isFinish: Boolean) -> Unit) : ResponseBody() {
+class ProgressResponseBody(private val url: String, private val response: ResponseBody) : ResponseBody() {
+
+    private val progressListener =  ProgressListener.downloadProgressListeners[url]
 
     /**
      * 总进度
      */
-    private var total: Long = 0
+    private var fillLength = 0L
+
+    private var step = 0L
 
     private var bufferedSource: BufferedSource? = null
 
@@ -27,8 +30,10 @@ class ProgressResponseBody(private val response: ResponseBody, private val progr
     }
 
     override fun contentLength(): Long {
-        this.total = response.contentLength()
-        return total
+        this.fillLength = response.contentLength()
+        this.step = fillLength / 100L
+        println("步长  $step")
+        return fillLength
     }
 
     override fun source(): BufferedSource? {
@@ -41,25 +46,25 @@ class ProgressResponseBody(private val response: ResponseBody, private val progr
     private fun source(source: Source): Source {
         return object : ForwardingSource(source) {
             //当前读取的字节数
-            private var currentTotal: Long = 0L
+            private var currentLength = 0L
 
-            //记录上一次的进度值
-            private var lastProgress = 0.0
+            //上次进度
+            private var lastLength = 0L
 
             override fun read(sink: Buffer, byteCount: Long): Long {
                 val bytesRead = super.read(sink, byteCount)
 
                 if (bytesRead == -1L) {
                     //读取结束
-                    progressListener(1.0, true)
+                    progressListener?.invoke(fillLength, fillLength, true)
+                    //移除
+                    ProgressListener.downloadProgressListeners.remove(url)
                 } else {
-                    currentTotal += bytesRead
-                    val currentProgress = (currentTotal / total.toDouble()).leaveTwoDecimal()
-                    //过滤相同的进度值
-                    if (currentProgress > lastProgress) {
-                        //回调lambda表达式
-                        progressListener(currentProgress, false)
-                        lastProgress = currentProgress
+                    currentLength += bytesRead
+                    if (currentLength - lastLength >= step) {
+                        progressListener?.invoke(currentLength, fillLength, false)
+                        //更新记录
+                        lastLength = currentLength
                     }
                 }
                 return bytesRead

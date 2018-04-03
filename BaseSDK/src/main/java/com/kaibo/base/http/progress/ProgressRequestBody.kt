@@ -17,25 +17,33 @@ import java.io.File
  */
 class ProgressRequestBody : RequestBody {
 
+    private val url: String
+
     private val requestBody: RequestBody
 
-    private val progressListener: (progress: Double, isFinish: Boolean) -> Unit
+    private val progressListener: ((currentLength: Long, fillLength: Long, done: Boolean) -> Unit)?
 
     private var bufferedSink: BufferedSink? = null
 
     /**
      * 总长度
      */
-    private var total: Long = 0
+    private var fillLength: Long = 0
 
-    constructor(file: File, progressListener: (progress: Double, isFinish: Boolean) -> Unit) {
-        this.progressListener = progressListener
+    private var step = 0L
+
+    constructor(url: String, file: File) {
+        this.url = url
         this.requestBody = RequestBody.create(HttpRequestManager.FORM_DATA, file)
+
+        this.progressListener = ProgressListener.uploadProgressListener[url]
     }
 
-    constructor(requestBody: RequestBody, progressListener: (progress: Double, isFinish: Boolean) -> Unit) {
-        this.progressListener = progressListener
+    constructor(url: String, requestBody: RequestBody) {
+        this.url = url
         this.requestBody = requestBody
+
+        this.progressListener = ProgressListener.uploadProgressListener[url]
     }
 
     /**
@@ -50,8 +58,9 @@ class ProgressRequestBody : RequestBody {
      */
     override fun contentLength(): Long {
         //获取总长度,保存到全局变量中去
-        this.total = requestBody.contentLength()
-        return total
+        this.fillLength = requestBody.contentLength()
+        step = fillLength / 100L
+        return fillLength
     }
 
     override fun writeTo(sink: BufferedSink) {
@@ -70,31 +79,25 @@ class ProgressRequestBody : RequestBody {
     private fun sink(sink: Sink): Sink {
         return object : ForwardingSink(sink) {
             //当前写入的总字节数
-            internal var currentTotal = 0L
+            private var currentLength = 0L
 
-            //记录上一次的进度值
-            internal var lastProgress = 0.0
-
-            //记录是否已经完成
-            internal var isFinish = false
+            //上一次的进度值
+            private var lastLength = 0L
 
             override fun write(source: Buffer, byteCount: Long) {
                 super.write(source, byteCount)
-                //增加当前写入的字节数
-                currentTotal += if (byteCount < 0L) 0L else byteCount
+                if (byteCount == -1L) {
+                    //写入完成
+                    progressListener?.invoke(fillLength, fillLength, true)
 
-                val currentProgress = (currentTotal / total.toDouble()).leaveTwoDecimal()
-
-                //过滤相同的进度值
-                if (currentTotal == total && !isFinish) {
-                    isFinish = true
-                    //下载完成了
-                    progressListener(currentProgress, true)
+                    //移除
+                    ProgressListener.uploadProgressListener.remove(url)
                 } else {
-                    if (currentProgress > lastProgress) {
-                        //回调lambda表达式
-                        progressListener(currentProgress, false)
-                        lastProgress = currentProgress
+                    currentLength += byteCount
+                    //过滤进度
+                    if (currentLength - lastLength >= step) {
+                        progressListener?.invoke(fillLength, fillLength, false)
+                        lastLength = currentLength
                     }
                 }
             }

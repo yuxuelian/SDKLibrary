@@ -10,14 +10,15 @@ import okhttp3.Response
  * email：
  * description：
  */
-class ProgressInterceptor : Interceptor {
+object ProgressInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val response = chain.proceed(chain.request())
-        return response.newBuilder().body(ProgressResponseBody(response.body()!!, { progress, isFinish ->
-
-            println("${Thread.currentThread().name} $progress $isFinish")
-
-        })).build()
+        val request = chain.request()
+        val url = request.url().toString()
+        val response = chain.proceed(request)
+        response.body()?.let {
+            return response.newBuilder().body(ProgressResponseBody(url, it)).build()
+        }
+        return response
     }
 }

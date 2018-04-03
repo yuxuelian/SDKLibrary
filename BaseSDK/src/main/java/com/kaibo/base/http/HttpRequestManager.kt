@@ -48,15 +48,16 @@ object HttpRequestManager {
      */
     val okHttpClient = OkHttpClient
             .Builder()
-            .addInterceptor(ProgressInterceptor())
-//            .addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            //进度拦截器
+            .addInterceptor(ProgressInterceptor)
+//            .addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
             //失败重连
             .retryOnConnectionFailure(false)
             .connectTimeout(CONNECT_TIMEOUT_TIME, TimeUnit.SECONDS)
             .readTimeout(READ_TIMEOUT_TIME, TimeUnit.SECONDS)
             .writeTimeout(WRITE_TIMEOUT_TIME, TimeUnit.SECONDS)
 //                .cache(Cache(File("${BaseApplication.INSTANCE.cacheDir.absolutePath}${File.separator}okHttpCaches"), CACHE_SIZE))
-            .build()
+            .build()!!
 
     /**
      * Retrofit   实例
@@ -68,12 +69,12 @@ object HttpRequestManager {
 //                .addConverterFactory(FastJsonConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             //同步发出请求
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+//            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             //使用okhttp的线程池
 //                .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
             //指定在RxJava的线程池发出请求
-//                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
-            .build()
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+            .build()!!
 
     /**
      * 将路径列表转换成  List<MultipartBody.Part>

@@ -3,17 +3,17 @@ package com.kaibo.base
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.http.GET
-import retrofit2.http.POST
 import retrofit2.http.Streaming
 import retrofit2.http.Url
 
 /**
  * @author Administrator
- * @date 2018/4/2 0002 下午 3:36
+ * @date 2018/4/3 0003 上午 9:50
  * GitHub：
  * email：
  * description：
  */
+
 interface TestApi {
 
     @Streaming
