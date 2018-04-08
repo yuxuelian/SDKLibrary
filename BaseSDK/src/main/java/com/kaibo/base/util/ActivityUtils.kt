@@ -1,5 +1,8 @@
 package com.kaibo.base.util
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 
@@ -19,4 +22,8 @@ object ActivityUtils {
         transaction.commit()
     }
 
+}
+
+inline fun <reified T : Activity> Context.startActivity() {
+    startActivity(Intent(this, T::class.java))
 }

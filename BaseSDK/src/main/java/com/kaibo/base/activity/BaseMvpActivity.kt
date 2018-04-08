@@ -14,9 +14,10 @@ import java.lang.reflect.ParameterizedType
  * GitHub：
  * email：
  * description：使用MVP的Activity继承
+ * 这个类的主要功能是  通过反射  完成对  MVP三者之间的关系  进行  绑定操作
  */
 
-abstract class BaseMvpActivity<M : AbstractModel, V : AbstractFragment<*>, P : AbstractRxPresenter<*, *>> : BaseActivity() {
+abstract class BaseMvpActivity<M : AbstractModel, V : AbstractFragment<*>, P : AbstractRxPresenter<*, *>> : RxActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

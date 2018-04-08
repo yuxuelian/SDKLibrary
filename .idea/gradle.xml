@@ -9,6 +9,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/BaseSDK" />
+            <option value="$PROJECT_DIR$/SwipeBackLib" />
+            <option value="$PROJECT_DIR$/SwipeMenuLib" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>

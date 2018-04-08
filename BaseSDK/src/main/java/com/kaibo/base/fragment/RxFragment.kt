@@ -20,7 +20,7 @@ import io.reactivex.subjects.BehaviorSubject
  * @date 2018/4/2 0002 上午 10:27
  * GitHub：
  * email：
- * description：
+ * description：自动发送生命周期通知的Fragment
  */
 
 abstract class RxFragment : BaseFragment(), LifecycleProvider<FragmentEvent> {
