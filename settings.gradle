@@ -1,1 +1,1 @@
-include ':app', ':BaseSDK'
+include ':app', ':SdkCore', ':SwipeBackLib', ':SwipeMenuLib'
