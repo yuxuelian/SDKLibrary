@@ -24,12 +24,15 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
-import com.kaibo.base.R;
-import com.kaibo.swipemenulib.common.CustomViewBehind;
+import com.kaibo.swipemenulib.R;
 import com.kaibo.swipemenulib.weight.CustomViewAbove.OnPageChangeListener;
 
 import java.lang.reflect.Method;
 
+/**
+ * @author Administrator
+ * 整个视图区域的布局
+ */
 public class SwipeMenuLayout extends RelativeLayout {
 
     private static final String TAG = SwipeMenuLayout.class.getSimpleName();
@@ -42,19 +45,19 @@ public class SwipeMenuLayout extends RelativeLayout {
      * Constant value for use with setTouchModeAbove(). Allows the SlidingMenu to be opened with a swipe
      * gesture on the screen's margin
      */
-    public static final int TOUCHMODE_MARGIN = 0;
+    public static final int TOUCH_MODE_MARGIN = 0;
 
     /**
      * Constant value for use with setTouchModeAbove(). Allows the SlidingMenu to be opened with a swipe
      * gesture anywhere on the screen
      */
-    public static final int TOUCHMODE_FULLSCREEN = 1;
+    public static final int TOUCH_MODE_FULLSCREEN = 1;
 
     /**
      * Constant value for use with setTouchModeAbove(). Denies the SlidingMenu to be opened with a swipe
      * gesture
      */
-    public static final int TOUCHMODE_NONE = 2;
+    public static final int TOUCH_MODE_NONE = 2;
 
     /**
      * Constant value for use with setMode(). Puts the menu to the left of the content.
@@ -77,7 +80,7 @@ public class SwipeMenuLayout extends RelativeLayout {
 
     private OnOpenListener mOpenListener;
 
-    private OnOpenListener mSecondaryOpenListner;
+    private OnOpenListener mSecondaryOpenListener;
 
     private OnCloseListener mCloseListener;
 
@@ -234,8 +237,8 @@ public class SwipeMenuLayout extends RelativeLayout {
                     mOpenListener.onOpen();
                 } else if (position == POSITION_CLOSE && mCloseListener != null) {
                     mCloseListener.onClose();
-                } else if (position == POSITION_SECONDARY_OPEN && mSecondaryOpenListner != null) {
-                    mSecondaryOpenListner.onOpen();
+                } else if (position == POSITION_SECONDARY_OPEN && mSecondaryOpenListener != null) {
+                    mSecondaryOpenListener.onOpen();
                 }
             }
         });
@@ -257,9 +260,9 @@ public class SwipeMenuLayout extends RelativeLayout {
         } else {
             setMenu(new FrameLayout(context));
         }
-        int touchModeAbove = ta.getInt(R.styleable.SwipeMenuLayout_touchModeAbove, TOUCHMODE_MARGIN);
+        int touchModeAbove = ta.getInt(R.styleable.SwipeMenuLayout_touchModeAbove, TOUCH_MODE_MARGIN);
         setTouchModeAbove(touchModeAbove);
-        int touchModeBehind = ta.getInt(R.styleable.SwipeMenuLayout_touchModeBehind, TOUCHMODE_MARGIN);
+        int touchModeBehind = ta.getInt(R.styleable.SwipeMenuLayout_touchModeBehind, TOUCH_MODE_MARGIN);
         setTouchModeBehind(touchModeBehind);
 
         int offsetBehind = (int) ta.getDimension(R.styleable.SwipeMenuLayout_behindOffset, -1);
@@ -734,31 +737,31 @@ public class SwipeMenuLayout extends RelativeLayout {
 
     /**
      * Controls whether the SlidingMenu can be opened with a swipe gesture.
-     * Options are {@link #TOUCHMODE_MARGIN TOUCHMODE_MARGIN}, {@link #TOUCHMODE_FULLSCREEN TOUCHMODE_FULLSCREEN},
-     * or {@link #TOUCHMODE_NONE TOUCHMODE_NONE}
+     * Options are {@link #TOUCH_MODE_MARGIN TOUCH_MODE_MARGIN}, {@link #TOUCH_MODE_FULLSCREEN TOUCH_MODE_FULLSCREEN},
+     * or {@link #TOUCH_MODE_NONE TOUCH_MODE_NONE}
      *
      * @param i the new touch mode
      */
     public void setTouchModeAbove(int i) {
-        if (i != TOUCHMODE_FULLSCREEN && i != TOUCHMODE_MARGIN && i != TOUCHMODE_NONE) {
+        if (i != TOUCH_MODE_FULLSCREEN && i != TOUCH_MODE_MARGIN && i != TOUCH_MODE_NONE) {
             throw new IllegalStateException("TouchMode must be set to either" +
-                    "TOUCHMODE_FULLSCREEN or TOUCHMODE_MARGIN or TOUCHMODE_NONE.");
+                    "TOUCH_MODE_FULLSCREEN or TOUCH_MODE_MARGIN or TOUCH_MODE_NONE.");
         }
         mViewAbove.setTouchMode(i);
     }
 
     /**
      * Controls whether the SlidingMenu can be opened with a swipe gesture.
-     * Options are {@link #TOUCHMODE_MARGIN TOUCHMODE_MARGIN}, {@link #TOUCHMODE_FULLSCREEN TOUCHMODE_FULLSCREEN},
-     * or {@link #TOUCHMODE_NONE TOUCHMODE_NONE}
+     * Options are {@link #TOUCH_MODE_MARGIN TOUCH_MODE_MARGIN}, {@link #TOUCH_MODE_FULLSCREEN TOUCH_MODE_FULLSCREEN},
+     * or {@link #TOUCH_MODE_NONE TOUCH_MODE_NONE}
      *
      * @param i the new touch mode
      */
     public void setTouchModeBehind(int i) {
-        if (i != TOUCHMODE_FULLSCREEN && i != TOUCHMODE_MARGIN
-                && i != TOUCHMODE_NONE) {
+        if (i != TOUCH_MODE_FULLSCREEN && i != TOUCH_MODE_MARGIN
+                && i != TOUCH_MODE_NONE) {
             throw new IllegalStateException("TouchMode must be set to either" +
-                    "TOUCHMODE_FULLSCREEN or TOUCHMODE_MARGIN or TOUCHMODE_NONE.");
+                    "TOUCH_MODE_FULLSCREEN or TOUCH_MODE_MARGIN or TOUCH_MODE_NONE.");
         }
         mViewBehind.setTouchMode(i);
     }
@@ -915,7 +918,7 @@ public class SwipeMenuLayout extends RelativeLayout {
      */
 
     public void setSecondaryOnOpenListner(OnOpenListener listener) {
-        mSecondaryOpenListner = listener;
+        mSecondaryOpenListener = listener;
     }
 
     /**

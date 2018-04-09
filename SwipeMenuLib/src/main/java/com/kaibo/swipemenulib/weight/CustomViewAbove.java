@@ -19,27 +19,31 @@ import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.Scroller;
 
-import com.kaibo.swipemenulib.common.CustomViewBehind;
+import com.kaibo.swipemenulib.BuildConfig;
 import com.kaibo.swipemenulib.weight.SwipeMenuLayout.OnClosedListener;
 import com.kaibo.swipemenulib.weight.SwipeMenuLayout.OnOpenedListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Administrator
+ */
 public class CustomViewAbove extends ViewGroup {
 
     private static final String TAG = "CustomViewAbove";
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
 
     private static final boolean USE_CACHE = false;
 
-    private static final int MAX_SETTLE_DURATION = 600; // ms
-    private static final int MIN_DISTANCE_FOR_FLING = 25; // dips
+    private static final int MAX_SETTLE_DURATION = 400;
+    private static final int MIN_DISTANCE_FOR_FLING = 25;
 
-    private static final Interpolator sInterpolator = new Interpolator() {
+    private static final Interpolator S_INTERPOLATOR = new Interpolator() {
         @Override
         public float getInterpolation(float t) {
             t -= 1.0f;
@@ -85,7 +89,6 @@ public class CustomViewAbove extends ViewGroup {
     private int mFlingDistance;
 
     private CustomViewBehind mViewBehind;
-    //	private int mMode;
     private boolean mEnabled = true;
 
     private OnPageChangeListener mOnPageChangeListener;
@@ -94,9 +97,7 @@ public class CustomViewAbove extends ViewGroup {
     private OnClosedListener mClosedListener;
     private OnOpenedListener mOpenedListener;
 
-    private List<View> mIgnoredViews = new ArrayList<View>();
-
-    //	private int mScrollState = SCROLL_STATE_IDLE;
+    private List<View> mIgnoredViews = new ArrayList<>();
 
     /**
      * Callback interface for responding to changing state of the selected page.
@@ -133,16 +134,13 @@ public class CustomViewAbove extends ViewGroup {
 
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            // This space for rent
         }
 
         @Override
         public void onPageSelected(int position) {
-            // This space for rent
         }
 
         public void onPageScrollStateChanged(int state) {
-            // This space for rent
         }
     }
 
@@ -155,12 +153,12 @@ public class CustomViewAbove extends ViewGroup {
         initCustomViewAbove();
     }
 
-    void initCustomViewAbove() {
+    private void initCustomViewAbove() {
         setWillNotDraw(false);
         setDescendantFocusability(FOCUS_AFTER_DESCENDANTS);
         setFocusable(true);
         final Context context = getContext();
-        mScroller = new Scroller(context, sInterpolator);
+        mScroller = new Scroller(context, S_INTERPOLATOR);
         final ViewConfiguration configuration = ViewConfiguration.get(context);
         mTouchSlop = ViewConfigurationCompat.getScaledPagingTouchSlop(configuration);
         mMinimumVelocity = configuration.getScaledMinimumFlingVelocity();
@@ -290,8 +288,9 @@ public class CustomViewAbove extends ViewGroup {
     // the screen has to travel, however, we don't want this duration to be effected in a
     // purely linear fashion. Instead, we use this method to moderate the effect that the distance
     // of travel has on the overall snap duration.
-    float distanceInfluenceForSnapDuration(float f) {
-        f -= 0.5f; // center the values about 0.
+    private float distanceInfluenceForSnapDuration(float f) {
+        // center the values about 0.
+        f -= 0.5f;
         f *= 0.3f * Math.PI / 2.0f;
         return (float) Math.sin(f);
     }
@@ -386,9 +385,8 @@ public class CustomViewAbove extends ViewGroup {
      * @param y        the number of pixels to scroll by on the Y axis
      * @param velocity the velocity associated with a fling, if applicable. (0 otherwise)
      */
-    void smoothScrollTo(int x, int y, int velocity) {
+    private void smoothScrollTo(int x, int y, int velocity) {
         if (getChildCount() == 0) {
-            // Nothing to do.
             setScrollingCacheEnabled(false);
             return;
         }
@@ -416,18 +414,17 @@ public class CustomViewAbove extends ViewGroup {
         final int width = getBehindWidth();
         final int halfWidth = width / 2;
         final float distanceRatio = Math.min(1f, 1.0f * Math.abs(dx) / width);
-        final float distance = halfWidth + halfWidth *
-                distanceInfluenceForSnapDuration(distanceRatio);
+        final float distance = halfWidth + halfWidth * distanceInfluenceForSnapDuration(distanceRatio);
 
-        int duration = 0;
+        int duration;
         velocity = Math.abs(velocity);
         if (velocity > 0) {
             duration = 4 * Math.round(1000 * Math.abs(distance / velocity));
         } else {
             final float pageDelta = (float) Math.abs(dx) / width;
             duration = (int) ((pageDelta + 1) * 100);
-            duration = MAX_SETTLE_DURATION;
         }
+
         duration = Math.min(duration, MAX_SETTLE_DURATION);
 
         mScroller.startScroll(sx, sy, dx, dy, duration);
@@ -452,11 +449,9 @@ public class CustomViewAbove extends ViewGroup {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-
         int width = getDefaultSize(0, widthMeasureSpec);
         int height = getDefaultSize(0, heightMeasureSpec);
         setMeasuredDimension(width, height);
-
         final int contentWidth = getChildMeasureSpec(widthMeasureSpec, 0, width);
         final int contentHeight = getChildMeasureSpec(heightMeasureSpec, 0, height);
         mContent.measure(contentWidth, contentHeight);
@@ -465,11 +460,7 @@ public class CustomViewAbove extends ViewGroup {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        // Make sure scroll position is set correctly.
         if (w != oldw) {
-            // [ChrisJ] - This fixes the onConfiguration change for orientation issue..
-            // maybe worth having a look why the recomputeScroll pos is screwing
-            // up?
             completeScroll();
             scrollTo(getDestScrollX(mCurItem), getScrollY());
         }
@@ -483,12 +474,8 @@ public class CustomViewAbove extends ViewGroup {
     }
 
     public void setAboveOffset(int i) {
-        //		RelativeLayout.LayoutParams params = ((RelativeLayout.LayoutParams)mContent.getLayoutParams());
-        //		params.setMargins(i, params.topMargin, params.rightMargin, params.bottomMargin);
-        mContent.setPadding(i, mContent.getPaddingTop(),
-                mContent.getPaddingRight(), mContent.getPaddingBottom());
+        mContent.setPadding(i, mContent.getPaddingTop(), mContent.getPaddingRight(), mContent.getPaddingBottom());
     }
-
 
     @Override
     public void computeScroll() {
@@ -503,14 +490,10 @@ public class CustomViewAbove extends ViewGroup {
                     scrollTo(x, y);
                     pageScrolled(x);
                 }
-
-                // Keep on drawing until the animation has finished.
                 invalidate();
                 return;
             }
         }
-
-        // Done with scroll, clean up state.
         completeScroll();
     }
 
@@ -519,7 +502,6 @@ public class CustomViewAbove extends ViewGroup {
         final int position = xpos / widthWithMargin;
         final int offsetPixels = xpos % widthWithMargin;
         final float offset = (float) offsetPixels / widthWithMargin;
-
         onPageScrolled(position, offset, offsetPixels);
     }
 
@@ -547,7 +529,6 @@ public class CustomViewAbove extends ViewGroup {
     private void completeScroll() {
         boolean needPopulate = mScrolling;
         if (needPopulate) {
-            // Done with scroll, no longer want to cache view drawing.
             setScrollingCacheEnabled(false);
             mScroller.abortAnimation();
             int oldX = getScrollX();
@@ -570,8 +551,7 @@ public class CustomViewAbove extends ViewGroup {
         mScrolling = false;
     }
 
-    protected int mTouchMode = SwipeMenuLayout.TOUCHMODE_MARGIN;
-
+    protected int mTouchMode = SwipeMenuLayout.TOUCH_MODE_MARGIN;
 
     public void setTouchMode(int i) {
         mTouchMode = i;
@@ -587,11 +567,11 @@ public class CustomViewAbove extends ViewGroup {
             return mViewBehind.menuOpenTouchAllowed(mContent, mCurItem, x);
         } else {
             switch (mTouchMode) {
-                case SwipeMenuLayout.TOUCHMODE_FULLSCREEN:
+                case SwipeMenuLayout.TOUCH_MODE_FULLSCREEN:
                     return !isInIgnoredView(ev);
-                case SwipeMenuLayout.TOUCHMODE_NONE:
+                case SwipeMenuLayout.TOUCH_MODE_NONE:
                     return false;
-                case SwipeMenuLayout.TOUCHMODE_MARGIN:
+                case SwipeMenuLayout.TOUCH_MODE_MARGIN:
                     return mViewBehind.marginTouchAllowed(mContent, x);
                 default:
                     break;
@@ -601,7 +581,7 @@ public class CustomViewAbove extends ViewGroup {
     }
 
     private boolean thisSlideAllowed(float dx) {
-        boolean allowed = false;
+        boolean allowed;
         if (isMenuOpen()) {
             allowed = mViewBehind.menuOpenSlideAllowed(dx);
         } else {
@@ -623,27 +603,21 @@ public class CustomViewAbove extends ViewGroup {
 
     private boolean mQuickReturn = false;
 
-
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         if (!mEnabled) {
             return false;
         }
-
         final int action = ev.getAction() & MotionEventCompat.ACTION_MASK;
-
         if (DEBUG) {
             if (action == MotionEvent.ACTION_DOWN) {
                 Log.v(TAG, "Received ACTION_DOWN");
             }
         }
-
-        if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP
-                || (action != MotionEvent.ACTION_DOWN && mIsUnableToDrag)) {
+        if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP || (action != MotionEvent.ACTION_DOWN && mIsUnableToDrag)) {
             endDrag();
             return false;
         }
-
         switch (action) {
             case MotionEvent.ACTION_MOVE:
                 determineDrag(ev);
@@ -671,7 +645,6 @@ public class CustomViewAbove extends ViewGroup {
             default:
                 break;
         }
-
         if (!mIsBeingDragged) {
             if (mVelocityTracker == null) {
                 mVelocityTracker = VelocityTracker.obtain();
@@ -681,27 +654,19 @@ public class CustomViewAbove extends ViewGroup {
         return mIsBeingDragged || mQuickReturn;
     }
 
-
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         if (!mEnabled) {
             return false;
         }
-
         if (!mIsBeingDragged && !thisTouchAllowed(ev)) {
             return false;
         }
-
-        //		if (!mIsBeingDragged && !mQuickReturn)
-        //			return false;
-
         final int action = ev.getAction();
-
         if (mVelocityTracker == null) {
             mVelocityTracker = VelocityTracker.obtain();
         }
         mVelocityTracker.addMovement(ev);
-
         switch (action & MotionEventCompat.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
                 /*
@@ -750,8 +715,7 @@ public class CustomViewAbove extends ViewGroup {
                 if (mIsBeingDragged) {
                     final VelocityTracker velocityTracker = mVelocityTracker;
                     velocityTracker.computeCurrentVelocity(1000, mMaximumVelocity);
-                    int initialVelocity = (int) VelocityTrackerCompat.getXVelocity(
-                            velocityTracker, mActivePointerId);
+                    int initialVelocity = (int) VelocityTrackerCompat.getXVelocity(velocityTracker, mActivePointerId);
                     final int scrollX = getScrollX();
                     final float pageOffset = (float) (scrollX - getDestScrollX(mCurItem)) / getBehindWidth();
                     final int activePointerIndex = getPointerIndex(ev, mActivePointerId);
@@ -857,7 +821,9 @@ public class CustomViewAbove extends ViewGroup {
     }
 
     private void onSecondaryPointerUp(MotionEvent ev) {
-        if (DEBUG) Log.v(TAG, "onSecondaryPointerUp called");
+        if (DEBUG) {
+            Log.v(TAG, "onSecondaryPointerUp called");
+        }
         final int pointerIndex = MotionEventCompat.getActionIndex(ev);
         final int pointerId = MotionEventCompat.getPointerId(ev, pointerIndex);
         if (pointerId == mActivePointerId) {
@@ -962,14 +928,12 @@ public class CustomViewAbove extends ViewGroup {
                     handled = arrowScroll(FOCUS_RIGHT);
                     break;
                 case KeyEvent.KEYCODE_TAB:
-                    if (Build.VERSION.SDK_INT >= 11) {
-                        // The focus finder had a bug handling FOCUS_FORWARD and FOCUS_BACKWARD
-                        // before Android 3.0. Ignore the tab key on those devices.
-                        if (KeyEventCompat.hasNoModifiers(event)) {
-                            handled = arrowScroll(FOCUS_FORWARD);
-                        } else if (KeyEventCompat.hasModifiers(event, KeyEvent.META_SHIFT_ON)) {
-                            handled = arrowScroll(FOCUS_BACKWARD);
-                        }
+                    // The focus finder had a bug handling FOCUS_FORWARD and FOCUS_BACKWARD
+                    // before Android 3.0. Ignore the tab key on those devices.
+                    if (KeyEventCompat.hasNoModifiers(event)) {
+                        handled = arrowScroll(FOCUS_FORWARD);
+                    } else if (KeyEventCompat.hasModifiers(event, KeyEvent.META_SHIFT_ON)) {
+                        handled = arrowScroll(FOCUS_BACKWARD);
                     }
                     break;
                 default:
@@ -984,17 +948,12 @@ public class CustomViewAbove extends ViewGroup {
         if (currentFocused == this) {
             currentFocused = null;
         }
-
         boolean handled = false;
-
-        View nextFocused = FocusFinder.getInstance().findNextFocus(this, currentFocused,
-                direction);
+        View nextFocused = FocusFinder.getInstance().findNextFocus(this, currentFocused, direction);
         if (nextFocused != null && nextFocused != currentFocused) {
             if (direction == View.FOCUS_LEFT) {
                 handled = nextFocused.requestFocus();
             } else if (direction == View.FOCUS_RIGHT) {
-                // If there is nothing to the right, or this is causing us to
-                // jump to the left, then what we really want to do is page right.
                 if (currentFocused != null && nextFocused.getLeft() <= currentFocused.getLeft()) {
                     handled = pageRight();
                 } else {
@@ -1002,10 +961,8 @@ public class CustomViewAbove extends ViewGroup {
                 }
             }
         } else if (direction == FOCUS_LEFT || direction == FOCUS_BACKWARD) {
-            // Trying to move left and nothing there; try to page.
             handled = pageLeft();
         } else if (direction == FOCUS_RIGHT || direction == FOCUS_FORWARD) {
-            // Trying to move right and nothing there; try to page.
             handled = pageRight();
         }
         if (handled) {
@@ -1014,7 +971,7 @@ public class CustomViewAbove extends ViewGroup {
         return handled;
     }
 
-    boolean pageLeft() {
+    private boolean pageLeft() {
         if (mCurItem > 0) {
             setCurrentItem(mCurItem - 1, true);
             return true;
@@ -1022,12 +979,11 @@ public class CustomViewAbove extends ViewGroup {
         return false;
     }
 
-    boolean pageRight() {
+    private boolean pageRight() {
         if (mCurItem < 1) {
             setCurrentItem(mCurItem + 1, true);
             return true;
         }
         return false;
     }
-
 }

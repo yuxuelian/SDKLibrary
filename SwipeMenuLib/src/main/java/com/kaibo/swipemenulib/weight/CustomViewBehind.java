@@ -1,4 +1,4 @@
-package com.kaibo.swipemenulib.common;
+package com.kaibo.swipemenulib.weight;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -14,16 +14,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.kaibo.swipemenulib.R;
-import com.kaibo.swipemenulib.weight.CustomViewAbove;
-import com.kaibo.swipemenulib.weight.SwipeMenuLayout;
 import com.kaibo.swipemenulib.weight.SwipeMenuLayout.CanvasTransformer;
 
+/**
+ * @author Administrator
+ *
+ * @description 侧滑菜单中的根布局
+ */
 public class CustomViewBehind extends ViewGroup {
 
     private static final String TAG = "CustomViewBehind";
 
     private static final int MARGIN_THRESHOLD = 48;
-    private int mTouchMode = SwipeMenuLayout.TOUCHMODE_MARGIN;
+    private int mTouchMode = SwipeMenuLayout.TOUCH_MODE_MARGIN;
 
     private CustomViewAbove mViewAbove;
 
@@ -34,14 +37,22 @@ public class CustomViewBehind extends ViewGroup {
     private CanvasTransformer mTransformer;
     private boolean mChildrenEnabled;
 
+    private int mMode;
+    private boolean mFadeEnabled;
+    private final Paint mFadePaint = new Paint();
+    private float mScrollScale;
+    private Drawable mShadowDrawable;
+    private Drawable mSecondaryShadowDrawable;
+    private int mShadowWidth;
+    private float mFadeDegree;
+
     public CustomViewBehind(Context context) {
         this(context, null);
     }
 
     public CustomViewBehind(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mMarginThreshold = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                MARGIN_THRESHOLD, getResources().getDisplayMetrics());
+        mMarginThreshold = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, MARGIN_THRESHOLD, getResources().getDisplayMetrics());
     }
 
     public void setCustomViewAbove(CustomViewAbove customViewAbove) {
@@ -154,15 +165,6 @@ public class CustomViewBehind extends ViewGroup {
             mSecondaryContent.measure(contentWidth, contentHeight);
         }
     }
-
-    private int mMode;
-    private boolean mFadeEnabled;
-    private final Paint mFadePaint = new Paint();
-    private float mScrollScale;
-    private Drawable mShadowDrawable;
-    private Drawable mSecondaryShadowDrawable;
-    private int mShadowWidth;
-    private float mFadeDegree;
 
     public void setMode(int mode) {
         if (mode == SwipeMenuLayout.LEFT || mode == SwipeMenuLayout.RIGHT) {
@@ -325,9 +327,9 @@ public class CustomViewBehind extends ViewGroup {
 
     public boolean menuOpenTouchAllowed(View content, int currPage, float x) {
         switch (mTouchMode) {
-            case SwipeMenuLayout.TOUCHMODE_FULLSCREEN:
+            case SwipeMenuLayout.TOUCH_MODE_FULLSCREEN:
                 return true;
-            case SwipeMenuLayout.TOUCHMODE_MARGIN:
+            case SwipeMenuLayout.TOUCH_MODE_MARGIN:
                 return menuTouchInQuickReturn(content, currPage, x);
             default:
                 break;

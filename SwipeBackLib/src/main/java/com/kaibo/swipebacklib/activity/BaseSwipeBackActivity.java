@@ -8,30 +8,33 @@ import com.kaibo.base.activity.BaseMvpActivity;
 import com.kaibo.base.mvp.model.AbstractModel;
 import com.kaibo.base.mvp.presenter.AbstractRxPresenter;
 import com.kaibo.base.mvp.view.AbstractFragment;
-import com.kaibo.swipebacklib.SwipeBackActivityBase;
 import com.kaibo.swipebacklib.helper.SwipeBackActivityHelper;
 import com.kaibo.swipebacklib.util.Utils;
 import com.kaibo.swipebacklib.weight.SwipeBackLayout;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Administrator
  * @date 2018/4/2 0002 上午 10:35
  * GitHub：
  * email：
- * description：侧滑返回Activity
+ * description：继承这个Activity可以轻松实现  侧滑返回
  */
 
 public abstract class BaseSwipeBackActivity<M extends AbstractModel, V extends AbstractFragment<?>, P extends AbstractRxPresenter<?, ?>>
-        extends BaseMvpActivity<M, V, P>
-        implements SwipeBackActivityBase {
+        extends BaseMvpActivity<M, V, P> {
 
     private SwipeBackActivityHelper mHelper;
+
+    @NotNull
+    protected SwipeBackLayout mSwipeBackLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mHelper = new SwipeBackActivityHelper(this);
-        mHelper.onActivityCreate();
+        this.mSwipeBackLayout = mHelper.getSwipeBackLayout();
     }
 
     @Override
@@ -50,18 +53,8 @@ public abstract class BaseSwipeBackActivity<M extends AbstractModel, V extends A
     }
 
     @Override
-    public SwipeBackLayout getSwipeBackLayout() {
-        return mHelper.getSwipeBackLayout();
-    }
-
-    @Override
-    public void setSwipeBackEnable(boolean enable) {
-        getSwipeBackLayout().setEnableGesture(enable);
-    }
-
-    @Override
-    public void scrollToFinishActivity() {
+    public void onBackPressed() {
         Utils.convertActivityToTranslucent(this);
-        getSwipeBackLayout().scrollToFinishActivity();
+        mSwipeBackLayout.scrollToFinishActivity();
     }
 }

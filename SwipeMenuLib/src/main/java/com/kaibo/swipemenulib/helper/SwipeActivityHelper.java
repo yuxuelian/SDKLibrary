@@ -3,9 +3,7 @@ package com.kaibo.swipemenulib.helper;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 
 import com.kaibo.swipemenulib.R;
 import com.kaibo.swipemenulib.weight.SwipeMenuLayout;
@@ -21,11 +19,9 @@ public class SwipeActivityHelper {
 
     private View mViewBehind;
 
-    private boolean mBroadcasting = false;
-
     private boolean mOnPostCreateCalled = false;
 
-    private boolean mEnableSlide = false;
+    private boolean mEnableSlideActionBar = false;
 
     /**
      * Instantiates a new SwipeActivityHelper.
@@ -48,9 +44,7 @@ public class SwipeActivityHelper {
         }
 
         mOnPostCreateCalled = true;
-
-        mSwipeMenuLayout.attachToActivity(mActivity, mEnableSlide ? SwipeMenuLayout.SLIDING_WINDOW : SwipeMenuLayout.SLIDING_CONTENT, true);
-
+        mSwipeMenuLayout.attachToActivity(mActivity, mEnableSlideActionBar ? SwipeMenuLayout.SLIDING_WINDOW : SwipeMenuLayout.SLIDING_CONTENT, true);
         final boolean open;
         final boolean secondary;
         if (savedInstanceState != null) {
@@ -87,7 +81,7 @@ public class SwipeActivityHelper {
         if (mOnPostCreateCalled) {
             throw new IllegalStateException("enableSlidingActionBar must be called in onCreate.");
         }
-        mEnableSlide = slidingActionBarEnabled;
+        mEnableSlideActionBar = slidingActionBarEnabled;
     }
 
     /**
@@ -122,37 +116,19 @@ public class SwipeActivityHelper {
     /**
      * Register the above content view.
      *
-     * @param v      the above content view to register
-     * @param params LayoutParams for that view (unused)
+     * @param view the above content view to register
      */
-    public void registerAboveContentView(View v, LayoutParams params) {
-        if (!mBroadcasting) {
-            mViewAbove = v;
-        }
-    }
-
-    /**
-     * Set the activity content to an explicit view. This view is placed directly into the activity's view
-     * hierarchy. It can itself be a complex view hierarchy. When calling this method, the layout parameters
-     * of the specified view are ignored. Both the width and the height of the view are set by default to
-     * MATCH_PARENT. To use your own layout parameters, invoke setContentView(android.view.View,
-     * android.view.ViewGroup.LayoutParams) instead.
-     *
-     * @param v The desired content to display.
-     */
-    public void setContentView(View v) {
-        mBroadcasting = true;
-        mActivity.setContentView(v);
+    public void registerAboveContentView(View view) {
+        mViewAbove = view;
     }
 
     /**
      * Set the behind view content to an explicit view. This view is placed directly into the behind view 's view hierarchy.
      * It can itself be a complex view hierarchy.
      *
-     * @param view         The desired content to display.
-     * @param layoutParams Layout parameters for the view. (unused)
+     * @param view The desired content to display.
      */
-    public void setBehindContentView(View view, LayoutParams layoutParams) {
+    public void setBehindContentView(View view) {
         mViewBehind = view;
         mSwipeMenuLayout.setMenu(mViewBehind);
     }
@@ -164,34 +140,5 @@ public class SwipeActivityHelper {
      */
     public SwipeMenuLayout getSlidingMenu() {
         return mSwipeMenuLayout;
-    }
-
-    /**
-     * Toggle the SlidingMenu. If it is open, it will be closed, and vice versa.
-     */
-    public void toggle() {
-        mSwipeMenuLayout.toggle();
-    }
-
-    /**
-     * Close the SlidingMenu and show the content view.
-     */
-    public void showContent() {
-        mSwipeMenuLayout.showContent();
-    }
-
-    /**
-     * Open the SlidingMenu and show the menu view.
-     */
-    public void showMenu() {
-        mSwipeMenuLayout.showMenu();
-    }
-
-    /**
-     * Open the SlidingMenu and show the secondary menu view. Will default to the regular menu
-     * if there is only one.
-     */
-    public void showSecondaryMenu() {
-        mSwipeMenuLayout.showSecondaryMenu();
     }
 }

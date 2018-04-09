@@ -18,8 +18,13 @@ import com.kaibo.swipemenulib.weight.SwipeMenuLayout;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * @author Administrator
+ * 继承这个View可以轻松实现侧滑菜单效果
+ */
 public abstract class BaseSwipeMenuActivity<M extends AbstractModel, V extends AbstractFragment<?>, P extends AbstractRxPresenter<?, ?>>
         extends BaseMvpActivity<M, V, P> {
+
     private SwipeActivityHelper mHelper;
 
     @NotNull
@@ -43,7 +48,7 @@ public abstract class BaseSwipeMenuActivity<M extends AbstractModel, V extends A
         //给容器指定固定的Id
         frameLayout.setId(R.id.slide_menu_container);
         //给侧滑菜单中添加一个FrameLayout容器
-        mHelper.setBehindContentView(frameLayout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        mHelper.setBehindContentView(frameLayout);
         //给容器填充一个Fragment
         this.getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), this.getSlideMenuFragment()).commit();
         //获取到侧滑布局
@@ -51,18 +56,26 @@ public abstract class BaseSwipeMenuActivity<M extends AbstractModel, V extends A
         //设置左侧布局偏移量
         mSwipeMenuLayout.setBehindOffsetRes(R.dimen.default_sliding_menu_offset);
         //设置只能从边界滑出菜单
-        mSwipeMenuLayout.setTouchModeAbove(SwipeMenuLayout.TOUCHMODE_MARGIN);
+        mSwipeMenuLayout.setTouchModeAbove(SwipeMenuLayout.TOUCH_MODE_MARGIN);
         //设置左侧的阴影宽度
         mSwipeMenuLayout.setShadowWidthRes(R.dimen.default_shadow_width);
         //设置阴影
 //        mSwipeMenuLayout.setShadowDrawable();
 
+        //设置菜单宽度
+//        mSwipeMenuLayout.setBehindWidthRes(R.dimen.default_sliding_menu_width);
+
         Resources resources = this.getResources();
         //设置侧滑菜单的宽度
         int widthPixels = resources.getDisplayMetrics().widthPixels;
         mSwipeMenuLayout.setBehindWidth((int) ((double) widthPixels * 0.618D));
+
+        //使用阴影
         mSwipeMenuLayout.setFadeEnabled(true);
+
+        //阴影透明程度
         mSwipeMenuLayout.setFadeDegree(0.8F);
+
         //设置ActionBar不跟随滑动,这样能实现全屏侧滑
         mHelper.setSlidingActionBarEnabled(false);
     }
@@ -102,7 +115,7 @@ public abstract class BaseSwipeMenuActivity<M extends AbstractModel, V extends A
     @Override
     public void setContentView(@NotNull View v, @NotNull LayoutParams params) {
         super.setContentView(v, params);
-        mHelper.registerAboveContentView(v, params);
+        mHelper.registerAboveContentView(v);
     }
 
     @Override
