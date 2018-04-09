@@ -91,10 +91,8 @@ public class CustomViewAbove extends ViewGroup {
     private OnPageChangeListener mOnPageChangeListener;
     private OnPageChangeListener mInternalPageChangeListener;
 
-    //	private OnCloseListener mCloseListener;
-    //	private OnOpenListener mOpenListener;
-    private SwipeMenuLayout.OnClosedListener mClosedListener;
-    private SwipeMenuLayout.OnOpenedListener mOpenedListener;
+    private OnClosedListener mClosedListener;
+    private OnOpenedListener mOpenedListener;
 
     private List<View> mIgnoredViews = new ArrayList<View>();
 
@@ -254,15 +252,6 @@ public class CustomViewAbove extends ViewGroup {
         mOnPageChangeListener = listener;
     }
 
-    /*
-    public void setOnOpenListener(OnOpenListener l) {
-        mOpenListener = l;
-    }
-
-    public void setOnCloseListener(OnCloseListener l) {
-        mCloseListener = l;
-    }
-     */
     public void setOnOpenedListener(OnOpenedListener l) {
         mOpenedListener = l;
     }
@@ -314,6 +303,8 @@ public class CustomViewAbove extends ViewGroup {
                 return mViewBehind.getMenuLeft(mContent, page);
             case 1:
                 return mContent.getLeft();
+            default:
+                break;
         }
         return 0;
     }
@@ -375,6 +366,8 @@ public class CustomViewAbove extends ViewGroup {
     public void setSlidingEnabled(boolean b) {
         mEnabled = b;
     }
+
+    private float mScrollX = 0.0f;
 
     /**
      * Like {@link View#scrollBy}, but scroll smoothly instead of immediately.
@@ -579,6 +572,7 @@ public class CustomViewAbove extends ViewGroup {
 
     protected int mTouchMode = SwipeMenuLayout.TOUCHMODE_MARGIN;
 
+
     public void setTouchMode(int i) {
         mTouchMode = i;
     }
@@ -628,6 +622,7 @@ public class CustomViewAbove extends ViewGroup {
     }
 
     private boolean mQuickReturn = false;
+
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
@@ -843,7 +838,7 @@ public class CustomViewAbove extends ViewGroup {
                 targetPage += 1;
             }
         } else {
-            targetPage = (int) Math.round(mCurItem + pageOffset);
+            targetPage = Math.round(mCurItem + pageOffset);
         }
         return targetPage;
     }
@@ -860,9 +855,6 @@ public class CustomViewAbove extends ViewGroup {
         mViewBehind.drawFade(mContent, canvas, getPercentOpen());
         mViewBehind.drawSelector(mContent, canvas, getPercentOpen());
     }
-
-    // variables for drawing
-    private float mScrollX = 0.0f;
 
     private void onSecondaryPointerUp(MotionEvent ev) {
         if (DEBUG) Log.v(TAG, "onSecondaryPointerUp called");

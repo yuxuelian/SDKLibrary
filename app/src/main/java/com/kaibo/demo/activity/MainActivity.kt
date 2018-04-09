@@ -15,6 +15,8 @@ class MainActivity : BaseSwipeMenuActivity<MainModel, MainFragment, MainPresente
         return SlideMenuFragment()
     }
 
+
+
     class SlideMenuFragment : BaseFragment() {
         override fun initViewCreated(savedInstanceState: Bundle?) {
 

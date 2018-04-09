@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
+import com.kaibo.swipemenulib.R;
 import com.kaibo.swipemenulib.weight.SwipeMenuLayout;
 
 
@@ -33,15 +34,7 @@ public class SwipeActivityHelper {
      */
     public SwipeActivityHelper(Activity activity) {
         mActivity = activity;
-    }
-
-    /**
-     * Sets mSlidingMenu as a newly inflated SlidingMenu. Should be called within the activitiy's onCreate()
-     *
-     * @param savedInstanceState the saved instance state (unused)
-     */
-    public void onCreate(Bundle savedInstanceState) {
-        mSwipeMenuLayout = new SwipeMenuLayout(mActivity);
+        mSwipeMenuLayout = (SwipeMenuLayout) mActivity.getLayoutInflater().inflate(R.layout.swipe_menu_main, null);
     }
 
     /**
@@ -51,8 +44,7 @@ public class SwipeActivityHelper {
      */
     public void onPostCreate(Bundle savedInstanceState) {
         if (mViewBehind == null || mViewAbove == null) {
-            throw new IllegalStateException("Both setBehindContentView must be called " +
-                    "in onCreate in addition to setContentView.");
+            throw new IllegalStateException("Both setBehindContentView must be called in onCreate in addition to setContentView.");
         }
 
         mOnPostCreateCalled = true;
@@ -202,20 +194,4 @@ public class SwipeActivityHelper {
     public void showSecondaryMenu() {
         mSwipeMenuLayout.showSecondaryMenu();
     }
-
-    /**
-     * On key up.
-     *
-     * @param keyCode the key code
-     * @param event   the event
-     * @return true, if successful
-     */
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && mSwipeMenuLayout.isMenuShowing()) {
-            showContent();
-            return true;
-        }
-        return false;
-    }
-
 }

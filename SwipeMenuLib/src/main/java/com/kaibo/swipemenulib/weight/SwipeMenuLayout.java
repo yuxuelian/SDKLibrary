@@ -95,7 +95,7 @@ public class SwipeMenuLayout extends RelativeLayout {
         /**
          * On open.
          */
-        public void onOpen();
+        void onOpen();
     }
 
     /**
@@ -114,7 +114,7 @@ public class SwipeMenuLayout extends RelativeLayout {
         /**
          * On opened.
          */
-        public void onOpened();
+        void onOpened();
     }
 
     /**
@@ -133,7 +133,7 @@ public class SwipeMenuLayout extends RelativeLayout {
         /**
          * On close.
          */
-        public void onClose();
+        void onClose();
     }
 
     /**
@@ -152,7 +152,7 @@ public class SwipeMenuLayout extends RelativeLayout {
         /**
          * On closed.
          */
-        public void onClosed();
+        void onClosed();
     }
 
     /**
@@ -166,7 +166,7 @@ public class SwipeMenuLayout extends RelativeLayout {
          * @param canvas      the canvas
          * @param percentOpen the percent open
          */
-        public void transformCanvas(Canvas canvas, float percentOpen);
+        void transformCanvas(Canvas canvas, float percentOpen);
     }
 
     /**
@@ -219,9 +219,9 @@ public class SwipeMenuLayout extends RelativeLayout {
         mViewAbove.setCustomViewBehind(mViewBehind);
         mViewBehind.setCustomViewAbove(mViewAbove);
         mViewAbove.setOnPageChangeListener(new OnPageChangeListener() {
-            public static final int POSITION_OPEN = 0;
-            public static final int POSITION_CLOSE = 1;
-            public static final int POSITION_SECONDARY_OPEN = 2;
+            static final int POSITION_OPEN = 0;
+            static final int POSITION_CLOSE = 1;
+            static final int POSITION_SECONDARY_OPEN = 2;
 
             @Override
             public void onPageScrolled(int position, float positionOffset,
@@ -241,29 +241,29 @@ public class SwipeMenuLayout extends RelativeLayout {
         });
 
         // now style everything!
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SwipeMenu);
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SwipeMenuLayout);
         // set the above and behind views if defined in xml
-        int mode = ta.getInt(R.styleable.SwipeMenu_mode, LEFT);
+        int mode = ta.getInt(R.styleable.SwipeMenuLayout_mode, LEFT);
         setMode(mode);
-        int viewAbove = ta.getResourceId(R.styleable.SwipeMenu_viewAbove, -1);
+        int viewAbove = ta.getResourceId(R.styleable.SwipeMenuLayout_viewAbove, -1);
         if (viewAbove != -1) {
             setContent(viewAbove);
         } else {
             setContent(new FrameLayout(context));
         }
-        int viewBehind = ta.getResourceId(R.styleable.SwipeMenu_viewBehind, -1);
+        int viewBehind = ta.getResourceId(R.styleable.SwipeMenuLayout_viewBehind, -1);
         if (viewBehind != -1) {
             setMenu(viewBehind);
         } else {
             setMenu(new FrameLayout(context));
         }
-        int touchModeAbove = ta.getInt(R.styleable.SwipeMenu_touchModeAbove, TOUCHMODE_MARGIN);
+        int touchModeAbove = ta.getInt(R.styleable.SwipeMenuLayout_touchModeAbove, TOUCHMODE_MARGIN);
         setTouchModeAbove(touchModeAbove);
-        int touchModeBehind = ta.getInt(R.styleable.SwipeMenu_touchModeBehind, TOUCHMODE_MARGIN);
+        int touchModeBehind = ta.getInt(R.styleable.SwipeMenuLayout_touchModeBehind, TOUCHMODE_MARGIN);
         setTouchModeBehind(touchModeBehind);
 
-        int offsetBehind = (int) ta.getDimension(R.styleable.SwipeMenu_behindOffset, -1);
-        int widthBehind = (int) ta.getDimension(R.styleable.SwipeMenu_behindWidth, -1);
+        int offsetBehind = (int) ta.getDimension(R.styleable.SwipeMenuLayout_behindOffset, -1);
+        int widthBehind = (int) ta.getDimension(R.styleable.SwipeMenuLayout_behindWidth, -1);
         if (offsetBehind != -1 && widthBehind != -1) {
             throw new IllegalStateException("Cannot set both behindOffset and behindWidth for a SlidingMenu");
         } else if (offsetBehind != -1) {
@@ -273,21 +273,21 @@ public class SwipeMenuLayout extends RelativeLayout {
         } else {
             setBehindOffset(0);
         }
-        float scrollOffsetBehind = ta.getFloat(R.styleable.SwipeMenu_behindScrollScale, 0.33f);
+        float scrollOffsetBehind = ta.getFloat(R.styleable.SwipeMenuLayout_behindScrollScale, 0.33f);
         setBehindScrollScale(scrollOffsetBehind);
-        int shadowRes = ta.getResourceId(R.styleable.SwipeMenu_shadowDrawable, -1);
+        int shadowRes = ta.getResourceId(R.styleable.SwipeMenuLayout_shadowDrawable, -1);
         if (shadowRes != -1) {
             setShadowDrawable(shadowRes);
         }
-        int shadowWidth = (int) ta.getDimension(R.styleable.SwipeMenu_shadowWidth, 0);
+        int shadowWidth = (int) ta.getDimension(R.styleable.SwipeMenuLayout_shadowWidth, 0);
         setShadowWidth(shadowWidth);
-        boolean fadeEnabled = ta.getBoolean(R.styleable.SwipeMenu_fadeEnabled, true);
+        boolean fadeEnabled = ta.getBoolean(R.styleable.SwipeMenuLayout_fadeEnabled, true);
         setFadeEnabled(fadeEnabled);
-        float fadeDeg = ta.getFloat(R.styleable.SwipeMenu_fadeDegree, 0.33f);
+        float fadeDeg = ta.getFloat(R.styleable.SwipeMenuLayout_fadeDegree, 0.33f);
         setFadeDegree(fadeDeg);
-        boolean selectorEnabled = ta.getBoolean(R.styleable.SwipeMenu_selectorEnabled, false);
+        boolean selectorEnabled = ta.getBoolean(R.styleable.SwipeMenuLayout_selectorEnabled, false);
         setSelectorEnabled(selectorEnabled);
-        int selectorRes = ta.getResourceId(R.styleable.SwipeMenu_selectorDrawable, -1);
+        int selectorRes = ta.getResourceId(R.styleable.SwipeMenuLayout_selectorDrawable, -1);
         if (selectorRes != -1) {
             setSelectorDrawable(selectorRes);
         }
@@ -740,8 +740,7 @@ public class SwipeMenuLayout extends RelativeLayout {
      * @param i the new touch mode
      */
     public void setTouchModeAbove(int i) {
-        if (i != TOUCHMODE_FULLSCREEN && i != TOUCHMODE_MARGIN
-                && i != TOUCHMODE_NONE) {
+        if (i != TOUCHMODE_FULLSCREEN && i != TOUCHMODE_MARGIN && i != TOUCHMODE_NONE) {
             throw new IllegalStateException("TouchMode must be set to either" +
                     "TOUCHMODE_FULLSCREEN or TOUCHMODE_MARGIN or TOUCHMODE_NONE.");
         }

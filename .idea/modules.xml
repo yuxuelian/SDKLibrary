@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BaseSDK/Base.iml" filepath="$PROJECT_DIR$/BaseSDK/Base.iml" />
-      <module fileurl="file://$PROJECT_DIR$/BaseSDK/BaseSDK.iml" filepath="$PROJECT_DIR$/BaseSDK/BaseSDK.iml" />
       <module fileurl="file://$PROJECT_DIR$/MVPDemo.iml" filepath="$PROJECT_DIR$/MVPDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SdkCore/SdkCore.iml" filepath="$PROJECT_DIR$/SdkCore/SdkCore.iml" />
       <module fileurl="file://$PROJECT_DIR$/SwipeBackLib/SwipeBackLib.iml" filepath="$PROJECT_DIR$/SwipeBackLib/SwipeBackLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/SwipeMenuLib/SwipeMenuLib.iml" filepath="$PROJECT_DIR$/SwipeMenuLib/SwipeMenuLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
