@@ -12,11 +12,9 @@ import com.kaibo.base.glide.GlideApp
  * description：
  */
 
-object DataBindingAdapter{
-    @BindingAdapter("glide_load_img")
-    fun glideLoadImg(iv: ImageView, url: String?) {
-        GlideApp.with(iv.context)
-                .load(url)
-                .into(iv)
-    }
+@BindingAdapter("glide_load_img")
+fun glideLoadImg(iv: ImageView, url: String?) {
+    GlideApp.with(iv.context)
+            .load(url)
+            .into(iv)
 }

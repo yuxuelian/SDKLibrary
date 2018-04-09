@@ -19,10 +19,8 @@ class MarqueeTextView @JvmOverloads constructor(context: Context, attrs: Attribu
         setSingleLine()    //设置只显示一行,才会有跑马灯效果
         ellipsize = TextUtils.TruncateAt.MARQUEE //设置跑马灯效果
         marqueeRepeatLimit = -1  //设置为-1相当于marquee_forever
-        isClickable = true //设置可点击,消耗掉点击事件
+//        isClickable = true //设置可点击,消耗掉点击事件
     }
 
-    override fun isFocused(): Boolean {
-        return true    //设置获取焦点
-    }
+    override fun isFocused() = true
 }

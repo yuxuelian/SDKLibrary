@@ -5,7 +5,7 @@ import com.kaibo.base.R
 import com.kaibo.base.mvp.model.AbstractModel
 import com.kaibo.base.mvp.presenter.AbstractRxPresenter
 import com.kaibo.base.mvp.view.AbstractFragment
-import com.kaibo.base.util.ActivityUtils
+import com.kaibo.base.util.addFragmentToActivity
 import java.lang.reflect.ParameterizedType
 
 /**
@@ -49,7 +49,7 @@ abstract class BaseMvpActivity<M : AbstractModel, V : AbstractFragment<*>, P : A
 
                     //将view实例添加到activity
                     supportFragmentManager.findFragmentById(R.id.mvpViewContainer)
-                            ?: ActivityUtils.addFragmentToActivity(supportFragmentManager, view, R.id.mvpViewContainer)
+                            ?: this.addFragmentToActivity(R.id.mvpViewContainer, view)
                     return
                 } else {
                     throw IllegalArgumentException("泛型参数个数有误")

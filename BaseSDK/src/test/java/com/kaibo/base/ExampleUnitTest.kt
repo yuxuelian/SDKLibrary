@@ -24,7 +24,7 @@ class ExampleUnitTest {
 
     @Test
     fun test() {
-        val file = File("""D:\\qq.apk""")
+        val file = File("""H:\\qq.apk""")
         if (file.exists()) {
             file.createNewFile()
         }
@@ -39,7 +39,7 @@ class ExampleUnitTest {
                 .retrofit
                 .create(TestApi::class.java)
                 .downLoadFile(url)
-                .observeOn(AndroidSchedulers.mainThread())
+//                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     val buff = ByteArray(2048)
                     val byteStream = it.byteStream()
