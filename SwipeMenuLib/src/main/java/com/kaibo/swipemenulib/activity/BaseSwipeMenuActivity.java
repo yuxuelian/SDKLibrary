@@ -2,10 +2,11 @@ package com.kaibo.swipemenulib.activity;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.annotation.LayoutRes;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.kaibo.base.activity.BaseMvpActivity;
 import com.kaibo.base.mvp.model.AbstractModel;
@@ -35,8 +36,13 @@ public abstract class BaseSwipeMenuActivity<M extends AbstractModel, V extends A
      *
      * @return
      */
+//    @NotNull
+//    protected abstract Fragment getSlideMenuFragment();
+
     @NotNull
-    protected abstract Fragment getSlideMenuFragment();
+    @LayoutRes
+    protected abstract int getSlideMenuLayout();
+
 
     @Override
     protected void setContentViewBefore(@Nullable Bundle savedInstanceState) {
@@ -49,10 +55,15 @@ public abstract class BaseSwipeMenuActivity<M extends AbstractModel, V extends A
         frameLayout.setId(R.id.slide_menu_container);
         //给侧滑菜单中添加一个FrameLayout容器
         mHelper.setBehindContentView(frameLayout);
-        //给容器填充一个Fragment
-        this.getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), this.getSlideMenuFragment()).commit();
+//        //给容器填充一个Fragment
+//        this.getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), this.getSlideMenuFragment()).commit();
+
+
         //获取到侧滑布局
         this.mSwipeMenuLayout = mHelper.getSlidingMenu();
+
+        mSwipeMenuLayout.setMenu(getSlideMenuLayout());
+
         //设置左侧布局偏移量
         mSwipeMenuLayout.setBehindOffsetRes(R.dimen.default_sliding_menu_offset);
         //设置只能从边界滑出菜单
@@ -78,6 +89,11 @@ public abstract class BaseSwipeMenuActivity<M extends AbstractModel, V extends A
 
         //设置ActionBar不跟随滑动,这样能实现全屏侧滑
         mHelper.setSlidingActionBarEnabled(false);
+    }
+
+    @Override
+    protected void initOnCreate(@Nullable Bundle savedInstanceState) {
+
     }
 
     @Override

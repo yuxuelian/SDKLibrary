@@ -25,7 +25,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
         setContentViewBefore(savedInstanceState)
         setContentView(getLayoutRes())
-        setContentViewAfter(savedInstanceState)
+        initOnCreate(savedInstanceState)
     }
 
     @LayoutRes
@@ -43,7 +43,7 @@ abstract class BaseActivity : AppCompatActivity() {
      * setContentView之后调用
      * 可以做一些初始化操作
      */
-    protected open fun setContentViewAfter(savedInstanceState: Bundle?) {
+    protected open fun initOnCreate(savedInstanceState: Bundle?) {
 
     }
 }

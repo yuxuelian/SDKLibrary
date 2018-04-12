@@ -1,1 +1,7 @@
-include ':app', ':SdkCore', ':SwipeBackLib', ':SwipeMenuLib'
+include ':app'
+include ':SdkCore'
+include ':SwipeBackLib'
+include ':SwipeMenuLib'
+include ':WeightLib'
+include ':NdkLib'
+include ':ChannelManage'

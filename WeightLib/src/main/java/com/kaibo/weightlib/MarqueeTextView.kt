@@ -1,4 +1,4 @@
-package com.kaibo.base.weight
+package com.kaibo.weightlib
 
 import android.content.Context
 import android.support.v7.widget.AppCompatTextView
