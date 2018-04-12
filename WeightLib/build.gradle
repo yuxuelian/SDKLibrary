@@ -2,7 +2,8 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 27
-    buildToolsVersion "27.0.3"
+
+
 
     defaultConfig {
         minSdkVersion 19
@@ -25,8 +26,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation project(":SdkCore")
 
     implementation "com.android.support:appcompat-v7:$android_support_version"
     testImplementation 'junit:junit:4.12'

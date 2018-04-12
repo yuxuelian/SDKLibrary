@@ -8,9 +8,11 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/NdkLib" />
             <option value="$PROJECT_DIR$/SdkCore" />
             <option value="$PROJECT_DIR$/SwipeBackLib" />
             <option value="$PROJECT_DIR$/SwipeMenuLib" />
+            <option value="$PROJECT_DIR$/WeightLib" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>
