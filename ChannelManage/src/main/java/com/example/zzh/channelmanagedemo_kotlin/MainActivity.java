@@ -7,6 +7,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.WindowManager;
 
 import java.util.ArrayList;
@@ -26,54 +28,85 @@ public class MainActivity extends AppCompatActivity implements ChannelAdapter.on
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mRecyclerView = findViewById(R.id.recyclerView);
+
+        //列表中所有的数据集合
         mList = new ArrayList<>();
+
+        //创建布局管理器
         GridLayoutManager manager = new GridLayoutManager(this, 4);
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                return mList.get(position).getSpanSize();
+                int spanSize = mList.get(position).getSpanSize();
+                Log.d("Indicator---", "创建适配器后  " + spanSize);
+                return spanSize;
             }
         });
         mRecyclerView.setLayoutManager(manager);
+
         DefaultItemAnimator animator = new DefaultItemAnimator();
-        animator.setMoveDuration(300);     //设置动画时间
+        //设置动画时间
+        animator.setMoveDuration(300);
         animator.setRemoveDuration(0);
+        //设置Item动画
         mRecyclerView.setItemAnimator(animator);
+
+        //添加Title
         ChannelBean title = new ChannelBean();
         title.setLayoutId(R.layout.adapter_title);
         title.setSpanSize(4);
         mList.add(title);
+
+        //添加默认选中的
         for (String bean : select) {
             mList.add(new ChannelBean(bean, 1, R.layout.adapter_channel, true));
         }
+
+        //添加Table
         ChannelBean tabBean = new ChannelBean();
         tabBean.setLayoutId(R.layout.adapter_tab);
         tabBean.setSpanSize(4);
         mList.add(tabBean);
+
+        //添加推荐频道
         List<ChannelBean> recommendList = new ArrayList<>();
         for (String bean : recommend) {
             recommendList.add(new ChannelBean(bean, 1, R.layout.adapter_channel, true));
         }
+        mList.addAll(recommendList);
+
+        //添加地方新闻
         List<ChannelBean> cityList = new ArrayList<>();
         for (String bean : city) {
             cityList.add(new ChannelBean(bean, 1, R.layout.adapter_channel, false));
         }
+
+        //将更多频道  添加   cityList的集合中
         ChannelBean moreBean = new ChannelBean();
         moreBean.setLayoutId(R.layout.adapter_more_channel);
         moreBean.setSpanSize(4);
         cityList.add(moreBean);
-        mList.addAll(recommendList);
+
+        //创建是适配器
         mAdapter = new ChannelAdapter(this, mList, recommendList, cityList);
         mAdapter.setFixSize(1);
         mAdapter.setSelectedSize(select.length);
         mAdapter.setRecommend(true);
         mAdapter.setOnItemRangeChangeListener(this);
         mRecyclerView.setAdapter(mAdapter);
+
+        //添加分割线
         WindowManager m = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        int spacing = (m.getDefaultDisplay().getWidth() - dip2px(this, 70) * 4) / 5;
-        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(4,spacing,true));
-        ItemDragCallback callback=new ItemDragCallback(mAdapter,2);
-        ItemTouchHelper helper=new ItemTouchHelper(callback);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        if (m != null) {
+            m.getDefaultDisplay().getMetrics(displayMetrics);
+            int spacing = (displayMetrics.widthPixels - dip2px(this, 70) * 4) / 5;
+            mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(4, spacing, true));
+        }
+
+        //设置拖拽回调
+        ItemDragCallback callback = new ItemDragCallback(mAdapter, 2);
+        ItemTouchHelper helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(mRecyclerView);
     }
 
@@ -84,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements ChannelAdapter.on
 
     @Override
     public void refreshItemDecoration() {
+        //如果设置了itemDecoration，必须调用recyclerView.invalidateItemDecorations(),否则间距会不对
         mRecyclerView.invalidateItemDecorations();
     }
 }

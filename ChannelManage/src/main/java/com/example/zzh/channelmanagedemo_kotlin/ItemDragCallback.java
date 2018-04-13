@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.PathEffect;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
@@ -49,15 +50,15 @@ public class ItemDragCallback extends ItemTouchHelper.Callback {
         int fromPosition = viewHolder.getAdapterPosition();   //拖动的position
         int toPosition = target.getAdapterPosition();     //释放的position
         //固定位置及tab下面的channel不能拖动
-        if (toPosition < mAdapter.getFixSize() + 1 || toPosition > mAdapter.getSelectedSize())
+        if (toPosition < mAdapter.getFixSize() + 1 || toPosition > mAdapter.getSelectedSize()) {
             return false;
+        }
         mAdapter.itemMove(fromPosition, toPosition);
         return true;
     }
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-
     }
 
 
@@ -66,28 +67,36 @@ public class ItemDragCallback extends ItemTouchHelper.Callback {
         super.onChildDrawOver(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         if (dX != 0 && dY != 0 || isCurrentlyActive) {
             //长按拖拽时底部绘制一个虚线矩形
-            c.drawRect(viewHolder.itemView.getLeft(),viewHolder.itemView.getTop()-mPadding,viewHolder.itemView.getRight(),viewHolder.itemView.getBottom(),mPaint);
+            c.drawRect(viewHolder.itemView.getLeft() - mPadding,
+                    viewHolder.itemView.getTop() - mPadding,
+                    viewHolder.itemView.getRight() + mPadding,
+                    viewHolder.itemView.getBottom() + mPadding,
+                    mPaint);
         }
     }
 
     @Override
     public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
         super.onSelectedChanged(viewHolder, actionState);
-        if(actionState==ACTION_STATE_DRAG){
+        if (actionState == ACTION_STATE_DRAG) {
             //长按时调用
-            ChannelAdapter.ChannelHolder holder= (ChannelAdapter.ChannelHolder) viewHolder;
+            ChannelAdapter.ChannelHolder holder = (ChannelAdapter.ChannelHolder) viewHolder;
             holder.name.setBackgroundColor(Color.parseColor("#FDFDFE"));
             holder.delete.setVisibility(View.GONE);
-            holder.name.setElevation(5f);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                holder.name.setElevation(5f);
+            }
         }
     }
 
     @Override
     public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
         super.clearView(recyclerView, viewHolder);
-        ChannelAdapter.ChannelHolder holder= (ChannelAdapter.ChannelHolder) viewHolder;
+        ChannelAdapter.ChannelHolder holder = (ChannelAdapter.ChannelHolder) viewHolder;
         holder.name.setBackgroundColor(Color.parseColor("#f0f0f0"));
-        holder.name.setElevation(0f);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            holder.name.setElevation(0f);
+        }
         holder.delete.setVisibility(View.VISIBLE);
     }
 }
