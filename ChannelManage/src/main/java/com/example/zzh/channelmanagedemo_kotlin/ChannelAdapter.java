@@ -6,6 +6,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.view.LayoutInflater;
@@ -26,10 +27,18 @@ import java.util.List;
 
 public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
+
     private List<ChannelBean> mList;
+
     private List<ChannelBean> recommendList;  //推荐频道
     private List<ChannelBean> cityList;    //地方新闻
+
+
+    /**
+     * 当前选中的新闻项的大小
+     */
     private int selectedSize;
+
     private int fixSize;           //已选频道中固定频道大小
     private boolean isRecommend;   //当前是否显示推荐频道
     private onItemRangeChangeListener onItemRangeChangeListener;
@@ -37,7 +46,10 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private int mTabY;            //Tab距离parent的Y的距离
 
 
-    public ChannelAdapter(Context mContext, List<ChannelBean> mList, List<ChannelBean> recommendList, List<ChannelBean> cityList) {
+    public ChannelAdapter(Context mContext,
+                          List<ChannelBean> mList,
+                          List<ChannelBean> recommendList,
+                          List<ChannelBean> cityList) {
         this.mContext = mContext;
         this.mList = mList;
         this.recommendList = recommendList;
@@ -70,16 +82,21 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         isRecommend = recommend;
     }
 
+    @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(viewType, parent, false);
         if (viewType == R.layout.adapter_channel) {
+            //新闻项
             return new ChannelHolder(view);
         } else if (viewType == R.layout.adapter_more_channel) {
+            //更多频道
             return new MoreChannelHolder(view);
         } else if (viewType == R.layout.adapter_tab) {
+            //tab
             return new TabHolder(view);
         } else {
+            //title
             return new TitleHolder(view);
         }
     }
@@ -105,7 +122,7 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             public void onClick(View v) {
                 if (holder.getLayoutPosition() < selectedSize + 1) {
                     //tab上面的 点击移除
-                     if (holder.getLayoutPosition() > fixSize) {
+                    if (holder.getLayoutPosition() > fixSize) {
                         removeFromSelected(holder);
                     }
                 } else {
@@ -119,6 +136,8 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
             }
         });
+
+
         holder.name.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -126,6 +145,8 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 return true;
             }
         });
+
+
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,25 +187,42 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
             });
         }
+
+        //点击地方新闻回调监听
         holder.city.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // isRecommend  这个标志可以用来防止重复点击   避免多余的操作
                 if (isRecommend) {
+                    //设置字体加粗
                     holder.city.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+                    //设置字体默认
                     holder.recommend.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+
+                    //修改indicator位置
                     if (mRight == -1) {
                         mRight = mLeft + holder.city.getLeft() - MainActivity.dip2px(mContext, 10);
                     }
                     params.leftMargin = mRight;
+
+                    //标记为当前在城市页
                     isRecommend = false;
+
+                    //清除 频道页
                     recommendList.clear();
+                    //重新将 mList  从  selectedSize + 2  的结束的值复制到频道页
                     recommendList.addAll(mList.subList(selectedSize + 2, mList.size()));
+                    //从  mList  中移除频道页
                     mList.removeAll(recommendList);
+                    //将城市页复制到  mList
                     mList.addAll(cityList);
+                    //刷新
                     notifyDataSetChanged();
                 }
             }
         });
+
+        //点击推荐频道回调监听
         holder.recommend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -213,9 +251,12 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     private void removeFromSelected(ChannelHolder holder) {
+        //首先获取当前需要移除的item的位置
         int position = holder.getLayoutPosition();
         holder.delete.setVisibility(View.GONE);
+        //获取Bean
         ChannelBean bean = mList.get(position);
+
         if ((isRecommend && bean.isRecommend()) || (!isRecommend && !bean.isRecommend())) {
             //移除的频道属于当前tab显示的频道，直接调用系统的移除动画
             itemMove(position, selectedSize + 1);
@@ -228,6 +269,8 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             //不属于当前tab显示的频道
             removeAnimation(holder.itemView, isRecommend ? mRight : mLeft, mTabY, position);
         }
+
+        //选中的大小减一
         selectedSize--;
     }
 
@@ -291,6 +334,12 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         set.start();
     }
 
+    /**
+     * 移动
+     *
+     * @param fromPosition
+     * @param toPosition
+     */
     void itemMove(int fromPosition, int toPosition) {
         if (fromPosition < toPosition) {
             for (int i = fromPosition; i < toPosition; i++) {
@@ -301,6 +350,8 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 Collections.swap(mList, i, i - 1);
             }
         }
+
+        //刷新   会有默认的移动动画
         notifyItemMoved(fromPosition, toPosition);
     }
 
@@ -353,6 +404,9 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     interface onItemRangeChangeListener {
+        /**
+         * 如果设置了itemDecoration，必须调用recyclerView.invalidateItemDecorations(),否则间距会不对
+         */
         void refreshItemDecoration();
     }
 }

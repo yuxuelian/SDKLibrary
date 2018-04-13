@@ -1,6 +1,9 @@
 package com.kaibo.demo.activity
 
 import android.os.Bundle
+import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.module.AppGlideModule
+import com.bumptech.glide.module.LibraryGlideModule
 import com.kaibo.demo.R
 import com.kaibo.demo.mvp.model.MainModel
 import com.kaibo.demo.mvp.presenter.MainPresenter
