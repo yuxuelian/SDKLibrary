@@ -1,4 +1,4 @@
-package com.kaibo.indicatrormanagerlib.util
+package com.kaibo.base.util
 
 import java.util.*
 import kotlin.collections.Map.Entry

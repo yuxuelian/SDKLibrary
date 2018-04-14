@@ -1,10 +1,11 @@
 package com.kaibo.demo.adapter
 
+import android.support.v7.widget.GridLayoutManager
 import android.util.Log
 import android.view.View
 import com.chad.library.adapter.base.BaseViewHolder
 import com.kaibo.demo.entity.TestEntity
-import com.kaibo.indicatrormanagerlib.BaseIndicatrorManagerRvAdapter
+import com.kaibo.indicatrormanagerlib.BaseIndicatorManagerRvAdapter
 import com.kaibo.indicatrormanagerlib.entity.OptionEntity
 import kotlinx.android.synthetic.main.option_item.view.*
 
@@ -16,15 +17,26 @@ import kotlinx.android.synthetic.main.option_item.view.*
  * description：
  */
 
+class TestAdapter(allOption: MutableList<OptionEntity>,
+                  gridLayoutManager: GridLayoutManager,
+                  optionLayoutRes: Int,
+                  decorationRes: Int,
+                  selectedSize: Int=0,
+                  fixSelectSize: Int=0) :
+        BaseIndicatorManagerRvAdapter(
+                allOption,
+                gridLayoutManager,
+                optionLayoutRes,
+                decorationRes,
+                selectedSize,
+                fixSelectSize) {
 
-class TestAdapter(allOption: MutableList<OptionEntity>, optionLayoutRes: Int, decorationRes: Int) : BaseIndicatrorManagerRvAdapter(allOption, optionLayoutRes, decorationRes) {
-
-    override fun convertOptions(helper: BaseViewHolder, item: OptionEntity?) {
-        helper.itemView.itemOptionBtn.text = (item as? TestEntity)?.str ?: ""
+    override fun convertOptions(helper: BaseViewHolder, optionEntity: OptionEntity?) {
+        helper.itemView.itemOptionBtn.text = (optionEntity as? TestEntity)?.str ?: ""
     }
 
     override fun convertDecoration(decoration: View) {
-        Log.d("TestAdapter","调用convertDecoration")
+        Log.d("TestAdapter", "调用convertDecoration")
     }
 
 }

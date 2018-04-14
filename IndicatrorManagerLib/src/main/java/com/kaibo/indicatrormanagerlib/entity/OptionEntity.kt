@@ -11,18 +11,13 @@ import com.chad.library.adapter.base.entity.MultiItemEntity
  */
 interface OptionEntity : MultiItemEntity {
 
+    /**
+     * 默认设置ItemType为  OPTION_TYPE
+     */
+    override fun getItemType() = OPTION_TYPE
+
     companion object {
-        val OPTION_TYPE = 0
-        val TAB_TYPE = 1
+        const val OPTION_TYPE = 0
+        const val TAB_TYPE = 1
     }
-
-    /**
-     * 是否选中  只有被选中的项才能被拖动
-     */
-    var isSelect: Boolean
-
-    /**
-     * 是否是分割View
-     */
-    val isDecoration: Boolean
 }

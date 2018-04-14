@@ -8,10 +8,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/ChannelManage" />
+            <option value="$PROJECT_DIR$/Common" />
             <option value="$PROJECT_DIR$/IndicatrorManagerLib" />
             <option value="$PROJECT_DIR$/NdkLib" />
-            <option value="$PROJECT_DIR$/SdkCore" />
             <option value="$PROJECT_DIR$/SwipeBackLib" />
             <option value="$PROJECT_DIR$/SwipeMenuLib" />
             <option value="$PROJECT_DIR$/WeightLib" />
