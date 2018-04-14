@@ -31,7 +31,7 @@ class ExampleUnitTest {
         val outputStream = FileOutputStream(file)
         val url = "https://qd.myapp.com/myapp/qqteam/Androidlite/qqlite_3.6.3.697_android_r110028_GuanWang_537055374_release_10000484.apk"
         ProgressListener.downloadProgressListeners[url] = { currentLength, fillLength, done ->
-//            println("currentLength=$currentLength fillLength=$fillLength  done=$done")
+            //            println("currentLength=$currentLength fillLength=$fillLength  done=$done")
             println(Thread.currentThread().name)
         }
 
