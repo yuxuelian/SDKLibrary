@@ -1,9 +1,7 @@
 package com.kaibo.demo.activity
 
 import android.os.Bundle
-import com.bumptech.glide.annotation.GlideModule
-import com.bumptech.glide.module.AppGlideModule
-import com.bumptech.glide.module.LibraryGlideModule
+import com.kaibo.common.util.*
 import com.kaibo.demo.R
 import com.kaibo.demo.mvp.model.MainModel
 import com.kaibo.demo.mvp.presenter.MainPresenter
@@ -20,6 +18,14 @@ class MainActivity : BaseSwipeMenuActivity<MainModel, MainFragment, MainPresente
 
     override fun initOnCreate(savedInstanceState: Bundle?) {
         text.text = EncryptUtils.encrypt("123")
-
+        println(isRoot())
+        println(isEmulator())
+        println(hasExternalStorage())
+        println(versionCode)
+        println(versionName)
+        println(isGPSEnable)
+        println(isNetworkConnected)
+        println(sha1)
     }
+
 }

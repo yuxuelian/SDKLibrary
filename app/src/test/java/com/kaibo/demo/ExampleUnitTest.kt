@@ -28,6 +28,40 @@ class ExampleUnitTest {
     }
 
 
+
+    @Test
+    fun test1(){
+        val str1=""
+        val str2=""
+        val str3=""
+        val str4=""
+
+        val arrayList = ArrayList<String>()
+
+        arrayList.add(str1)
+        arrayList.add(str2)
+        arrayList.add(str3)
+        arrayList.add(str4)
+
+        val str5=""
+        val str6=""
+        val str7=""
+        val str8=""
+
+        val arrayList2 = ArrayList<String>()
+
+        arrayList2.add(str5)
+        arrayList2.add(str6)
+        arrayList2.add(str7)
+        arrayList2.add(str8)
+
+        arrayList2.forEachIndexed { index, s ->
+            arrayList[index]=s
+        }
+
+    }
+
+
     class Aaa() {
         init {
             println("执行构造")

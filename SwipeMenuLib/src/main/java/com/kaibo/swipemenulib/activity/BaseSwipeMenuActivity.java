@@ -8,10 +8,10 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.kaibo.base.activity.BaseMvpActivity;
-import com.kaibo.base.mvp.model.AbstractModel;
-import com.kaibo.base.mvp.presenter.AbstractRxPresenter;
-import com.kaibo.base.mvp.view.AbstractFragment;
+import com.kaibo.common.activity.BaseMvpActivity;
+import com.kaibo.common.mvp.model.AbstractModel;
+import com.kaibo.common.mvp.presenter.AbstractRxPresenter;
+import com.kaibo.common.mvp.view.AbstractFragment;
 import com.kaibo.swipemenulib.R;
 import com.kaibo.swipemenulib.helper.SwipeActivityHelper;
 import com.kaibo.swipemenulib.weight.SwipeMenuLayout;

@@ -45,7 +45,7 @@ class BottomSheetLayout @JvmOverloads constructor(context: Context, attrs: Attri
     private lateinit var topView: View
     private lateinit var bottomView: View
 
-    private val viewDragHelper = ViewDragHelper.create(this, 1.0F, MyCollBack())
+    private val viewDragHelper = ViewDragHelper.create(this, 1.0F, MyCallBack())
 
     /**
      * 展开关闭动画
@@ -258,7 +258,7 @@ class BottomSheetLayout @JvmOverloads constructor(context: Context, attrs: Attri
         }
     }
 
-    internal inner class MyCollBack : ViewDragHelper.Callback() {
+    internal inner class MyCallBack : ViewDragHelper.Callback() {
 
         /**
          * 边界控制

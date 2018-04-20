@@ -1,8 +1,8 @@
 package com.kaibo.demo.mvp.contract
 
-import com.kaibo.base.mvp.model.BaseModel
-import com.kaibo.base.mvp.presenter.BasePresenter
-import com.kaibo.base.mvp.view.BaseView
+import com.kaibo.common.mvp.model.BaseModel
+import com.kaibo.common.mvp.presenter.BasePresenter
+import com.kaibo.common.mvp.view.BaseView
 
 /**
  * @author Administrator

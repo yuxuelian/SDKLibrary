@@ -92,10 +92,10 @@ android {
 }
 
 dependencies {
-    implementation "com.android.support.constraint:constraint-layout:1.0.2"
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api "com.android.support.constraint:constraint-layout:$constraint_layout_version"
     //-----------------------------kotlin-------------------------------------
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     //-----------------------------support------------------------------------
     api "com.android.support:design:$android_support_version"
     api "com.android.support:multidex:$android_multidex_version"
@@ -134,6 +134,8 @@ dependencies {
 //    api 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
     //-----------------------------gson---------------------------------------
     api "com.google.code.gson:gson:$gson_version"
+    api "com.google.android:flexbox:$flexbox_version"
+
     //-----------------------------BRVAH--------------------------------------
     api "com.github.CymChad:BaseRecyclerViewAdapterHelper:$brvah_version"
     //-----------------------------glide--------------------------------------

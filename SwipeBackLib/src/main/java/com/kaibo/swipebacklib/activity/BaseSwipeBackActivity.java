@@ -4,10 +4,10 @@ package com.kaibo.swipebacklib.activity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.kaibo.base.activity.BaseMvpActivity;
-import com.kaibo.base.mvp.model.AbstractModel;
-import com.kaibo.base.mvp.presenter.AbstractRxPresenter;
-import com.kaibo.base.mvp.view.AbstractFragment;
+import com.kaibo.common.activity.BaseMvpActivity;
+import com.kaibo.common.mvp.model.AbstractModel;
+import com.kaibo.common.mvp.presenter.AbstractRxPresenter;
+import com.kaibo.common.mvp.view.AbstractFragment;
 import com.kaibo.swipebacklib.helper.SwipeBackActivityHelper;
 import com.kaibo.swipebacklib.util.Utils;
 import com.kaibo.swipebacklib.weight.SwipeBackLayout;

@@ -33,7 +33,7 @@ class OptionDragCallBack(private val mAdapter: BaseIndicatorManagerRvAdapter) : 
     /**
      * 虚线框的内边距
      */
-    private var mPadding = 2
+    var mPadding = 2
 
     /**
      * 这个是用来限制哪些Item能拖动

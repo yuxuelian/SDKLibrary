@@ -1,6 +1,6 @@
 package com.kaibo.demo.mvp.presenter
 
-import com.kaibo.base.mvp.presenter.AbstractRxPresenter
+import com.kaibo.common.mvp.presenter.AbstractRxPresenter
 import com.kaibo.demo.mvp.contract.MainContract
 import com.kaibo.demo.mvp.model.MainModel
 import com.kaibo.demo.mvp.view.MainFragment
