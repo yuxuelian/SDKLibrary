@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.kaibo.common.activity.BaseMvpActivity;
 import com.kaibo.common.mvp.model.AbstractModel;
-import com.kaibo.common.mvp.presenter.AbstractRxPresenter;
+import com.kaibo.common.mvp.presenter.AbstractPresenter;
 import com.kaibo.common.mvp.view.AbstractFragment;
 import com.kaibo.swipebacklib.helper.SwipeBackActivityHelper;
 import com.kaibo.swipebacklib.util.Utils;
@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
  * description：继承这个Activity可以轻松实现  侧滑返回
  */
 
-public abstract class BaseSwipeBackActivity<M extends AbstractModel, V extends AbstractFragment<?>, P extends AbstractRxPresenter<?, ?>>
+public abstract class BaseSwipeBackActivity<M extends AbstractModel, V extends AbstractFragment<?>, P extends AbstractPresenter<?, ?>>
         extends BaseMvpActivity<M, V, P> {
 
     private SwipeBackActivityHelper mHelper;

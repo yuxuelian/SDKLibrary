@@ -21,7 +21,7 @@ import io.reactivex.subjects.BehaviorSubject
  * 将生命周期发送到出去   用于实现自动解除对RxJava的订阅
  * 特别说明:子类必须有一个实现了 V  和  M  接口的参数的构造方法
  */
-abstract class AbstractRxPresenter<out V : BaseView<*>, out M : BaseModel>(override val mModel: M, override val mView: V) : BasePresenter<V, M>, LifecycleProvider<FragmentEvent> {
+abstract class AbstractPresenter<out V : BaseView<*>, out M : BaseModel>(override val mModel: M, override val mView: V) : BasePresenter<V, M>, LifecycleProvider<FragmentEvent> {
 
     private val lifecycleSubject = BehaviorSubject.create<FragmentEvent>()
 
