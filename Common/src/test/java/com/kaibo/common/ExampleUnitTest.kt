@@ -2,8 +2,6 @@ package com.kaibo.common
 
 import com.kaibo.common.http.HttpRequestManager
 import com.kaibo.common.http.progress.ProgressListener
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.io.File
@@ -51,8 +49,15 @@ class ExampleUnitTest {
                     outputStream.close()
                 })
 
-        while (true){
+        while (true) {
 
         }
+    }
+
+    @Test
+    fun test2() {
+        val str: String? = null
+        println(str.toString())
+        println("123".isNotEmpty())
     }
 }

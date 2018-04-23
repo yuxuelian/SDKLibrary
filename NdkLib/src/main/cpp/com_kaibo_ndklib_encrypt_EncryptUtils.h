@@ -7,13 +7,14 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 /*
  * Class:     com_kaibo_ndklib_encrypt_EncryptUtils
  * Method:    encrypt
  * Signature: (Ljava/lang/String;)Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL Java_com_kaibo_ndklib_encrypt_EncryptUtils_encrypt
-  (JNIEnv *, jclass, jstring);
+        (JNIEnv *, jobject, jstring);
 
 /*
  * Class:     com_kaibo_ndklib_encrypt_EncryptUtils
@@ -21,7 +22,7 @@ JNIEXPORT jstring JNICALL Java_com_kaibo_ndklib_encrypt_EncryptUtils_encrypt
  * Signature: (Ljava/lang/String;)Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL Java_com_kaibo_ndklib_encrypt_EncryptUtils_decrypt
-  (JNIEnv *, jclass, jstring);
+        (JNIEnv *, jobject, jstring);
 
 #ifdef __cplusplus
 }

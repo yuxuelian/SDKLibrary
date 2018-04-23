@@ -17,10 +17,10 @@ public class ExampleUnitTest {
         assertEquals(4, 2 + 2);
     }
 
-
     @Test
     public void test2() {
-        System.out.println(EncryptUtils.encrypt(""));
+        System.out.println(EncryptUtils.getInstance().decrypt(""));
+        System.out.println(EncryptUtils.getInstance().decrypt(""));
     }
 
 }

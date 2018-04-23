@@ -13,14 +13,26 @@ public class EncryptUtils {
         System.loadLibrary("encrypt");
     }
 
+    private EncryptUtils() {
+
+    }
+
+    private static class InstanceHelper {
+        private static EncryptUtils encryptUtils = new EncryptUtils();
+    }
+
+    public static EncryptUtils getInstance() {
+        return InstanceHelper.encryptUtils;
+    }
+
     /**
      * 加密
      */
-    public static native String encrypt(String text);
+    public native String encrypt(String text);
 
     /**
      * 解密
      */
-    public static native String decrypt(String text);
+    public native String decrypt(String text);
 
 }

@@ -25,12 +25,19 @@ import com.kaibo.common.util.immersive
 
 abstract class BaseActivity : AppCompatActivity() {
 
+    /**
+     * 重写这个属性控制是否沉浸式状态栏
+     */
+    protected open val enableImmersive: Boolean = true
+
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         //默认设置Activity为沉浸式
-        immersive(null, false)
+        if (enableImmersive) {
+            immersive(null, false)
+        }
 
         setContentViewBefore(savedInstanceState)
         setContentView(getLayoutRes())

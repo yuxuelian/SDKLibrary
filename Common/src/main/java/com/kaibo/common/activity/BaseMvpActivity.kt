@@ -18,7 +18,6 @@ import java.lang.reflect.ParameterizedType
  * 这个类的主要功能是  通过反射  完成对  MVP三者之间的关系  进行  绑定操作
  */
 
-@Suppress("UNCHECKED_CAST")
 abstract class BaseMvpActivity<out M : AbstractModel,
         out V : AbstractFragment<*>,
         out P : AbstractPresenter<*, *>> :
@@ -46,14 +45,17 @@ abstract class BaseMvpActivity<out M : AbstractModel,
                     ?.let {
                         if (it.size == 3) {
                             //创建 model 实例
+                            @Suppress("UNCHECKED_CAST")
                             val modelClass = it[0] as Class<M>
                             _model = modelClass.newInstance()
 
                             //创建 view 实例
+                            @Suppress("UNCHECKED_CAST")
                             val viewClass = it[1] as Class<V>
                             _view = viewClass.newInstance()
 
                             //创建 presenter 实例  使用带 model view 参数的构造方法
+                            @Suppress("UNCHECKED_CAST")
                             _presenter = (it[2] as Class<P>)
                                     .getConstructor(modelClass, viewClass)
                                     .newInstance(_model, _view)

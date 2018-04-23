@@ -17,7 +17,8 @@ class MainActivity : BaseSwipeMenuActivity<MainModel, MainFragment, MainPresente
     }
 
     override fun initOnCreate(savedInstanceState: Bundle?) {
-        text.text = EncryptUtils.encrypt("123")
+        text.text = EncryptUtils.getInstance().encrypt("123")
+        text.text = EncryptUtils.getInstance().decrypt("decrypt")
         println(isRoot())
         println(isEmulator())
         println(hasExternalStorage())
