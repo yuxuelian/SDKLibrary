@@ -9,5 +9,10 @@ package com.kaibo.wheelview.data.entity;
  */
 
 public abstract class BaseAddressBean {
+    /**
+     * 获取省市区名
+     *
+     * @return
+     */
     public abstract String getName();
 }

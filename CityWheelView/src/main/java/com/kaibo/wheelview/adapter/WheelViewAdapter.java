@@ -31,17 +31,17 @@ public interface WheelViewAdapter {
      *
      * @return the count of wheel items
      */
-    int getItemsCount();
+    int getCount();
 
     /**
      * Get a View that displays the data at the specified position in the data set
      *
-     * @param index       the item index
+     * @param position       the item index
      * @param convertView the old view to reuse if possible
      * @param parent      the parent that this view will eventually be attached to
      * @return the wheel item View
      */
-    View getItem(int index, View convertView, ViewGroup parent);
+    View getItem(int position, View convertView, ViewGroup parent);
 
     /**
      * Get a View that displays an empty wheel item placed before the first or after

@@ -20,16 +20,18 @@ import android.database.DataSetObserver;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Abstract Wheel adapter.
+ *
  * @author Administrator
  */
 public abstract class AbstractWheelAdapter implements WheelViewAdapter {
 
-    private List<DataSetObserver> datasetObservers;
+    private List<DataSetObserver> dataSetObservers;
 
     @Override
     public View getEmptyItem(View convertView, ViewGroup parent) {
@@ -38,25 +40,25 @@ public abstract class AbstractWheelAdapter implements WheelViewAdapter {
 
     @Override
     public void registerDataSetObserver(DataSetObserver observer) {
-        if (datasetObservers == null) {
-            datasetObservers = new LinkedList<>();
+        if (dataSetObservers == null) {
+            dataSetObservers = new ArrayList<>();
         }
-        datasetObservers.add(observer);
+        dataSetObservers.add(observer);
     }
 
     @Override
     public void unregisterDataSetObserver(DataSetObserver observer) {
-        if (datasetObservers != null) {
-            datasetObservers.remove(observer);
+        if (dataSetObservers != null) {
+            dataSetObservers.remove(observer);
         }
     }
 
     /**
      * Notifies observers about data changing
      */
-    protected void notifyDataChangedEvent() {
-        if (datasetObservers != null) {
-            for (DataSetObserver observer : datasetObservers) {
+    protected void notifyDataChanged() {
+        if (dataSetObservers != null) {
+            for (DataSetObserver observer : dataSetObservers) {
                 observer.onChanged();
             }
         }
@@ -65,9 +67,9 @@ public abstract class AbstractWheelAdapter implements WheelViewAdapter {
     /**
      * Notifies observers about invalidating data
      */
-    protected void notifyDataInvalidatedEvent() {
-        if (datasetObservers != null) {
-            for (DataSetObserver observer : datasetObservers) {
+    protected void notifyDataInvalidated() {
+        if (dataSetObservers != null) {
+            for (DataSetObserver observer : dataSetObservers) {
                 observer.onInvalidated();
             }
         }
