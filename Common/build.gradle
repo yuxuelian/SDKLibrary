@@ -158,6 +158,9 @@ dependencies {
     //-----------------------------logger-------------------------------------
     api "com.orhanobut:logger:$logger_version"
 
+    //RecyclerView顶部悬浮效果  https://github.com/Gavin-ZYX/StickyDecoration
+    api 'com.gavin.com.library:stickyDecoration:1.4.2'
+
     //-----------------------------Test---------------------------------------
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

@@ -68,4 +68,5 @@ dependencies {
     implementation project(':SwipeMenuLib')
     implementation project(':NdkLib')
     implementation project(':IndicatrorManagerLib')
+    implementation project(':CityWheelView')
 }

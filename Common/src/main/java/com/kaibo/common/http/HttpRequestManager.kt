@@ -1,16 +1,17 @@
 package com.kaibo.common.http
 
-import com.kaibo.common.BaseApplication
 import com.kaibo.common.http.progress.ProgressInterceptor
-import com.kaibo.common.util.isNotNull
+import com.kaibo.common.util.isNotEmpty
 import io.reactivex.schedulers.Schedulers
-import okhttp3.*
-import okhttp3.logging.HttpLoggingInterceptor
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.RequestBody
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
-import java.util.ArrayList
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 /**
@@ -88,7 +89,7 @@ object HttpRequestManager {
         val tempMediaType = checkNotNull(mediaType)
         val list = ArrayList<MultipartBody.Part>()
         flies.filter {
-            it.isNotNull()
+            it.isNotEmpty()
         }.forEach {
             val file = File(it)
             val responseBody = RequestBody.create(tempMediaType, file)

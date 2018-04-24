@@ -17,10 +17,10 @@ import com.orhanobut.logger.Logger
 abstract class BaseApplication : Application() {
 
     companion object {
-        val INSTANCE by lazy {
-            tempInstance
+        val Instance by lazy {
+            _instance
         }
-        private lateinit var tempInstance: BaseApplication
+        private lateinit var _instance: BaseApplication
     }
 
     override fun attachBaseContext(base: Context?) {
@@ -30,7 +30,7 @@ abstract class BaseApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        tempInstance = this
+        _instance = this
         ToastUtils.init(this)
         Logger.addLogAdapter(AndroidLogAdapter())
     }
