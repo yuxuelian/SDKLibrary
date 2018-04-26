@@ -6,7 +6,10 @@ import com.kaibo.common.mvp.view.AbstractFragment
 import com.kaibo.common.util.immersiveTopView
 import com.kaibo.demo.R
 import com.kaibo.demo.mvp.contract.MainContract
-import com.kaibo.wheelview.CityWheelDialog
+import com.kaibo.wheelview.dialog.DialogStyleConfig
+import com.kaibo.wheelview.dialog.SelectCityWheelDialog
+import com.kaibo.wheelview.dialog.SelectDateWheelDialog
+import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.include_title.*
 
@@ -35,9 +38,15 @@ class MainFragment : AbstractFragment<MainContract.Presenter>(), MainContract.Vi
 //            context?.toAppSetting()
 //            Log.d("TAG", context?.sha1)
 
-            val cityWheelDialog = CityWheelDialog(mAttachActivity)
-            cityWheelDialog.show()
-        }
+            val selectCityDialog = SelectCityWheelDialog(DialogStyleConfig(mAttachActivity))
+            selectCityDialog.setSelectedListener { selectProvince, selectLeader, selectCity, selectCityId ->
+                Logger.d("$selectProvince $selectLeader $selectCity $selectCityId")
+            }
+            selectCityDialog.show()
 
+//            val selectDateWheelDialog = SelectDateWheelDialog(mAttachActivity, System.currentTimeMillis(), SelectDateWheelDialog.DAY_MILLIS * 3)
+//
+//            selectDateWheelDialog.show()
+        }
     }
 }

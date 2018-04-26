@@ -86,16 +86,18 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
 }
 
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
     api "com.android.support.constraint:constraint-layout:$constraint_layout_version"
+
     //-----------------------------kotlin-------------------------------------
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
     //-----------------------------support------------------------------------
     api "com.android.support:design:$android_support_version"
     api "com.android.support:multidex:$android_multidex_version"
@@ -103,42 +105,60 @@ dependencies {
     api "com.android.support:cardview-v7:$android_support_version"
     api "com.android.support:appcompat-v7:$android_support_version"
     api "com.android.support:recyclerview-v7:$android_support_version"
+
     //-----------------------------Room---------------------------------------
     api "android.arch.persistence.room:runtime:$android_room_version"
     api "android.arch.persistence.room:rxjava2:$android_room_version"
     kapt "android.arch.persistence.room:compiler:$android_room_version"
+
     //-----------------------------RxJava-------------------------------------
     api "io.reactivex.rxjava2:rxjava:$rxjava2_version"
     api "io.reactivex.rxjava2:rxandroid:$rxandroid2_version"
     api "com.trello.rxlifecycle2:rxlifecycle:$rxlifecycle_version"
     api "com.trello.rxlifecycle2:rxlifecycle-android:$rxlifecycle_version"
-//    api "com.trello.rxlifecycle2:rxlifecycle-components:$rxlifecycle_version"
-//    api "com.trello.rxlifecycle2:rxlifecycle-components-preference:$rxlifecycle_version"
-//    api "com.trello.rxlifecycle2:rxlifecycle-navi:$rxlifecycle_version"
-//    api "com.trello.rxlifecycle2:rxlifecycle-android-lifecycle:$rxlifecycle_version"
-//    api "com.trello.rxlifecycle2:rxlifecycle-kotlin:$rxlifecycle_version"
-//    api "com.trello.rxlifecycle2:rxlifecycle-android-lifecycle-kotlin:$rxlifecycle_version"
 
-//    api("com.hwangjr.rxbus:rxbus:1.0.6") {
-//        exclude group: 'com.jakewharton.timber', module: 'timber'
-//    }
+    //    api "com.trello.rxlifecycle2:rxlifecycle-components:$rxlifecycle_version"
+
+    //    api "com.trello.rxlifecycle2:rxlifecycle-components-preference:$rxlifecycle_version"
+
+    //    api "com.trello.rxlifecycle2:rxlifecycle-navi:$rxlifecycle_version"
+
+    //    api "com.trello.rxlifecycle2:rxlifecycle-android-lifecycle:$rxlifecycle_version"
+
+    //    api "com.trello.rxlifecycle2:rxlifecycle-kotlin:$rxlifecycle_version"
+
+    //    api "com.trello.rxlifecycle2:rxlifecycle-android-lifecycle-kotlin:$rxlifecycle_version"
+
+    //    api("com.hwangjr.rxbus:rxbus:1.0.6") {
+
+    //        exclude group: 'com.jakewharton.timber', module: 'timber'
+
+    //    }
+
     //-----------------------------retrofit-----------------------------------
     api "com.squareup.okhttp3:okhttp:$okhttp_version"
     api "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
     api "com.squareup.retrofit2:retrofit:$retrofit_version"
     api "com.squareup.retrofit2:converter-gson:$retrofit_version"
     api "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+
     //-----------------------------fastjson-----------------------------------
-//    api 'com.alibaba:fastjson:1.2.46'
-//    api 'com.alibaba:fastjson:1.1.68.android'
-//    api 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
+
+    //    api 'com.alibaba:fastjson:1.2.46'
+
+    //    api 'com.alibaba:fastjson:1.1.68.android'
+
+    //    api 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
+
     //-----------------------------gson---------------------------------------
     api "com.google.code.gson:gson:$gson_version"
     api "com.google.android:flexbox:$flexbox_version"
 
     //-----------------------------BRVAH--------------------------------------
     api "com.github.CymChad:BaseRecyclerViewAdapterHelper:$brvah_version"
+
     //-----------------------------glide--------------------------------------
+
     //api 'com.github.bumptech.glide:glide:3.7.0'
     api "com.github.bumptech.glide:okhttp3-integration:$glide_version"
     api("com.github.bumptech.glide:glide:$glide_version") {
@@ -146,15 +166,19 @@ dependencies {
     }
     kapt "com.github.bumptech.glide:compiler:$glide_version"
     api "com.android.support:support-fragment:$android_support_version"
+
     //-----------------------------arouter-----------------------------------
     api("com.alibaba:arouter-api:$arouter_version") {
         exclude group: "com.android.support"
     }
     kapt "com.alibaba:arouter-compiler:$arouter_compiler_version"
+
     //-----------------------------kotlin-ktx---------------------------------
     api "androidx.core:core-ktx:$androidx_ktx_version"
+
     //-----------------------------DataBinding--------------------------------
     kapt "com.android.databinding:compiler:$gradle_plugin_version"
+
     //-----------------------------logger-------------------------------------
     api "com.orhanobut:logger:$logger_version"
 
@@ -165,6 +189,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
     //性能检测
     androidTestImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
 }
