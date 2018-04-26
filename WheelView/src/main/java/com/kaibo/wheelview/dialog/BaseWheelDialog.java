@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.kaibo.wheelview.R;
 import com.kaibo.wheelview.adapter.WheelViewAdapter;
-import com.kaibo.wheelview.adapter.OnWheelChangedListenerAdapter;
+import com.kaibo.wheelview.listener.OnWheelChangedListener;
 import com.kaibo.wheelview.weight.WheelView;
 
 /**
@@ -92,7 +92,7 @@ public abstract class BaseWheelDialog extends Dialog {
 
         firstWheelView.setVisibleItems(5);
         firstWheelView.setViewAdapter(getFirstWheelAdapter());
-        firstWheelView.addChangingListener(new OnWheelChangedListenerAdapter() {
+        firstWheelView.addChangingListener(new OnWheelChangedListener() {
             @Override
             public void onChangedPosition(WheelView wheel, int lastPosition, int position) {
                 firstWheelViewChange(wheel, lastPosition, position);
@@ -101,7 +101,7 @@ public abstract class BaseWheelDialog extends Dialog {
 
         secondWheelView.setVisibleItems(5);
         secondWheelView.setViewAdapter(getSecondWheelAdapter());
-        secondWheelView.addChangingListener(new OnWheelChangedListenerAdapter() {
+        secondWheelView.addChangingListener(new OnWheelChangedListener() {
             @Override
             public void onChangedPosition(WheelView wheel, int lastPosition, int position) {
                 secondWheelViewChange(wheel, lastPosition, position);
@@ -110,7 +110,7 @@ public abstract class BaseWheelDialog extends Dialog {
 
         thirdWheelView.setVisibleItems(5);
         thirdWheelView.setViewAdapter(getThirdWheelAdapter());
-        thirdWheelView.addChangingListener(new OnWheelChangedListenerAdapter() {
+        thirdWheelView.addChangingListener(new OnWheelChangedListener() {
             @Override
             public void onChangedPosition(WheelView wheel, int lastPosition, int position) {
                 thirdWheelViewChange(wheel, lastPosition, position);

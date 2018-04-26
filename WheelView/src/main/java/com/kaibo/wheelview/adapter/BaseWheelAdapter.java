@@ -31,6 +31,11 @@ public abstract class BaseWheelAdapter implements WheelViewAdapter {
     private List<DataSetObserver> dataSetObservers;
 
     @Override
+    public void updateView(List<View> allChildView, int selectViewPosition) {
+
+    }
+
+    @Override
     public View getEmptyItem(View convertView, ViewGroup parent) {
         return null;
     }

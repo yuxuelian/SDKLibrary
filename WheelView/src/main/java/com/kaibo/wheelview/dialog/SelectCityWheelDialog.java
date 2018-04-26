@@ -1,14 +1,9 @@
 package com.kaibo.wheelview.dialog;
 
-import android.accessibilityservice.AccessibilityService;
 import android.annotation.SuppressLint;
-import android.graphics.Color;
-import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.view.View;
-import android.widget.TextView;
 
-import com.kaibo.wheelview.adapter.OnWheelChangedListenerAdapter;
 import com.kaibo.wheelview.adapter.SelectCityWheelAdapter;
 import com.kaibo.wheelview.adapter.WheelViewAdapter;
 import com.kaibo.wheelview.data.BaseCityDatabase;
@@ -66,13 +61,6 @@ public class SelectCityWheelDialog extends BaseWheelDialog {
      */
     private List<ProvinceBean> allCityMsg;
 
-    private float wheelViewSelectTextSize = 16F;
-    private float wheelViewNormalTextSize = 14F;
-    @ColorInt
-    private int wheelViewSelectTextColor = Color.parseColor("#FFAA66");
-    @ColorInt
-    private int wheelViewNormalTextColor = Color.parseColor("#996633");
-
     public interface OnSelectedListener {
         /**
          * 点击确定后回调这个方法
@@ -92,27 +80,6 @@ public class SelectCityWheelDialog extends BaseWheelDialog {
     public SelectCityWheelDialog(@NonNull DialogStyleConfig dialogStyleConfig) {
         super(dialogStyleConfig);
         initData();
-        OnWheelChangedListenerAdapter listenerAdapter = new OnWheelChangedListenerAdapter() {
-            @Override
-            public void onChangedView(WheelView wheel, View lastView, View view) {
-                TextView textView;
-                if (lastView != null) {
-                    textView = (TextView) lastView;
-                    textView.setTextColor(wheelViewNormalTextColor);
-                    textView.setTextSize(wheelViewNormalTextSize);
-                }
-
-                if (view != null) {
-                    textView = (TextView) view;
-                    textView.setTextColor(wheelViewSelectTextColor);
-                    textView.setTextSize(wheelViewSelectTextSize);
-                }
-            }
-        };
-
-        firstWheelView.addChangingListener(listenerAdapter);
-        secondWheelView.addChangingListener(listenerAdapter);
-        thirdWheelView.addChangingListener(listenerAdapter);
     }
 
     @SuppressLint("CheckResult")

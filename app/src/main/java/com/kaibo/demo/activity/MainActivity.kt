@@ -19,14 +19,14 @@ class MainActivity : BaseSwipeMenuActivity<MainModel, MainFragment, MainPresente
     override fun initOnCreate(savedInstanceState: Bundle?) {
         text.text = EncryptUtils.getInstance().encrypt("123")
         text.text = EncryptUtils.getInstance().decrypt("decrypt")
-        println(isRoot())
-        println(isEmulator())
-        println(hasExternalStorage())
-        println(versionCode)
-        println(versionName)
-        println(isGPSEnable)
-        println(isNetworkConnected)
-        println(sha1)
+//        println(isRoot())
+//        println(isEmulator())
+//        println(hasExternalStorage())
+//        println(versionCode)
+//        println(versionName)
+//        println(isGPSEnable)
+//        println(isNetworkConnected)
+//        println(sha1)
     }
 
 }

@@ -1,6 +1,7 @@
 package com.kaibo.wheelview.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,13 @@ public class SelectDateWheelAdapter extends BaseWheelAdapter {
     @Override
     public int getCount() {
         return list == null ? 0 : list.size();
+    }
+
+    @Override
+    public void updateView(List<View> allChildView, int selectViewPosition) {
+        for (View view : allChildView) {
+            TextView textView = (TextView) view;
+        }
     }
 
     @Override

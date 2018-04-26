@@ -20,12 +20,22 @@ import android.database.DataSetObserver;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 /**
  * @author Administrator
  */
 public interface WheelViewAdapter {
 
     int getCount();
+
+    /**
+     * 这个方法用于给子View设置样式
+     *
+     * @param allChildView  所有的子View
+     * @param selectViewPosition 当前选中的子View在列表中的位置
+     */
+    void updateView(List<View> allChildView, int selectViewPosition);
 
     View getItem(int position, View convertView, ViewGroup parent);
 

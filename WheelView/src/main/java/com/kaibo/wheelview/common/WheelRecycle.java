@@ -21,6 +21,14 @@ public class WheelRecycle {
         this.wheelView = wheelView;
     }
 
+    /**
+     * 移除view
+     *
+     * @param layout
+     * @param firstItem
+     * @param range
+     * @return
+     */
     public int recycleItems(LinearLayout layout, int firstItem, ItemsRange range) {
         int index = firstItem;
         for (int i = 0; i < layout.getChildCount(); ) {
@@ -59,16 +67,14 @@ public class WheelRecycle {
         if (cache == null) {
             cache = new LinkedList<>();
         }
-
         cache.add(view);
         return cache;
     }
 
     private void recycleView(View view, int index) {
         int count = wheelView.getViewAdapter().getCount();
-
-        if ((index < 0 || index >= count) && !wheelView.isCyclic()) {
-            // empty view
+        boolean b = (index < 0 || index >= count) && !wheelView.isCyclic();
+        if (b) {
             emptyItems = addView(view, emptyItems);
         } else {
             while (index < 0) {

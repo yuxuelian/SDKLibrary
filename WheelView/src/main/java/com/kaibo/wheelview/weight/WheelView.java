@@ -22,12 +22,11 @@ package com.kaibo.wheelview.weight;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.GradientDrawable.Orientation;
 import android.support.annotation.ColorInt;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -270,10 +269,9 @@ public class WheelView extends View {
      * @param oldValue the old wheel value
      * @param newValue the new wheel value
      */
-    protected void notifyChangingListeners(int oldValue, int newValue) {
+    protected void notifyChangedListeners(int oldValue, int newValue) {
         for (OnWheelChangedListener listener : changingListeners) {
             listener.onChangedPosition(this, oldValue, newValue);
-            listener.onChangedView(this, getItemView(oldValue), getItemView(newValue));
         }
     }
 
@@ -387,19 +385,19 @@ public class WheelView extends View {
                 scrollingOffset = 0;
                 int old = currentItem;
                 currentItem = index;
-                notifyChangingListeners(old, currentItem);
+                notifyChangedListeners(old, currentItem);
                 invalidate();
             }
         }
     }
 
     /**
-     * 指定位置
+     * 暴露方法指定位置
      *
-     * @param index the item index
+     * @param position the item index
      */
-    public void setCurrentItem(int index) {
-        setCurrentItem(index, false);
+    public void setCurrentItem(int position) {
+        setCurrentItem(position, false);
     }
 
     /**
@@ -576,7 +574,6 @@ public class WheelView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
         if (viewAdapter != null && viewAdapter.getCount() > 0) {
             updateView();
             drawItems(canvas);
@@ -584,6 +581,7 @@ public class WheelView extends View {
             drawCenterRect(canvas);
         }
 
+        //画阴影
         if (isDrawShadows) {
             isDrawShadows(canvas);
         }
@@ -767,6 +765,11 @@ public class WheelView extends View {
         return new ItemsRange(first, count);
     }
 
+    @ColorInt
+    private int wheelViewSelectTextColor = Color.parseColor("#FFAA66");
+    @ColorInt
+    private int wheelViewNormalTextColor = Color.parseColor("#996633");
+
     /**
      * @return true if items are rebuilt
      */
@@ -775,7 +778,9 @@ public class WheelView extends View {
         ItemsRange range = getItemsRange();
         if (itemsLayout != null) {
             int first = recycle.recycleItems(itemsLayout, firstItem, range);
+
             updated = firstItem != first;
+
             firstItem = first;
         } else {
             createItemsLayout();
@@ -797,21 +802,29 @@ public class WheelView extends View {
         } else {
             firstItem = range.getFirst();
         }
-
         int first = firstItem;
-
         for (int i = itemsLayout.getChildCount(); i < range.getCount(); i++) {
             if (!addViewItem(firstItem + i, false) && itemsLayout.getChildCount() == 0) {
                 first++;
             }
         }
-
         firstItem = first;
-
-        Log.d("TAG", "firstItem-----" + firstItem);
-        Log.d("TAG", "currentItem-----" + currentItem);
-
+        notifyChildView();
         return updated;
+    }
+
+    /**
+     * 通知子View更新样式
+     */
+    private void notifyChildView() {
+        if (viewAdapter != null) {
+            int childCount = itemsLayout.getChildCount();
+            List<View> allChildView = new ArrayList<>(childCount);
+            for (int i = 0; i < childCount; i++) {
+                allChildView.add(itemsLayout.getChildAt(i));
+            }
+            viewAdapter.updateView(allChildView, currentItem - firstItem);
+        }
     }
 
     /**
@@ -851,8 +864,6 @@ public class WheelView extends View {
             }
         }
     }
-
-    private View lastView;
 
     /**
      * Adds view for item to items layout
