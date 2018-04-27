@@ -26,8 +26,9 @@ class IndicatorMangerTestActivity : AppCompatActivity() {
         //创建适配器
         val testAdapter = TestAdapter(select,
                 GridLayoutManager(this, 4),
-                R.layout.option_item,
-                R.layout.decoration_item,
+                R.layout.item_option,
+                R.layout.item_title_tab,
+                R.layout.item_center_tab,
                 10,
                 2)
 

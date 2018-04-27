@@ -112,7 +112,8 @@ dependencies {
     kapt "android.arch.persistence.room:compiler:$android_room_version"
 
     //-----------------------------RxJava-------------------------------------
-    api "io.reactivex.rxjava2:rxjava:$rxjava2_version"
+//    api "io.reactivex.rxjava2:rxjava:$rxjava2_version"
+    api "io.reactivex.rxjava2:rxkotlin:$rxjava2_kotlin_version"
     api "io.reactivex.rxjava2:rxandroid:$rxandroid2_version"
     api "com.trello.rxlifecycle2:rxlifecycle:$rxlifecycle_version"
     api "com.trello.rxlifecycle2:rxlifecycle-android:$rxlifecycle_version"
@@ -184,6 +185,10 @@ dependencies {
 
     //RecyclerView顶部悬浮效果  https://github.com/Gavin-ZYX/StickyDecoration
     api 'com.gavin.com.library:stickyDecoration:1.4.2'
+
+    //dagger
+    api "com.google.dagger:dagger:$dagger2_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger2_version"
 
     //-----------------------------Test---------------------------------------
     testImplementation 'junit:junit:4.12'

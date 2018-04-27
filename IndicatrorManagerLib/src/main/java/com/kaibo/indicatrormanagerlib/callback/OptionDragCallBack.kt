@@ -39,8 +39,9 @@ class OptionDragCallBack(private val mAdapter: BaseIndicatorManagerRvAdapter) : 
      * 这个是用来限制哪些Item能拖动
      */
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
+
         //固定位置及tab下面的channel不能拖动
-        if (viewHolder.layoutPosition < mAdapter.fixSelectSize || viewHolder.layoutPosition > mAdapter.selectedSize - 1) {
+        if (viewHolder.layoutPosition < mAdapter.fixSelectSize + 1 || viewHolder.layoutPosition > mAdapter.selectedSize) {
             return 0
         }
 
@@ -62,7 +63,7 @@ class OptionDragCallBack(private val mAdapter: BaseIndicatorManagerRvAdapter) : 
 
         //固定位置及tab下面的channel不能拖动  还有固定位置的
         //mAdapter.selectedSize - 1  因为Tab占一个位置所以要减一
-        if (toPosition < mAdapter.fixSelectSize || toPosition > mAdapter.selectedSize - 1) {
+        if (toPosition < mAdapter.fixSelectSize + 1 || toPosition > mAdapter.selectedSize) {
             return false
         }
         return true
@@ -72,7 +73,7 @@ class OptionDragCallBack(private val mAdapter: BaseIndicatorManagerRvAdapter) : 
     }
 
     //长按时调用
-    override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder, actionState: Int) {
+    override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
         super.onSelectedChanged(viewHolder, actionState)
         if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
             //长按时调用

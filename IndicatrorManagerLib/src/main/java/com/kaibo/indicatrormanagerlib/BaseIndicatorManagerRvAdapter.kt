@@ -1,8 +1,10 @@
 package com.kaibo.indicatrormanagerlib
 
+import android.support.annotation.LayoutRes
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.util.Log
 import android.view.View
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -20,8 +22,12 @@ import java.util.*
  */
 abstract class BaseIndicatorManagerRvAdapter(private var allOption: MutableList<OptionEntity>,
                                              private val gridLayoutManager: GridLayoutManager,
+                                             @LayoutRes
                                              optionLayoutRes: Int,
-                                             decorationRes: Int,
+                                             @LayoutRes
+                                             tabTitleLayoutRes: Int,
+                                             @LayoutRes
+                                             tabCenterLayoutRes: Int,
                                              var selectedSize: Int = 0,
                                              var fixSelectSize: Int = 0) :
         BaseMultiItemQuickAdapter<OptionEntity, BaseViewHolder>(allOption) {
@@ -67,47 +73,60 @@ abstract class BaseIndicatorManagerRvAdapter(private var allOption: MutableList<
 
     init {
         checkOptions(allOption, selectedSize, fixSelectSize)
-        allOption.add(selectedSize, object : OptionEntity {
-            override fun getItemType() = OptionEntity.TAB_TYPE
+
+        //添加标题TAB
+        allOption.add(0, object : OptionEntity {
+            override fun getItemType() = OptionEntity.TAB_TITLE_TYPE
+        })
+
+        //添加中间TAB
+        allOption.add(selectedSize + 1, object : OptionEntity {
+            override fun getItemType() = OptionEntity.TAB_CENTER_TYPE
         })
 
         //添加多布局类型
         addItemType(OptionEntity.OPTION_TYPE, optionLayoutRes)
-        addItemType(OptionEntity.TAB_TYPE, decorationRes)
+        addItemType(OptionEntity.TAB_TITLE_TYPE, tabTitleLayoutRes)
+        addItemType(OptionEntity.TAB_CENTER_TYPE, tabCenterLayoutRes)
 
         this.setOnItemClickListener { adapter, view, position ->
             if (!recyclerView.itemAnimator.isRunning) {
                 when {
-                    position < fixSelectSize -> {
-                        //固定不动区域  不做任何处理
+                    position == 0 -> {
+                        //点击了标题TAB
+                        Log.d("ClickListener", "点击了标题TAB  $position")
                     }
-                    position < selectedSize -> {
+                    position < fixSelectSize + 1 -> {
+                        //固定不动区域  不做任何处理
+                        Log.d("ClickListener", "固定不动区域  $position")
+                    }
+                    position < selectedSize + 1 -> {
                         //可以删除区域  点击删除
-                        optionMove(position, selectedSize)
+                        optionMove(position, selectedSize + 1)
                         selectedSize--
                         onOptionStateListener?.refreshOptionDecoration()
-                        onOptionStateListener?.onSelectedOptionList(allOption.subList(0, selectedSize))
+                        onOptionStateListener?.onSelectedOptionList(allOption.subList(1, selectedSize + 1))
                     }
-                    position == selectedSize -> {
-                        //固定不动区域  不做任何处理
+                    position == selectedSize + 1 -> {
+                        //点击了中间的TAB
+                        Log.d("ClickListener", "点击了中间的TAB  $position")
                     }
                     else -> {
                         //可以添加区域  点击添加
-                        optionMove(position, selectedSize)
+                        optionMove(position, selectedSize + 1)
                         selectedSize++
                         onOptionStateListener?.refreshOptionDecoration()
-                        onOptionStateListener?.onSelectedOptionList(allOption.subList(0, selectedSize))
+                        onOptionStateListener?.onSelectedOptionList(allOption.subList(1, selectedSize + 1))
                     }
                 }
             }
         }
     }
 
-
     /**
      * 获取选中的Item
      */
-    fun getSelectedItemList() = allOption.subList(0, selectedSize)
+    fun getSelectedItemList() = allOption.subList(1, selectedSize + 1)
 
     /**
      * 将this绑定到传入的  recyclerView  去
@@ -116,7 +135,7 @@ abstract class BaseIndicatorManagerRvAdapter(private var allOption: MutableList<
         super.bindToRecyclerView(recyclerView)
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                return if (allOption[position].itemType == OptionEntity.TAB_TYPE) {
+                return if (allOption[position].itemType != OptionEntity.OPTION_TYPE) {
                     gridLayoutManager.spanCount
                 } else {
                     1
@@ -130,10 +149,10 @@ abstract class BaseIndicatorManagerRvAdapter(private var allOption: MutableList<
     }
 
     override fun convert(helper: BaseViewHolder, optionEntity: OptionEntity) {
-        if (optionEntity.itemType == OptionEntity.TAB_TYPE) {
-            convertDecoration(helper.itemView)
-        } else {
-            convertOptions(helper, optionEntity)
+        when {
+            optionEntity.itemType == OptionEntity.TAB_TITLE_TYPE -> convertTabTitle(helper.itemView)
+            optionEntity.itemType == OptionEntity.TAB_CENTER_TYPE -> convertTabCenter(helper.itemView)
+            else -> convertOptions(helper, optionEntity)
         }
     }
 
@@ -162,9 +181,15 @@ abstract class BaseIndicatorManagerRvAdapter(private var allOption: MutableList<
     protected abstract fun convertOptions(helper: BaseViewHolder, optionEntity: OptionEntity?)
 
     /**
-     * 绑定  convertDecoration
+     * 绑定  convertTabTitle
      */
-    protected abstract fun convertDecoration(decoration: View)
+    protected abstract fun convertTabTitle(titleTabView: View)
+
+    /**
+     * 绑定  convertTabCenter
+     */
+    protected abstract fun convertTabCenter(centerTabView: View)
+
 
     /**
      * 被拖动的时候这个方法会被回调

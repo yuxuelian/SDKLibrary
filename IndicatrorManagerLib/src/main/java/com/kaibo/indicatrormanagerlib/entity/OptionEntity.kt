@@ -18,6 +18,7 @@ interface OptionEntity : MultiItemEntity {
 
     companion object {
         const val OPTION_TYPE = 0
-        const val TAB_TYPE = 1
+        const val TAB_TITLE_TYPE = 1
+        const val TAB_CENTER_TYPE = 2
     }
 }
