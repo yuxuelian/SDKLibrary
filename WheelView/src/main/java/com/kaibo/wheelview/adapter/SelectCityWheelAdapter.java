@@ -33,9 +33,25 @@ public class SelectCityWheelAdapter<T extends BaseAddressBean> extends BaseWheel
     private List<T> list;
     private final LayoutInflater inflater;
 
+    public void setWheelViewSelectTextSize(float wheelViewSelectTextSize) {
+        this.wheelViewSelectTextSize = wheelViewSelectTextSize;
+    }
+
+    public void setWheelViewNormalTextSize(float wheelViewNormalTextSize) {
+        this.wheelViewNormalTextSize = wheelViewNormalTextSize;
+    }
+
+    public void setWheelViewSelectTextColor(int wheelViewSelectTextColor) {
+        this.wheelViewSelectTextColor = wheelViewSelectTextColor;
+    }
+
+    public void setWheelViewNormalTextColor(int wheelViewNormalTextColor) {
+        this.wheelViewNormalTextColor = wheelViewNormalTextColor;
+    }
+
     private float wheelViewSelectTextSize = 16F;
 
-    private float wheelViewNormalTextSize = 14F;
+    private float wheelViewNormalTextSize = 12F;
 
     @ColorInt
     private int wheelViewSelectTextColor = Color.parseColor("#FFAA66");
@@ -53,6 +69,10 @@ public class SelectCityWheelAdapter<T extends BaseAddressBean> extends BaseWheel
 
     @Override
     public void updateView(List<View> allChildView, int selectViewPosition) {
+        setTextViewStyle(allChildView, selectViewPosition);
+    }
+
+    private void setTextViewStyle(List<View> allChildView, int selectViewPosition) {
         for (View view : allChildView) {
             TextView textView = (TextView) view;
             textView.setTextColor(wheelViewNormalTextColor);

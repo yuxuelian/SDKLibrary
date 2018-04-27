@@ -1,6 +1,8 @@
 package com.kaibo.wheelview.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.annotation.ColorInt;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +27,15 @@ public class SelectDateWheelAdapter extends BaseWheelAdapter {
     private List<String> list;
     private final LayoutInflater inflater;
 
+    private float wheelViewSelectTextSize = 16F;
+
+    private float wheelViewNormalTextSize = 14F;
+
+    @ColorInt
+    private int wheelViewSelectTextColor = Color.parseColor("#FFAA66");
+    @ColorInt
+    private int wheelViewNormalTextColor = Color.parseColor("#996633");
+
     public SelectDateWheelAdapter(Context context) {
         inflater = LayoutInflater.from(context);
     }
@@ -46,8 +57,20 @@ public class SelectDateWheelAdapter extends BaseWheelAdapter {
 
     @Override
     public void updateView(List<View> allChildView, int selectViewPosition) {
+        setTextViewStyle(allChildView, selectViewPosition);
+    }
+
+    private void setTextViewStyle(List<View> allChildView, int selectViewPosition) {
         for (View view : allChildView) {
             TextView textView = (TextView) view;
+            textView.setTextColor(wheelViewNormalTextColor);
+            textView.setTextSize(wheelViewNormalTextSize);
+        }
+
+        if (selectViewPosition >= 0 && selectViewPosition < allChildView.size()) {
+            TextView textView = (TextView) allChildView.get(selectViewPosition);
+            textView.setTextColor(wheelViewSelectTextColor);
+            textView.setTextSize(wheelViewSelectTextSize);
         }
     }
 

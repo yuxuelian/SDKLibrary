@@ -13,7 +13,9 @@ import com.kaibo.demo.mvp.view.MainFragment
  * description：
  */
 
-class MainPresenter(mModel: MainModel, mView: MainFragment) : AbstractPresenter<MainContract.View, MainContract.Model>(mModel, mView), MainContract.Presenter {
+class MainPresenter(mModel: MainModel, mView: MainFragment) :
+        AbstractPresenter<MainContract.View, MainContract.Model>(mModel, mView),
+        MainContract.Presenter {
 
     override fun queryOrderById(id: Long) {
 //        mView.showToast("查询到订单  id是 $id")
