@@ -1,24 +1,29 @@
 package com.kaibo.demo.activity
 
 import android.os.Bundle
-import com.kaibo.common.util.*
 import com.kaibo.demo.R
+import com.kaibo.demo.mvp.contract.MainContract
 import com.kaibo.demo.mvp.model.MainModel
 import com.kaibo.demo.mvp.presenter.MainPresenter
-import com.kaibo.demo.mvp.view.MainFragment
-import com.kaibo.ndklib.encrypt.EncryptUtils
-import com.kaibo.swipemenulib.activity.BaseSwipeMenuActivity
-import kotlinx.android.synthetic.main.menu_layout.*
+import com.kaibo.swipemenulib.activity.AbstractSwipeMenuActivity
+import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseSwipeMenuActivity<MainModel, MainFragment, MainPresenter>() {
+class MainActivity : AbstractSwipeMenuActivity<MainPresenter, MainModel>(), MainContract.View {
+
+    override val enableImmersive: Boolean
+        get() = false
+
+    override fun getLayoutRes(): Int {
+        return R.layout.activity_main
+    }
 
     override fun getSlideMenuLayout(): Int {
         return R.layout.menu_layout
     }
 
     override fun initOnCreate(savedInstanceState: Bundle?) {
-        text.text = EncryptUtils.getInstance().encrypt("123")
-        text.text = EncryptUtils.getInstance().decrypt("decrypt")
+//        text.text = EncryptUtils.getInstance().encrypt("123")
+//        text.text = EncryptUtils.getInstance().decrypt("decrypt")
 //        println(isRoot())
 //        println(isEmulator())
 //        println(hasExternalStorage())
@@ -27,6 +32,10 @@ class MainActivity : BaseSwipeMenuActivity<MainModel, MainFragment, MainPresente
 //        println(isGPSEnable)
 //        println(isNetworkConnected)
 //        println(sha1)
-    }
 
+        button.setOnClickListener {
+            mPresenter.queryOrderById(123L)
+        }
+
+    }
 }

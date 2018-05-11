@@ -7,10 +7,9 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
 
-import com.kaibo.common.activity.BaseMvpActivity;
-import com.kaibo.common.mvp.model.AbstractModel;
-import com.kaibo.common.mvp.presenter.AbstractPresenter;
-import com.kaibo.common.mvp.view.AbstractFragment;
+import com.kaibo.mvp.activity.AbstractMvpActivity;
+import com.kaibo.mvp.model.AbstractModel;
+import com.kaibo.mvp.presenter.AbstractPresenter;
 import com.kaibo.swipemenulib.R;
 import com.kaibo.swipemenulib.helper.SwipeActivityHelper;
 import com.kaibo.swipemenulib.weight.SwipeMenuLayout;
@@ -22,8 +21,8 @@ import org.jetbrains.annotations.Nullable;
  * @author Administrator
  * 继承这个View可以轻松实现侧滑菜单效果
  */
-public abstract class BaseSwipeMenuActivity<M extends AbstractModel, V extends AbstractFragment<?>, P extends AbstractPresenter<?, ?>>
-        extends BaseMvpActivity<M, V, P> {
+public abstract class AbstractSwipeMenuActivity<P extends AbstractPresenter<?, ?>, M extends AbstractModel>
+        extends AbstractMvpActivity<P, M> {
 
     private SwipeActivityHelper mHelper;
 
@@ -37,7 +36,6 @@ public abstract class BaseSwipeMenuActivity<M extends AbstractModel, V extends A
      */
 //    @NotNull
 //    protected abstract Fragment getSlideMenuFragment();
-
     @NotNull
     @LayoutRes
     protected abstract int getSlideMenuLayout();

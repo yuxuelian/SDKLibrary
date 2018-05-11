@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/BaseMvpLib/BaseMvpLib.iml" filepath="$PROJECT_DIR$/BaseMvpLib/BaseMvpLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/Common/Common.iml" filepath="$PROJECT_DIR$/Common/Common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/IndicatrorManagerLib/IndicatrorManagerLib.iml" filepath="$PROJECT_DIR$/IndicatrorManagerLib/IndicatrorManagerLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/IndicatrorManagerLib/IndicatrorManagerLib.iml" filepath="$PROJECT_DIR$/IndicatrorManagerLib/IndicatrorManagerLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/NdkLib/NdkLib.iml" filepath="$PROJECT_DIR$/NdkLib/NdkLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/SDKLibrary.iml" filepath="$PROJECT_DIR$/SDKLibrary.iml" />

@@ -1,4 +1,6 @@
-package com.kaibo.common.mvp.model
+package com.kaibo.mvp.model
+
+import com.kaibo.mvp.contract.BaseModel
 
 /**
  * @author Administrator
@@ -7,6 +9,6 @@ package com.kaibo.common.mvp.model
  * email：
  * description：
  */
-abstract class AbstractModel:BaseModel{
+abstract class AbstractModel : BaseModel {
 
 }

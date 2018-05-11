@@ -1,9 +1,10 @@
-package com.kaibo.common.mvp.presenter
+package com.kaibo.mvp.presenter
 
+import android.os.Bundle
 import android.support.annotation.CheckResult
-import com.kaibo.common.mvp.model.BaseModel
-import com.kaibo.common.mvp.view.BaseView
-import com.orhanobut.logger.Logger
+import com.kaibo.mvp.contract.BaseFragmentPresenter
+import com.kaibo.mvp.contract.BaseModel
+import com.kaibo.mvp.contract.BaseView
 import com.trello.rxlifecycle2.LifecycleProvider
 import com.trello.rxlifecycle2.LifecycleTransformer
 import com.trello.rxlifecycle2.RxLifecycle
@@ -19,9 +20,26 @@ import io.reactivex.subjects.BehaviorSubject
  * email：
  * description：
  * 将生命周期发送到出去   用于实现自动解除对RxJava的订阅
- * 特别说明:子类必须有一个实现了 V  和  M  接口的参数的构造方法
  */
-abstract class AbstractPresenter<out V : BaseView<*>, out M : BaseModel>(override val mModel: M, override val mView: V) : BasePresenter<V, M>, LifecycleProvider<FragmentEvent> {
+abstract class AbstractFragmentPresenter<out V : BaseView, out M : BaseModel> :
+        BaseFragmentPresenter<V, M>,
+        LifecycleProvider<FragmentEvent> {
+
+    override val mModel by lazy {
+        _model
+    }
+
+    override val mView by lazy {
+        _view
+    }
+
+    private lateinit var _model: M
+    private lateinit var _view: V
+
+    fun setMV(model: @UnsafeVariance M, view: @UnsafeVariance V) {
+        this._model = model
+        this._view = view
+    }
 
     private val lifecycleSubject = BehaviorSubject.create<FragmentEvent>()
 
@@ -41,53 +59,42 @@ abstract class AbstractPresenter<out V : BaseView<*>, out M : BaseModel>(overrid
     }
 
     override fun onAttach() {
-        Logger.d("onAttach")
         lifecycleSubject.onNext(FragmentEvent.ATTACH)
     }
 
-    override fun onCreate() {
-        Logger.d("onCreate")
+    override fun onCreate(savedInstanceState: Bundle?) {
         lifecycleSubject.onNext(FragmentEvent.CREATE)
     }
 
     override fun onViewCreated() {
-        Logger.d("onViewCreated")
         lifecycleSubject.onNext(FragmentEvent.CREATE_VIEW)
     }
 
     override fun onStart() {
-        Logger.d("onStart")
         lifecycleSubject.onNext(FragmentEvent.START)
     }
 
     override fun onResume() {
-        Logger.d("onResume")
         lifecycleSubject.onNext(FragmentEvent.RESUME)
     }
 
     override fun onPause() {
-        Logger.d("onPause")
         lifecycleSubject.onNext(FragmentEvent.PAUSE)
     }
 
     override fun onStop() {
-        Logger.d("onStop")
         lifecycleSubject.onNext(FragmentEvent.STOP)
     }
 
     override fun onDestroyView() {
-        Logger.d("onDestroyView")
         lifecycleSubject.onNext(FragmentEvent.DESTROY_VIEW)
     }
 
     override fun onDestroy() {
-        Logger.d("onDestroy")
         lifecycleSubject.onNext(FragmentEvent.DESTROY)
-        mView.showToast("执行了  onDestroy")
     }
 
     override fun onDetach() {
-        Logger.d("onDetach")
         lifecycleSubject.onNext(FragmentEvent.DETACH)
     }
 }

@@ -8,6 +8,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/BaseMvpLib" />
             <option value="$PROJECT_DIR$/Common" />
             <option value="$PROJECT_DIR$/IndicatrorManagerLib" />
             <option value="$PROJECT_DIR$/NdkLib" />

@@ -1,6 +1,4 @@
-package com.kaibo.common.mvp.view
-
-import com.kaibo.common.mvp.presenter.BasePresenter
+package com.kaibo.mvp.contract
 
 /**
  * @author Administrator
@@ -9,9 +7,7 @@ import com.kaibo.common.mvp.presenter.BasePresenter
  * email：
  * description：
  */
-interface BaseView<out P : BasePresenter<BaseView<P>, *>> {
-
-    var mPresenter: @UnsafeVariance P
+interface BaseView {
 
     fun showLoadView()
 

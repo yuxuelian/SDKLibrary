@@ -27,6 +27,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     /**
      * 重写这个属性控制是否沉浸式状态栏
+     * 默认是   沉浸式状态栏
      */
     protected open val enableImmersive: Boolean = true
 

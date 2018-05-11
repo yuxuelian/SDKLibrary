@@ -1,6 +1,6 @@
 package com.kaibo.demo.mvp.model
 
-import com.kaibo.common.mvp.model.AbstractModel
+import com.kaibo.mvp.model.AbstractModel
 import com.kaibo.demo.mvp.contract.MainContract
 
 /**

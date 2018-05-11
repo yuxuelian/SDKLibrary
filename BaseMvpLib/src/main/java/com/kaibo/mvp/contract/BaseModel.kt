@@ -1,4 +1,4 @@
-package com.kaibo.common.mvp.model
+package com.kaibo.mvp.contract
 
 /**
  * @author Administrator
@@ -8,4 +8,5 @@ package com.kaibo.common.mvp.model
  * description：
  */
 interface BaseModel {
+
 }

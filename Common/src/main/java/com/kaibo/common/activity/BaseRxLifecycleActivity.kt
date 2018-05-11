@@ -19,9 +19,10 @@ import io.reactivex.subjects.BehaviorSubject
  * GitHub：
  * email：
  * description：
+ * 非  MVP 的 Activity  继承
  */
 
-abstract class RxActivity : BaseActivity(), LifecycleProvider<ActivityEvent> {
+abstract class BaseRxLifecycleActivity : BaseActivity(), LifecycleProvider<ActivityEvent> {
 
     private val lifecycleSubject = BehaviorSubject.create<ActivityEvent>()
 

@@ -1,8 +1,8 @@
 package com.kaibo.demo.mvp.contract
 
-import com.kaibo.common.mvp.model.BaseModel
-import com.kaibo.common.mvp.presenter.BasePresenter
-import com.kaibo.common.mvp.view.BaseView
+import com.kaibo.mvp.contract.BaseModel
+import com.kaibo.mvp.contract.BasePresenter
+import com.kaibo.mvp.contract.BaseView
 
 /**
  * @author Administrator
@@ -13,7 +13,9 @@ import com.kaibo.common.mvp.view.BaseView
  */
 interface MainContract {
 
-    interface View : BaseView<Presenter>
+    interface View : BaseView {
+
+    }
 
     interface Presenter : BasePresenter<View, Model> {
         fun queryOrderById(id: Long)

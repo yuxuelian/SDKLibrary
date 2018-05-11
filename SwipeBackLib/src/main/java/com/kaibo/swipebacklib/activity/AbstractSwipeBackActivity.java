@@ -4,15 +4,12 @@ package com.kaibo.swipebacklib.activity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.kaibo.common.activity.BaseMvpActivity;
-import com.kaibo.common.mvp.model.AbstractModel;
-import com.kaibo.common.mvp.presenter.AbstractPresenter;
-import com.kaibo.common.mvp.view.AbstractFragment;
+import com.kaibo.mvp.activity.AbstractMvpActivity;
+import com.kaibo.mvp.model.AbstractModel;
+import com.kaibo.mvp.presenter.AbstractPresenter;
 import com.kaibo.swipebacklib.helper.SwipeBackActivityHelper;
 import com.kaibo.swipebacklib.util.Utils;
 import com.kaibo.swipebacklib.weight.SwipeBackLayout;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Administrator
@@ -22,12 +19,11 @@ import org.jetbrains.annotations.NotNull;
  * description：继承这个Activity可以轻松实现  侧滑返回
  */
 
-public abstract class BaseSwipeBackActivity<M extends AbstractModel, V extends AbstractFragment<?>, P extends AbstractPresenter<?, ?>>
-        extends BaseMvpActivity<M, V, P> {
+public abstract class AbstractSwipeBackActivity<P extends AbstractPresenter<?, ?>, M extends AbstractModel>
+        extends AbstractMvpActivity<P, M> {
 
     private SwipeBackActivityHelper mHelper;
 
-    @NotNull
     protected SwipeBackLayout mSwipeBackLayout;
 
     @Override

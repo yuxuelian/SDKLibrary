@@ -1,29 +1,44 @@
-package com.kaibo.common.mvp.view
+package com.kaibo.mvp.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.support.annotation.CallSuper
 import android.view.View
 import com.kaibo.common.fragment.base.BaseFragment
-import com.kaibo.common.mvp.presenter.BasePresenter
-import com.kaibo.common.util.ToastUtils
-
+import com.kaibo.mvp.contract.BaseView
+import com.kaibo.mvp.model.AbstractModel
+import com.kaibo.mvp.presenter.AbstractFragmentPresenter
+import java.lang.reflect.ParameterizedType
 
 /**
  * @author Administrator
- * @date 2018/3/19 0019 上午 10:55
- * GitHub：
- * email：
- * description：将Fragment的生命周期传递到Presenter中去
+ * @date 2018/5/11 0011 下午 2:01
+ * @GitHub：https://github.com/yuxuelian
+ * @email：
+ * @description：
+ * Fragment中使用    MVP
  */
-abstract class AbstractFragment<out P : BasePresenter<BaseView<P>, *>> : BaseFragment(), BaseView<P> {
 
-    /**
-     * 当Fragment实例创建后,请立即对  Presenter  进行赋值
-     */
-    override lateinit var mPresenter: @UnsafeVariance P
+abstract class AbstractMvpFragment<out P : AbstractFragmentPresenter<*, *>, out M : AbstractModel> :
+        BaseFragment(),
+        BaseView {
 
-    @CallSuper
+    protected val mPresenter: P
+
+    init {
+        val actualTypeArguments = (this.javaClass.genericSuperclass as ParameterizedType).actualTypeArguments
+
+        //创建 presenter 实例  使用带 model view 参数的构造方法
+        @Suppress("UNCHECKED_CAST")
+        mPresenter = (actualTypeArguments[0] as Class<P>).newInstance()
+
+        //创建 model 实例
+        @Suppress("UNCHECKED_CAST")
+        val model: M = (actualTypeArguments[1] as Class<M>).newInstance()
+
+        mPresenter.setMV(model, this)
+    }
+
+    //绑定生命周期
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         mPresenter.onAttach()
@@ -31,7 +46,7 @@ abstract class AbstractFragment<out P : BasePresenter<BaseView<P>, *>> : BaseFra
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mPresenter.onCreate()
+        mPresenter.onCreate(savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -74,15 +89,4 @@ abstract class AbstractFragment<out P : BasePresenter<BaseView<P>, *>> : BaseFra
         super.onDetach()
     }
 
-    override fun showLoadView() {
-
-    }
-
-    override fun hideLoadView() {
-
-    }
-
-    override fun showToast(msg: String) {
-        ToastUtils.showToast(msg)
-    }
 }
