@@ -9,9 +9,16 @@ package com.kaibo.mvp.contract
  */
 interface BaseView {
 
-    fun showLoadView()
+    fun showLoad()
 
-    fun hideLoadView()
+    fun hideLoad()
 
-    fun showToast(msg: String)
+    fun showInfo(msg: String)
+
+    fun showSuccess(msg: String)
+
+    fun showWarning(msg: String)
+
+    fun showError(msg: String)
+
 }

@@ -6,12 +6,10 @@ import com.kaibo.demo.mvp.contract.MainContract
 import com.kaibo.demo.mvp.model.MainModel
 import com.kaibo.demo.mvp.presenter.MainPresenter
 import com.kaibo.swipemenulib.activity.AbstractSwipeMenuActivity
+import com.kaibo.toast.ToastUtils
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AbstractSwipeMenuActivity<MainPresenter, MainModel>(), MainContract.View {
-
-    override val enableImmersive: Boolean
-        get() = false
 
     override fun getLayoutRes(): Int {
         return R.layout.activity_main
@@ -34,7 +32,8 @@ class MainActivity : AbstractSwipeMenuActivity<MainPresenter, MainModel>(), Main
 //        println(sha1)
 
         button.setOnClickListener {
-            mPresenter.queryOrderById(123L)
+            ToastUtils.showSuccess("123")
+//            mPresenter.queryOrderById(123L)
         }
 
     }

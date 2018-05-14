@@ -15,8 +15,8 @@ class MainPresenter : AbstractPresenter<MainContract.View, MainContract.Model>()
         MainContract.Presenter {
 
     override fun queryOrderById(id: Long) {
-//        mView.showToast("查询到订单  id是 $id")
-        mView.showToast(mModel.getTestStr())
+//        mView.showInfo("查询到订单  id是 $id")
+        mView.showInfo(mModel.getTestStr())
 
     }
 

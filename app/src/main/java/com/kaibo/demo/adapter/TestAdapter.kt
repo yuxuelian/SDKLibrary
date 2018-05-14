@@ -45,7 +45,7 @@ class TestAdapter(allOption: MutableList<OptionEntity>,
         helper.itemView.itemOptionBtn.text = (optionEntity as? TestEntity)?.str ?: ""
     }
 
-    override fun convertTabCenter(decoration: View) {
+    override fun convertTabCenter(centerTabView: View) {
         Log.d("TestAdapter", "调用 convertTabCenter")
     }
 

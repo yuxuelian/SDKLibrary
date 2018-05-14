@@ -7,6 +7,7 @@ import com.kaibo.common.fragment.base.BaseFragment
 import com.kaibo.mvp.contract.BaseView
 import com.kaibo.mvp.model.AbstractModel
 import com.kaibo.mvp.presenter.AbstractFragmentPresenter
+import com.kaibo.toast.ToastUtils
 import java.lang.reflect.ParameterizedType
 
 /**
@@ -38,10 +39,33 @@ abstract class AbstractMvpFragment<out P : AbstractFragmentPresenter<*, *>, out 
         mPresenter.setMV(model, this)
     }
 
+
+    override fun showLoad() {
+    }
+
+    override fun hideLoad() {
+    }
+
+    override fun showInfo(msg: String) {
+        ToastUtils.showInfo(msg)
+    }
+
+    override fun showSuccess(msg: String) {
+        ToastUtils.showSuccess(msg)
+    }
+
+    override fun showWarning(msg: String) {
+        ToastUtils.showWarning(msg)
+    }
+
+    override fun showError(msg: String) {
+        ToastUtils.showError(msg)
+    }
+
     //绑定生命周期
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        mPresenter.onAttach()
+        mPresenter.onAttach(context)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,7 +75,7 @@ abstract class AbstractMvpFragment<out P : AbstractFragmentPresenter<*, *>, out 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mPresenter.onViewCreated()
+        mPresenter.onViewCreated(view, savedInstanceState)
     }
 
     override fun onStart() {

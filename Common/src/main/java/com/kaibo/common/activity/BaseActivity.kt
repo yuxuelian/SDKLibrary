@@ -1,18 +1,9 @@
 package com.kaibo.common.activity
 
-import android.content.Context
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.annotation.LayoutRes
-import android.support.v4.content.ContextCompat
-import android.support.v4.view.LayoutInflaterCompat
 import android.support.v7.app.AppCompatActivity
-import android.util.AttributeSet
-import android.view.LayoutInflater
-import android.view.View
-import android.widget.EditText
-import android.widget.TextView
-import com.kaibo.common.R
 import com.kaibo.common.util.immersive
 
 /**
@@ -26,18 +17,20 @@ import com.kaibo.common.util.immersive
 abstract class BaseActivity : AppCompatActivity() {
 
     /**
-     * 重写这个属性控制是否沉浸式状态栏
-     * 默认是   沉浸式状态栏
+     * 是否沉浸式   Pair  的第一个参数表示是否沉浸式
+     * 第二个参数    当第一个参数为true的时候  第二个参数才生效
+     * 第二个参数表示是否使状态栏的颜色变成黑色
      */
-    protected open val enableImmersive: Boolean = true
+    protected open fun enableImmersive(): Pair<Boolean, Boolean> = Pair(true, false)
 
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         //默认设置Activity为沉浸式
+        val (enableImmersive, isLight) = enableImmersive()
         if (enableImmersive) {
-            immersive(null, false)
+            immersive(isLight)
         }
 
         setContentViewBefore(savedInstanceState)

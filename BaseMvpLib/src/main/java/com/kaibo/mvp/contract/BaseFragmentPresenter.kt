@@ -1,5 +1,9 @@
 package com.kaibo.mvp.contract
 
+import android.content.Context
+import android.os.Bundle
+import android.view.View
+
 /**
  * @author Administrator
  * @date 2018/5/11 0011 下午 2:08
@@ -9,8 +13,8 @@ package com.kaibo.mvp.contract
  */
 
 interface BaseFragmentPresenter<out V : BaseView, out M : BaseModel> : BasePresenter<V, M> {
-    fun onAttach()
-    fun onViewCreated()
+    fun onAttach(context: Context?)
+    fun onViewCreated(view: View, savedInstanceState: Bundle?)
     fun onDestroyView()
     fun onDetach()
 }

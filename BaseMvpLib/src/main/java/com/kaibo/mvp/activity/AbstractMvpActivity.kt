@@ -2,10 +2,10 @@ package com.kaibo.mvp.activity
 
 import android.os.Bundle
 import com.kaibo.common.activity.BaseActivity
-import com.kaibo.common.util.ToastUtils
 import com.kaibo.mvp.contract.BaseView
 import com.kaibo.mvp.model.AbstractModel
 import com.kaibo.mvp.presenter.AbstractPresenter
+import com.kaibo.toast.ToastUtils
 import java.lang.reflect.ParameterizedType
 
 /**
@@ -36,16 +36,28 @@ abstract class AbstractMvpActivity<out P : AbstractPresenter<*, *>, out M : Abst
         mPresenter.setMV(model, this)
     }
 
-    override fun showLoadView() {
+    override fun showLoad() {
 
     }
 
-    override fun hideLoadView() {
+    override fun hideLoad() {
 
     }
 
-    override fun showToast(msg: String) {
-        ToastUtils.showToast(msg)
+    override fun showInfo(msg: String) {
+        ToastUtils.showInfo(msg)
+    }
+
+    override fun showSuccess(msg: String) {
+        ToastUtils.showSuccess(msg)
+    }
+
+    override fun showWarning(msg: String) {
+        ToastUtils.showWarning(msg)
+    }
+
+    override fun showError(msg: String) {
+        ToastUtils.showError(msg)
     }
 
     //------------------------绑定生命周期------------------------

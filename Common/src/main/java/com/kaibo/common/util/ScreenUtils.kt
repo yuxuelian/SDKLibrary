@@ -27,27 +27,34 @@ val Context.statusBarHeight
 
 /**
  * 设置沉浸式
- * title  titleView   没有可以传null
  * isLight是否对状态栏颜色变黑
  */
-fun Activity.immersive(topView: View?, isLight: Boolean) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        with(window) {
-            clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS or
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
-            decorView.systemUiVisibility = android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-                    android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                    if (isLight && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-                    } else {
-                        0
-                    }
-            statusBarColor = Color.TRANSPARENT
+fun Activity.immersive(isLight: Boolean) {
+    when {
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP -> {
+            with(window) {
+                //清除状态栏默认状态
+                clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS or
+                        WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+                //SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN 布局设置为全屏布局
+                //SYSTEM_UI_FLAG_LAYOUT_STABLE
+                //SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                        if (isLight && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                        } else {
+                            0
+                        }
+                statusBarColor = Color.TRANSPARENT
+            }
         }
-        topView?.setPadding(0, this.statusBarHeight, 0, 0)
-    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        topView?.setPadding(0, this.statusBarHeight, 0, 0)
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT -> {
+            this.window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        }
+        else -> {
+            return
+        }
     }
 }
 

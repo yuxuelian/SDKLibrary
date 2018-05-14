@@ -190,6 +190,9 @@ dependencies {
     api "com.google.dagger:dagger:$dagger2_version"
     kapt "com.google.dagger:dagger-compiler:$dagger2_version"
 
+    //api project(":Toast")
+    api('name': 'ToastUtils', 'ext': 'aar')
+
     //-----------------------------Test---------------------------------------
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

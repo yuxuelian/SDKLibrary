@@ -1,7 +1,9 @@
 package com.kaibo.mvp.presenter
 
+import android.content.Context
 import android.os.Bundle
 import android.support.annotation.CheckResult
+import android.view.View
 import com.kaibo.mvp.contract.BaseFragmentPresenter
 import com.kaibo.mvp.contract.BaseModel
 import com.kaibo.mvp.contract.BaseView
@@ -58,7 +60,7 @@ abstract class AbstractFragmentPresenter<out V : BaseView, out M : BaseModel> :
         return RxLifecycleAndroid.bindFragment(lifecycleSubject)
     }
 
-    override fun onAttach() {
+    override fun onAttach(context: Context?) {
         lifecycleSubject.onNext(FragmentEvent.ATTACH)
     }
 
@@ -66,7 +68,7 @@ abstract class AbstractFragmentPresenter<out V : BaseView, out M : BaseModel> :
         lifecycleSubject.onNext(FragmentEvent.CREATE)
     }
 
-    override fun onViewCreated() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         lifecycleSubject.onNext(FragmentEvent.CREATE_VIEW)
     }
 

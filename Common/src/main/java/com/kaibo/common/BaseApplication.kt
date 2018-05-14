@@ -3,7 +3,7 @@ package com.kaibo.common
 import android.app.Application
 import android.content.Context
 import android.support.multidex.MultiDex
-import com.kaibo.common.util.ToastUtils
+import com.kaibo.toast.ToastUtils
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 
