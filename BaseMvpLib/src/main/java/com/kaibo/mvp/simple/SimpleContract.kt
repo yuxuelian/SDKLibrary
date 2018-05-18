@@ -1,8 +1,8 @@
 package com.kaibo.mvp.simple
 
-import com.kaibo.mvp.contract.BaseModel
-import com.kaibo.mvp.contract.BasePresenter
-import com.kaibo.mvp.contract.BaseView
+import com.kaibo.mvp.contract.IBaseModel
+import com.kaibo.mvp.contract.IBasePresenter
+import com.kaibo.mvp.contract.IBaseView
 
 /**
  * @author Administrator
@@ -13,9 +13,9 @@ import com.kaibo.mvp.contract.BaseView
  */
 
 interface SimpleContract {
-    interface Model : BaseModel
+    interface IModel : IBaseModel
 
-    interface View : BaseView
+    interface IView : IBaseView
 
-    interface Presenter : BasePresenter<View, Model>
+    interface IPresenter : IBasePresenter<IView, IModel>
 }

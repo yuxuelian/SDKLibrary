@@ -10,7 +10,7 @@ buildscript {
         android_support_version = '27.1.1'
         androidx_ktx_version = '0.3'
         android_multidex_version = '1.0.3'
-        android_room_version = '1.0.0'
+        android_room_version = '1.1.0'
         rxjava2_version = '2.1.9'
         rxandroid2_version = '2.0.1'
         rxlifecycle_version = '2.2.1'
@@ -38,20 +38,30 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-noarg:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
     }
 }
 
 allprojects {
     repositories {
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public'
+        }
         google()
         jcenter()
         mavenCentral()
         maven {
-            url "https://jitpack.io"
+//            url 'https://jitpack.io'
+            url 'http://localhost:8081/repository/maven-public/'
         }
+
+        maven {
+            url "${RELEASE_REPOSITORY_URL}"
+//            credentials {
+//                username "${NEXUS_USERNAME}"
+//                password "${NEXUS_PASSWORD}"
+//            }
+        }
+
         flatDir {
             dirs 'libs', rootProject.ext.LIBS_DIRS_PATH
         }

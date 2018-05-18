@@ -1,10 +1,11 @@
-include ':app'
-include ':Common'
-include ':SwipeBackLib'
-include ':SwipeMenuLib'
+//独立项目
 include ':WeightLib'
 include ':NdkLib'
 include ':IndicatrorManagerLib'
 include ':WheelView'
+//继承
+include ':Core'
 include ':BaseMvpLib'
-//include ':Toast'
+include ':SwipeBackLib'
+include ':SwipeMenuLib'
+include ':app'

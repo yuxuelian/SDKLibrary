@@ -368,7 +368,7 @@ public class SwipeMenuLayout extends RelativeLayout {
     }
 
     /**
-     * Set the above view content to the given View.
+     * Set the above view content to the given BaseView.
      *
      * @param view The desired content to display.
      */
@@ -397,7 +397,7 @@ public class SwipeMenuLayout extends RelativeLayout {
     }
 
     /**
-     * Set the behind view (menu) content to the given View.
+     * Set the behind view (menu) content to the given BaseView.
      *
      * @param view The desired content to display.
      */
@@ -425,7 +425,7 @@ public class SwipeMenuLayout extends RelativeLayout {
     }
 
     /**
-     * Set the secondary behind view (right menu) content to the given View.
+     * Set the secondary behind view (right menu) content to the given BaseView.
      *
      * @param view The desired content to display.
      */
@@ -876,7 +876,7 @@ public class SwipeMenuLayout extends RelativeLayout {
     }
 
     /**
-     * Add a View ignored by the Touch Down event when mode is Fullscreen
+     * Add a BaseView ignored by the Touch Down event when mode is Fullscreen
      *
      * @param v a view to be ignored
      */
@@ -885,7 +885,7 @@ public class SwipeMenuLayout extends RelativeLayout {
     }
 
     /**
-     * Remove a View ignored by the Touch Down event when mode is Fullscreen
+     * Remove a BaseView ignored by the Touch Down event when mode is Fullscreen
      *
      * @param v a view not wanted to be ignored anymore
      */
@@ -992,7 +992,7 @@ public class SwipeMenuLayout extends RelativeLayout {
     }
 
     /* (non-Javadoc)
-     * @see android.view.View#onSaveInstanceState()
+     * @see android.view.BaseView#onSaveInstanceState()
      */
     @Override
     protected Parcelable onSaveInstanceState() {
@@ -1002,7 +1002,7 @@ public class SwipeMenuLayout extends RelativeLayout {
     }
 
     /* (non-Javadoc)
-     * @see android.view.View#onRestoreInstanceState(android.os.Parcelable)
+     * @see android.view.BaseView#onRestoreInstanceState(android.os.Parcelable)
      */
     @Override
     protected void onRestoreInstanceState(Parcelable state) {

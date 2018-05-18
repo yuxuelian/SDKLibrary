@@ -1,7 +1,7 @@
 package com.kaibo.demo.mvp.presenter
 
 import com.kaibo.demo.mvp.contract.MainContract
-import com.kaibo.mvp.presenter.AbstractPresenter
+import com.kaibo.mvp.presenter.BaseBasePresenter
 
 /**
  * @author Administrator
@@ -11,8 +11,8 @@ import com.kaibo.mvp.presenter.AbstractPresenter
  * description：
  */
 
-class MainPresenter : AbstractPresenter<MainContract.View, MainContract.Model>(),
-        MainContract.Presenter {
+class MainPresenter : BaseBasePresenter<MainContract.IView, MainContract.IModel>(),
+        MainContract.IPresenter {
 
     override fun queryOrderById(id: Long) {
 //        mView.showInfo("查询到订单  id是 $id")
