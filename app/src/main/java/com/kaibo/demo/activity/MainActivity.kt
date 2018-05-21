@@ -9,6 +9,8 @@ import com.kaibo.demo.mvp.presenter.MainPresenter
 import com.kaibo.ndklib.encrypt.EncryptUtils
 import com.kaibo.swipemenulib.activity.BaseSwipeMenuActivity
 import com.kaibo.common.toast.ToastUtils
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.menu_layout.*
 
 class MainActivity : BaseSwipeMenuActivity<MainPresenter, MainModel>(), MainContract.IView {
 
