@@ -9,6 +9,7 @@ import com.kaibo.mvp.model.BaseBaseModel
 import com.kaibo.mvp.presenter.BaseFragmentPresenter
 import com.kaibo.common.toast.ToastUtils
 import java.lang.reflect.ParameterizedType
+import java.lang.reflect.Type
 
 /**
  * @author Administrator
@@ -26,7 +27,7 @@ abstract class BaseMvpFragment<out P : BaseFragmentPresenter<*, *>, out M : Base
     protected val mPresenter: P
 
     init {
-        val actualTypeArguments = (this.javaClass.genericSuperclass as ParameterizedType).actualTypeArguments
+        val actualTypeArguments: Array<Type> = (this.javaClass.genericSuperclass as ParameterizedType).actualTypeArguments
 
         //创建 presenter 实例
         @Suppress("UNCHECKED_CAST")

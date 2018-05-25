@@ -4,8 +4,6 @@ apply plugin: 'kotlin-android'
 android {
     compileSdkVersion 27
 
-
-
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 27
@@ -35,7 +33,7 @@ dependencies {
     //-----------------------------kotlin-------------------------------------
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 //    api project(":Common")
-    api("com.kaibo.sdklib:core:1.0.0") {
+    api("com.kaibo.sdklib:core:1.0.1") {
         //依赖传递
         transitive = true
     }

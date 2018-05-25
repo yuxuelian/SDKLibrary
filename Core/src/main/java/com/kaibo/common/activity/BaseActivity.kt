@@ -1,5 +1,7 @@
 package com.kaibo.common.activity
 
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.annotation.LayoutRes
@@ -55,5 +57,30 @@ abstract class BaseActivity : AppCompatActivity() {
      */
     protected open fun initOnCreate(savedInstanceState: Bundle?) {
 
+    }
+
+    /**
+     * 禁止字体随系统变化
+     */
+    override fun onConfigurationChanged(config: Configuration) {
+        //非默认值
+        if (config.fontScale != 1F) {
+            //调用一次
+            val newConfig = Configuration()
+            newConfig.setToDefaults()//设置默认
+            resources.updateConfiguration(newConfig, resources.displayMetrics)
+        }
+        super.onConfigurationChanged(config)
+    }
+
+    override fun getResources(): Resources {
+        val res = super.getResources()
+        //非默认值
+        if (res.configuration.fontScale != 1F) {
+            val newConfig = Configuration()
+            newConfig.setToDefaults()//设置默认
+            res.updateConfiguration(newConfig, res.displayMetrics)
+        }
+        return res
     }
 }
