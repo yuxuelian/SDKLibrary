@@ -32,11 +32,11 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     //-----------------------------kotlin-------------------------------------
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-//    api project(":Common")
-    api("com.kaibo.sdklib:core:1.0.1") {
-        //依赖传递
-        transitive = true
-    }
+    api project(":Core")
+//    api("com.kaibo.sdklib:core:1.0.0") {
+//        //依赖传递
+//        transitive = true
+//    }
     implementation 'com.android.support:appcompat-v7:27.1.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

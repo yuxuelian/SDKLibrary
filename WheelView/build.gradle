@@ -40,10 +40,12 @@ dependencies {
 //    implementation "android.arch.persistence.room:rxjava2:$android_room_version"
 //    kapt "android.arch.persistence.room:compiler:$android_room_version"
 
-    api("com.kaibo.common:common:1.0.2") {
-        //依赖传递
-        transitive = true
-    }
+//    implementation("com.kaibo.common:common:1.0.2") {
+//        //依赖传递
+//        transitive = true
+//    }
+
+    implementation project(":Core")
 
     annotationProcessor "android.arch.persistence.room:compiler:$android_room_version"
     testImplementation 'junit:junit:4.12'
