@@ -1,6 +1,6 @@
 package com.kaibo.demo
 
-import com.kaibo.common.BaseApplication
+import com.kaibo.core.BaseApplication
 
 /**
  * @author Administrator

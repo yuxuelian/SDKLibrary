@@ -3,11 +3,11 @@ package com.kaibo.mvp.fragment
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import com.kaibo.common.fragment.base.BaseFragment
+import com.kaibo.core.fragment.base.BaseFragment
 import com.kaibo.mvp.contract.IBaseView
 import com.kaibo.mvp.model.BaseBaseModel
 import com.kaibo.mvp.presenter.BaseFragmentPresenter
-import com.kaibo.common.toast.ToastUtils
+import com.kaibo.core.toast.ToastUtils
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 

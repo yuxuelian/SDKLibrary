@@ -5,7 +5,7 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-import com.kaibo.common.BaseApplication;
+import com.kaibo.core.BaseApplication;
 import com.kaibo.wheelview.data.dao.CityDao;
 import com.kaibo.wheelview.data.entity.CityEntity;
 

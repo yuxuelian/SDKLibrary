@@ -1,5 +1,6 @@
 package com.kaibo.demo.entity
 
+import com.kaibo.core.annotation.PoKo
 import com.kaibo.indicatrormanagerlib.entity.OptionEntity
 
 /**
@@ -9,4 +10,5 @@ import com.kaibo.indicatrormanagerlib.entity.OptionEntity
  * email：
  * description：
  */
+@PoKo
 data class TestEntity(var str: String) : OptionEntity

@@ -1,11 +1,11 @@
 package com.kaibo.mvp.activity
 
 import android.os.Bundle
-import com.kaibo.common.activity.BaseActivity
+import com.kaibo.core.activity.BaseActivity
 import com.kaibo.mvp.contract.IBaseView
 import com.kaibo.mvp.model.BaseBaseModel
 import com.kaibo.mvp.presenter.BaseBasePresenter
-import com.kaibo.common.toast.ToastUtils
+import com.kaibo.core.toast.ToastUtils
 import java.lang.reflect.ParameterizedType
 
 /**

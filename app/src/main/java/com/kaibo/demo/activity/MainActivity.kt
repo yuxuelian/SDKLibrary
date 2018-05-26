@@ -1,14 +1,14 @@
 package com.kaibo.demo.activity
 
 import android.os.Bundle
-import com.kaibo.common.util.sign
+import com.kaibo.core.util.sign
 import com.kaibo.demo.R
 import com.kaibo.demo.mvp.contract.MainContract
 import com.kaibo.demo.mvp.model.MainModel
 import com.kaibo.demo.mvp.presenter.MainPresenter
 import com.kaibo.ndklib.encrypt.EncryptUtils
 import com.kaibo.swipemenulib.activity.BaseSwipeMenuActivity
-import com.kaibo.common.toast.ToastUtils
+import com.kaibo.core.toast.ToastUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.menu_layout.*
 

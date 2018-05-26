@@ -6,11 +6,11 @@ apply plugin: 'kotlin-noarg'
 apply plugin: 'kotlin-allopen'
 
 noArg {
-    annotation("com.kaibo.base.annotation.PoKo")
+    annotation("com.kaibo.core.annotation.PoKo")
 }
 
 allOpen {
-    annotation("com.kaibo.base.annotation.PoKo")
+    annotation("com.kaibo.core.annotation.PoKo")
 }
 
 android {
