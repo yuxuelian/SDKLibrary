@@ -1,4 +1,4 @@
-package com.kaibo.weightlib
+package com.kaibo.ui.weight
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -147,26 +147,21 @@ class BottomSheetLayout @JvmOverloads constructor(context: Context, attrs: Attri
         val heightMode = MeasureSpec.getMode(heightMeasureSpec)
         val heightSize = MeasureSpec.getSize(heightMeasureSpec)
 
-        var width = 0
-        var height = 0
-
-        when (widthMode) {
-            MeasureSpec.AT_MOST ->
-                //子元素至多达到指定大小的值
-                width = Math.min(this.layoutParams.width, widthSize)
-            MeasureSpec.EXACTLY ->
-                //父元素决定自元素的确切大小，子元素将被限定在给定的边界里而忽略它本身大小
-                width = widthSize
-            MeasureSpec.UNSPECIFIED -> {
-                //父容器没有对我有任何限制
-                width = this.layoutParams.width
-            }
+        val width = when (widthMode) {
+        //子元素至多达到指定大小的值
+            MeasureSpec.AT_MOST -> Math.min(this.layoutParams.width, widthSize)
+        //父元素决定自元素的确切大小，子元素将被限定在给定的边界里而忽略它本身大小
+            MeasureSpec.EXACTLY -> widthSize
+        //父容器没有对我有任何限制
+            MeasureSpec.UNSPECIFIED -> this.layoutParams.width
+            else -> 0
         }
 
-        when (heightMode) {
-            View.MeasureSpec.AT_MOST -> height = Math.min(this.layoutParams.height, heightSize)
-            View.MeasureSpec.EXACTLY -> height = heightSize
-            View.MeasureSpec.UNSPECIFIED -> height = this.layoutParams.height
+        val height = when (heightMode) {
+            View.MeasureSpec.AT_MOST -> Math.min(this.layoutParams.height, heightSize)
+            View.MeasureSpec.EXACTLY -> heightSize
+            View.MeasureSpec.UNSPECIFIED -> this.layoutParams.height
+            else -> 0
         }
 
         //测量第一个子View的尺寸

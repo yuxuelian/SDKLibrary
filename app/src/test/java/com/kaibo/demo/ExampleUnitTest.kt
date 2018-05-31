@@ -3,6 +3,7 @@ package com.kaibo.demo
 import org.junit.Test
 
 import org.junit.Assert.*
+import java.nio.charset.Charset
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -58,6 +59,16 @@ class ExampleUnitTest {
             arrayList[index] = s
         }
 
+    }
+
+    @Test
+    fun test2() {
+        println(listOf(1, 2, 3, 3, 3) - listOf(3))
+        println(Runtime.getRuntime().availableProcessors())
+        val exec = Runtime.getRuntime().exec("cd ")
+        exec.inputStream.bufferedReader(Charset.forName("gb2312")).lineSequence().forEach {
+            println(it)
+        }
     }
 
     class Aaa() {

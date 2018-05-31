@@ -147,6 +147,18 @@ fun Context.sign(sign: String = "SHA1"): String {
     return byte2HexFormatted(publicKey)
 }
 
+//这里是将获取到得编码进行16进制转换
+private fun byte2HexFormatted(arr: ByteArray): String {
+    val str = StringBuilder(arr.size * 2)
+    arr.forEachIndexed { index, it ->
+        str.append(String.format("%02X", it))
+        if (index != arr.size - 1) {
+            str.append(':')
+        }
+    }
+    return str.toString()
+}
+
 /**
  * 给app设置一个通用字体.一般在Application的onCreate方法中调用
  *
@@ -170,24 +182,25 @@ fun Context.setFont(staticTypefaceFieldName: String, fontName: String) {
  * @param newTypeface             用于替换的字体文件
  */
 private fun replaceFont(staticTypefaceFieldName: String, newTypeface: Typeface) {
-    Typeface::class.java.getDeclaredField(staticTypefaceFieldName)
+    Typeface::class
+            .java
+            .getDeclaredField(staticTypefaceFieldName)
             .apply {
                 isAccessible = true
                 set(null, newTypeface)
             }
 }
 
-//这里是将获取到得编码进行16进制转换
-private fun byte2HexFormatted(arr: ByteArray): String {
-    val str = StringBuilder(arr.size * 2)
-    arr.forEachIndexed { index, it ->
-        str.append(String.format("%02x", it))
-        if (index != arr.size - 1) {
-            str.append(':')
-        }
-    }
-    return str.toString().toUpperCase()
+/**
+ * 以短信的方式发送字符串
+ */
+fun Context.sendSms(smsContent: String) {
+    val smsToUri: Uri = Uri.parse("smsto:")
+    val intent = Intent(Intent.ACTION_SENDTO, smsToUri)
+    intent.putExtra("sms_body", smsContent)
+    this.startActivity(intent)
 }
+
 
 
 

@@ -4,12 +4,12 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <!-- 全面屏适配 -->
-    <meta-data
-        android:name="android.max_aspect"
-        android:value="2.1" />
-
     <application>
+
+        <!-- 全面屏适配 -->
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.1" />
 
     </application>
 </manifest>

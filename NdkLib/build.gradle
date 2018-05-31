@@ -18,10 +18,11 @@ android {
             }
         }
 
-//        ndk {
-//            //只兼容下面的型号
+        ndk {
+            //只兼容下面的型号
 //            abiFilters "armeabi", "armeabi-v7a"
-//        }
+            abiFilters "armeabi-v7a"
+        }
     }
 
     buildTypes {

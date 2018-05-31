@@ -1,5 +1,8 @@
 package com.kaibo.core.util
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import okhttp3.MediaType
 import okhttp3.RequestBody
 

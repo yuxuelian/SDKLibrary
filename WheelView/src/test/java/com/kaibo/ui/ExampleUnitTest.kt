@@ -1,4 +1,4 @@
-package com.kaibo.weightlib
+package com.kaibo.ui
 
 import org.junit.Test
 
