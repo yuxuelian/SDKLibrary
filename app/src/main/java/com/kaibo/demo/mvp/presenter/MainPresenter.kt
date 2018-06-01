@@ -4,11 +4,11 @@ import com.kaibo.demo.mvp.contract.MainContract
 import com.kaibo.mvp.presenter.BaseBasePresenter
 
 /**
- * @author Administrator
- * @date 2018/3/16 0016 下午 1:34
- * GitHub：
- * email：
- * description：
+ * @author:Administrator
+ * @date:2018/3/16 0016 下午 1:34
+ * GitHub:
+ * email:
+ * description:
  */
 
 class MainPresenter : BaseBasePresenter<MainContract.IView, MainContract.IModel>(),

@@ -15,11 +15,11 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * @author Administrator
- * @date 2018/4/23 0023 下午 5:35
- * GitHub：
- * email：
- * description：
+ * @author:Administrator
+ * @date:2018/4/23 0023 下午 5:35
+ * GitHub:
+ * email:
+ * description:
  */
 
 @Database(entities = {CityEntity.class}, version = 1, exportSchema = false)

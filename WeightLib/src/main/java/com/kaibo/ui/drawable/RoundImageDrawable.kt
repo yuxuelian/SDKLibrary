@@ -4,8 +4,8 @@ import android.graphics.*
 import android.graphics.drawable.Drawable
 
 /**
- * @author Administrator
- * @date 2018/5/29 0029 上午 9:46
+ * @author:Administrator
+ * @date:2018/5/29 0029 上午 9:46
  * @GitHub:https://github.com/yuxuelian
  * @email:
  * @description:

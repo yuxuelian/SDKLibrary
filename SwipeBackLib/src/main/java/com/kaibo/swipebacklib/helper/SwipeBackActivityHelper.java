@@ -11,7 +11,7 @@ import com.kaibo.swipebacklib.weight.SwipeBackLayout;
 import com.kaibo.swipebacklib.util.Utils;
 
 /**
- * @author kaibo
+ * @author:kaibo
  */
 public class SwipeBackActivityHelper {
     private Activity mActivity;

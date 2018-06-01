@@ -16,11 +16,11 @@ import com.kaibo.wheelview.weight.WheelView;
 import java.util.List;
 
 /**
- * @author Administrator
- * @date 2018/4/26 0026 上午 8:43
- * @GitHub：https://github.com/yuxuelian
- * @email：
- * @description：
+ * @author:Administrator
+ * @date:2018/4/26 0026 上午 8:43
+ * @GitHub:https://github.com/yuxuelian
+ * @email:
+ * @description:
  */
 
 public class DialogStyleConfig {

@@ -49,7 +49,7 @@ import java.util.List;
 /**
  * Numeric wheel view.
  *
- * @author Administrator
+ * @author:Administrator
  */
 public class WheelView extends View {
 
@@ -473,7 +473,7 @@ public class WheelView extends View {
     }
 
     /**
-     * @param layout the source layout
+     * @param layout the wrapperSource layout
      * @return the desired layout height
      */
     private int getDesiredHeight(LinearLayout layout) {

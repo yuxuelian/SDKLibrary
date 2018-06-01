@@ -15,11 +15,11 @@ import kotlinx.android.synthetic.main.toast_layout.view.*
 
 
 /**
- * @author Administrator
- * @date 2018/5/14 0014 上午 9:09
- * @GitHub：https://github.com/yuxuelian
- * @email：
- * @description：
+ * @author:Administrator
+ * @date:2018/5/14 0014 上午 9:09
+ * @GitHub:https://github.com/yuxuelian
+ * @email:
+ * @description:
  */
 
 object ToastUtils {

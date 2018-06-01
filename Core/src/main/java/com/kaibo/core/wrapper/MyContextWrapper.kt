@@ -10,11 +10,11 @@ import java.util.*
 
 
 /**
- * @author Administrator
- * @date 2018/5/18 0018 下午 6:03
- * @GitHub：https://github.com/yuxuelian
- * @email：
- * @description：
+ * @author:Administrator
+ * @date:2018/5/18 0018 下午 6:03
+ * @GitHub:https://github.com/yuxuelian
+ * @email:
+ * @description:
  */
 class MyContextWrapper(base: Context) : ContextWrapper(base) {
     companion object {

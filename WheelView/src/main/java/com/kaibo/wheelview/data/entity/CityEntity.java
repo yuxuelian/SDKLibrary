@@ -7,11 +7,11 @@ import android.arch.persistence.room.PrimaryKey;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * @author Administrator
- * @date 2018/4/23 0023 下午 5:36
- * GitHub：
- * email：
- * description：数据库中表对应的实体
+ * @author:Administrator
+ * @date:2018/4/23 0023 下午 5:36
+ * GitHub:
+ * email:
+ * description:数据库中表对应的实体
  */
 
 @Entity(tableName = "city")

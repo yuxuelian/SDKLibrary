@@ -5,11 +5,11 @@ import com.kaibo.mvp.contract.IBasePresenter
 import com.kaibo.mvp.contract.IBaseView
 
 /**
- * @author Administrator
- * @date 2018/3/19 0019 上午 11:00
- * GitHub：
- * email：
- * description：
+ * @author:Administrator
+ * @date:2018/3/19 0019 上午 11:00
+ * GitHub:
+ * email:
+ * description:
  */
 interface MainContract {
 

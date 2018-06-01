@@ -8,11 +8,11 @@ import com.kaibo.wheelview.data.entity.CityBean;
 import java.util.List;
 
 /**
- * @author Administrator
- * @date 2018/4/24 0024 上午 8:57
- * GitHub：
- * email：
- * description：
+ * @author:Administrator
+ * @date:2018/4/24 0024 上午 8:57
+ * GitHub:
+ * email:
+ * description:
  */
 
 @Dao

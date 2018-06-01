@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * @author Administrator
+ * @author:Administrator
  * 继承这个View可以轻松实现侧滑菜单效果
  */
 public abstract class BaseSwipeMenuActivity<P extends BaseBasePresenter<?, ?>, M extends BaseBaseModel>

@@ -8,11 +8,11 @@ import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 
 /**
- * @author Administrator
- * @date 2018/3/16 0016 下午 1:45
- * GitHub：
- * email：
- * description：
+ * @author:Administrator
+ * @date:2018/3/16 0016 下午 1:45
+ * GitHub:
+ * email:
+ * description:
  */
 abstract class BaseApplication : Application() {
 

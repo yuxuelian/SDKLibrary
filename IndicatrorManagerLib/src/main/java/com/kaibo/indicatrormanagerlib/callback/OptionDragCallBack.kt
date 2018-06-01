@@ -10,11 +10,11 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.kaibo.indicatrormanagerlib.BaseIndicatorManagerRvAdapter
 
 /**
- * @author Administrator
- * @date 2018/4/13 0013 下午 5:12
- * GitHub：
- * email：
- * description：
+ * @author:Administrator
+ * @date:2018/4/13 0013 下午 5:12
+ * GitHub:
+ * email:
+ * description:
  */
 class OptionDragCallBack(private val mAdapter: BaseIndicatorManagerRvAdapter) : ItemTouchHelper.Callback() {
 

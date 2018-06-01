@@ -11,11 +11,11 @@ import android.view.ViewGroup
 import android.view.WindowManager
 
 /**
- * @author Administrator
- * @date 2018/4/8 0008 下午 12:52
- * GitHub：
- * email：
- * description：对android屏幕尺寸等相关操作的扩展方法
+ * @author:Administrator
+ * @date:2018/4/8 0008 下午 12:52
+ * GitHub:
+ * email:
+ * description:对android屏幕尺寸等相关操作的扩展方法
  */
 
 

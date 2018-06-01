@@ -10,8 +10,8 @@ import android.view.View
 import android.view.animation.LinearInterpolator
 
 /**
- * @author Administrator
- * @date 2018/5/28 0028 上午 9:28
+ * @author:Administrator
+ * @date:2018/5/28 0028 上午 9:28
  * @GitHub:https://github.com/yuxuelian
  * @email:
  * @description:

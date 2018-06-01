@@ -18,11 +18,11 @@ import java.io.InputStream
 
 
 /**
- * @author Administrator
- * @date 2018/3/28 0028 上午 11:40
- * GitHub：
- * email：
- * description：
+ * @author:Administrator
+ * @date:2018/3/28 0028 上午 11:40
+ * GitHub:
+ * email:
+ * description:
  */
 
 @GlideModule

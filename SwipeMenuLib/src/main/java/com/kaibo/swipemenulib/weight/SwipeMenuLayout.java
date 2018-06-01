@@ -30,7 +30,7 @@ import com.kaibo.swipemenulib.weight.CustomViewAbove.OnPageChangeListener;
 import java.lang.reflect.Method;
 
 /**
- * @author Administrator
+ * @author:Administrator
  * 整个视图区域的布局
  */
 public class SwipeMenuLayout extends RelativeLayout {

@@ -3,11 +3,11 @@ package com.kaibo.wheelview.data.entity;
 import java.util.List;
 
 /**
- * @author Administrator
- * @date 2018/4/24 0024 下午 3:42
- * GitHub：
- * email：
- * description：
+ * @author:Administrator
+ * @date:2018/4/24 0024 下午 3:42
+ * GitHub:
+ * email:
+ * description:
  */
 public class ProvinceBean extends BaseAddressBean {
 

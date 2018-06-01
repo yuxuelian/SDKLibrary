@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.view.View
 
 /**
- * @author Administrator
- * @date 2018/5/11 0011 下午 2:08
- * @GitHub：https://github.com/yuxuelian
- * @email：
- * @description：
+ * @author:Administrator
+ * @date:2018/5/11 0011 下午 2:08
+ * @GitHub:https://github.com/yuxuelian
+ * @email:
+ * @description:
  */
 
 interface IBaseFragmentPresenter<out V : IBaseView, out M : IBaseModel> : IBasePresenter<V, M> {

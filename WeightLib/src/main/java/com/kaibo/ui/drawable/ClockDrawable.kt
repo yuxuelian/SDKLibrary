@@ -9,8 +9,8 @@ import java.lang.ref.WeakReference
 import java.util.*
 
 /**
- * @author Administrator
- * @date 2018/5/30 0030 下午 4:43
+ * @author:Administrator
+ * @date:2018/5/30 0030 下午 4:43
  * @GitHub:https://github.com/yuxuelian
  * @email:
  * @description:

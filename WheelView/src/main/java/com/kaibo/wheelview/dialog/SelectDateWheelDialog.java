@@ -18,11 +18,11 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * @author Administrator
- * @date 2018/4/25 0025 上午 10:05
- * GitHub：
- * email：
- * description：日期选择对话框
+ * @author:Administrator
+ * @date:2018/4/25 0025 上午 10:05
+ * GitHub:
+ * email:
+ * description:日期选择对话框
  */
 public class SelectDateWheelDialog extends BaseWheelDialog {
 

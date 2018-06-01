@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Administrator
+ * @author:Administrator
  */
 public abstract class BaseWheelAdapter implements WheelViewAdapter {
 

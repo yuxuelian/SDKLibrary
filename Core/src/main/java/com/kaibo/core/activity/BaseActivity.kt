@@ -9,11 +9,11 @@ import android.support.v7.app.AppCompatActivity
 import com.kaibo.core.util.immersive
 
 /**
- * @author Administrator
- * @date 2018/4/2 0002 上午 10:35
- * GitHub：
- * email：
- * description：
+ * @author:Administrator
+ * @date:2018/4/2 0002 上午 10:35
+ * GitHub:
+ * email:
+ * description:
  */
 
 abstract class BaseActivity : AppCompatActivity() {

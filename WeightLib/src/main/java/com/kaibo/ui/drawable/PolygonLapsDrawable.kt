@@ -11,8 +11,8 @@ import android.support.annotation.ColorInt
 import android.view.animation.LinearInterpolator
 
 /**
- * @author Administrator
- * @date 2018/5/28 0028 下午 2:00
+ * @author:Administrator
+ * @date:2018/5/28 0028 下午 2:00
  * @GitHub:https://github.com/yuxuelian
  * @email:
  * @description:

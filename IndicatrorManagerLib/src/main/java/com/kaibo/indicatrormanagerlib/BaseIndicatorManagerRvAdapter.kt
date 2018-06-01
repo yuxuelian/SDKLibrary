@@ -14,11 +14,11 @@ import com.kaibo.indicatrormanagerlib.entity.OptionEntity
 import java.util.*
 
 /**
- * @author Administrator
- * @date 2018/4/13 0013 上午 11:23
- * GitHub：
- * email：
- * description：
+ * @author:Administrator
+ * @date:2018/4/13 0013 上午 11:23
+ * GitHub:
+ * email:
+ * description:
  */
 abstract class BaseIndicatorManagerRvAdapter(private var allOption: MutableList<OptionEntity>,
                                              private val gridLayoutManager: GridLayoutManager,

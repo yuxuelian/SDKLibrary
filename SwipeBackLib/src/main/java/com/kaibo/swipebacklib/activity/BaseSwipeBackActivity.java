@@ -12,11 +12,11 @@ import com.kaibo.swipebacklib.util.Utils;
 import com.kaibo.swipebacklib.weight.SwipeBackLayout;
 
 /**
- * @author Administrator
- * @date 2018/4/2 0002 上午 10:35
- * GitHub：
- * email：
- * description：继承这个Activity可以轻松实现  侧滑返回
+ * @author:Administrator
+ * @date:2018/4/2 0002 上午 10:35
+ * GitHub:
+ * email:
+ * description:继承这个Activity可以轻松实现  侧滑返回
  */
 
 public abstract class BaseSwipeBackActivity<P extends BaseBasePresenter<?, ?>, M extends BaseBaseModel>

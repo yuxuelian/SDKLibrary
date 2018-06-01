@@ -3,18 +3,18 @@ package com.kaibo.core.util
 import java.util.concurrent.*
 
 /**
- * @author Administrator
- * @date 2018/5/14 0014 下午 3:24
- * @GitHub：https://github.com/yuxuelian
- * @email：
- * @description：
+ * @author:Administrator
+ * @date:2018/5/14 0014 下午 3:24
+ * @GitHub:https://github.com/yuxuelian
+ * @email:
+ * @description:
  */
 object ThreadUtils {
     private val MAX_POOL_SIZ = Runtime.getRuntime().availableProcessors()
     private const val CORE_POOL_SIZE = 0
     private const val KEEP_ALIVE_TIME = 60L
 
-    private fun threadFactory(name: String, daemon: Boolean = false) = ThreadFactory {
+    fun threadFactory(name: String, daemon: Boolean = false) = ThreadFactory {
         val result = Thread(it, name)
         result.isDaemon = daemon
         result

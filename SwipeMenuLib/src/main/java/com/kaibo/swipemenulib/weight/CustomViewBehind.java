@@ -17,7 +17,7 @@ import com.kaibo.swipemenulib.R;
 import com.kaibo.swipemenulib.weight.SwipeMenuLayout.CanvasTransformer;
 
 /**
- * @author Administrator
+ * @author:Administrator
  *
  * @description 侧滑菜单中的根布局
  */

@@ -1,7 +1,7 @@
 package com.kaibo.wheelview.common;
 
 /**
- * @author Administrator
+ * @author:Administrator
  */
 public class ItemsRange {
 

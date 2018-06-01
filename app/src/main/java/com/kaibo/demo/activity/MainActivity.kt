@@ -2,11 +2,14 @@ package com.kaibo.demo.activity
 
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Environment
 import android.support.v4.widget.CircularProgressDrawable
 import com.jaredrummler.android.processes.AndroidProcesses
 import com.jaredrummler.android.processes.models.Statm
 import com.kaibo.core.toast.ToastUtils
 import com.kaibo.core.util.dp2px
+import com.kaibo.core.util.hasExternalStorage
+import com.kaibo.core.util.installApk
 import com.kaibo.core.util.sign
 import com.kaibo.demo.R
 import com.kaibo.demo.mvp.contract.MainContract
@@ -18,6 +21,8 @@ import com.kaibo.ui.drawable.ClockDrawable
 import com.kaibo.ui.drawable.PolygonLapsDrawable
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.menu_layout.*
+import java.io.File
+import java.io.FileOutputStream
 
 class MainActivity : BaseSwipeMenuActivity<MainPresenter, MainModel>(), MainContract.IView {
 
@@ -60,8 +65,15 @@ class MainActivity : BaseSwipeMenuActivity<MainPresenter, MainModel>(), MainCont
                 println(it.oom_adj())
                 println(it.oom_score())
                 println(it.wchan())
-
             }
+
+            println("包名:${this.packageName}")
+
+            if (hasExternalStorage()) {
+                val apkPath = Environment.getExternalStorageDirectory().absolutePath + File.separator + "app-release.apk"
+                installApk(apkPath)
+            }
+
 //            AndroidProcesses.getRunningAppProcesses().forEach {
 //                val stat: Stat = it.stat()
 //                println(stat.comm)
@@ -90,9 +102,10 @@ class MainActivity : BaseSwipeMenuActivity<MainPresenter, MainModel>(), MainCont
 //        imageView.setImageDrawable(circularProgressDrawable)
 //        circularProgressDrawable.start()
 
-        val clockDrawable = ClockDrawable()
-        clockDrawable.start()
-        imageView.setImageDrawable(clockDrawable)
+        //时钟drawable
+//        val clockDrawable = ClockDrawable()
+//        clockDrawable.start()
+//        imageView.setImageDrawable(clockDrawable)
     }
 
     private fun polygonTest() {

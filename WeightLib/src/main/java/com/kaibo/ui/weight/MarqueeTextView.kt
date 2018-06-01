@@ -6,11 +6,11 @@ import android.text.TextUtils
 import android.util.AttributeSet
 
 /**
- * @author Administrator
- * @date 2018/4/3 0003 上午 11:06
- * GitHub：
- * email：
- * description：跑马灯 TextView
+ * @author:Administrator
+ * @date:2018/4/3 0003 上午 11:06
+ * GitHub:
+ * email:
+ * description:跑马灯 TextView
  */
 
 class MarqueeTextView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : AppCompatTextView(context, attrs, defStyleAttr) {

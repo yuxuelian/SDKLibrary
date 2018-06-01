@@ -16,11 +16,11 @@ import com.kaibo.wheelview.listener.OnWheelChangedListener;
 import com.kaibo.wheelview.weight.WheelView;
 
 /**
- * @author Administrator
- * @date 2018/4/25 0025 下午 1:03
- * GitHub：
- * email：
- * description：
+ * @author:Administrator
+ * @date:2018/4/25 0025 下午 1:03
+ * GitHub:
+ * email:
+ * description:
  */
 public abstract class BaseWheelDialog extends Dialog {
 

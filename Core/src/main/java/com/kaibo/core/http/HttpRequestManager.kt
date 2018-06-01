@@ -1,6 +1,6 @@
 package com.kaibo.core.http
 
-import com.kaibo.core.http.progress.ProgressInterceptor
+import com.kaibo.core.http.interceptor.ProgressInterceptor
 import com.kaibo.core.util.isNotEmpty
 import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType
@@ -11,15 +11,14 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 /**
- * @author Administrator
- * @date 2018/3/28 0028 上午 11:21
- * GitHub：
- * email：
- * description：
+ * @author:Administrator
+ * @date:2018/3/28 0028 上午 11:21
+ * GitHub:
+ * email:
+ * description:
  */
 object HttpRequestManager {
 
@@ -51,7 +50,7 @@ object HttpRequestManager {
         OkHttpClient
                 .Builder()
                 //进度拦截器
-                .addInterceptor(ProgressInterceptor)
+                .addInterceptor(ProgressInterceptor())
 //            .addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
                 //失败重连
                 .retryOnConnectionFailure(false)
@@ -79,22 +78,5 @@ object HttpRequestManager {
                 //指定在RxJava的线程池发出请求
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .build()
-    }
-
-    /**
-     * 将路径列表转换成  List<MultipartBody.Part>
-     *  适用于后台一个key接收文件数组的情况
-     */
-    fun filesToMultiBodyParts(key: String, flies: List<String>, mediaType: MediaType?): List<MultipartBody.Part> {
-        val tempMediaType = checkNotNull(mediaType)
-        val list = ArrayList<MultipartBody.Part>()
-        flies.filter {
-            it.isNotEmpty()
-        }.forEach {
-            val file = File(it)
-            val responseBody = RequestBody.create(tempMediaType, file)
-            list.add(MultipartBody.Part.createFormData(key, file.name, responseBody))
-        }
-        return list
     }
 }

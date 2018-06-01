@@ -1,11 +1,15 @@
 package com.kaibo.core
 
 import com.kaibo.core.http.HttpRequestManager
-import com.kaibo.core.http.progress.ProgressListener
+import com.kaibo.core.http.progress.ProgressObservable
+import com.kaibo.core.util.LunarCalendar
+import com.kaibo.core.util.ThreadUtils
+import com.kaibo.core.util.leaveTwoDecimal
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.io.File
 import java.io.FileOutputStream
+import java.util.concurrent.ThreadFactory
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -22,16 +26,28 @@ class ExampleUnitTest {
 
     @Test
     fun test() {
-        val file = File("""H:\\qq.apk""")
+        val file = File("""D:\\qq.apk""")
         if (file.exists()) {
             file.createNewFile()
         }
         val outputStream = FileOutputStream(file)
         val url = "https://qd.myapp.com/myapp/qqteam/Androidlite/qqlite_3.6.3.697_android_r110028_GuanWang_537055374_release_10000484.apk"
-        ProgressListener.downloadProgressListeners[url] = { currentLength, fillLength, done ->
-            //            println("currentLength=$currentLength fillLength=$fillLength  done=$done")
-            println(Thread.currentThread().name)
-        }
+//        val url = "https://www.baidu.com/"
+//        ProgressListener.downloadProgressListeners[url] = { currentLength, fillLength, done ->
+//            //            println("currentLength=$currentLength fillLength=$fillLength  done=$done")
+//            println(Thread.currentThread().name)
+//        }
+
+        ProgressObservable
+                .listener(url)
+                .subscribe({
+                    println("it.currentLength=${it.currentLength}   it.fillLength=${it.fillLength}")
+                }, {
+                    it.printStackTrace()
+                    println("下载出错")
+                }, {
+                    println("下载完成")
+                })
 
         HttpRequestManager
                 .retrofit
@@ -60,5 +76,31 @@ class ExampleUnitTest {
 //        val str: String? = null
 //        println(str.toString())
 //        println("123".isNotEmpty())
+
+        val threadFactory: ThreadFactory = ThreadUtils.threadFactory("kaibo")
+        val newThread = threadFactory.newThread {
+            while (true) {
+                println("123")
+                Thread.sleep(1000)
+            }
+        }
+        newThread.start()
+        while (true) {
+
+        }
+    }
+
+    @Test
+    fun test3() {
+        println(0.125456.leaveTwoDecimal())
+    }
+
+    @Test
+    fun test4() {
+        val l = LunarCalendar(System.currentTimeMillis())
+        println("节气:" + l.termString)
+        println("干支历:" + l.cyclicalDateString)
+        println("星期:" + l.week)
+        println("农历:" + l.lunarDateString)
     }
 }

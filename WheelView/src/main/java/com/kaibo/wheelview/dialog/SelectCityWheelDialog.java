@@ -24,12 +24,12 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * 邮箱：568966289@qq.com
+ * 邮箱:568966289@qq.com
  * <p>
- * 创建时间：2017/4/19 14:44
- * 备注：
+ * 创建时间:2017/4/19 14:44
+ * 备注:
  *
- * @author Administrator
+ * @author:Administrator
  */
 
 public class SelectCityWheelDialog extends BaseWheelDialog {

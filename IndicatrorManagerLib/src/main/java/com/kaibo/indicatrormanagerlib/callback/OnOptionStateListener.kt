@@ -4,11 +4,11 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.kaibo.indicatrormanagerlib.entity.OptionEntity
 
 /**
- * @author Administrator
- * @date 2018/4/14 0014 上午 10:26
- * GitHub：
- * email：
- * description：
+ * @author:Administrator
+ * @date:2018/4/14 0014 上午 10:26
+ * GitHub:
+ * email:
+ * description:
  */
 interface OnOptionStateListener {
     /**

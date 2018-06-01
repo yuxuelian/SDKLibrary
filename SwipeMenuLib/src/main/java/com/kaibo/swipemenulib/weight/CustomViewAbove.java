@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Administrator
+ * @author:Administrator
  */
 public class CustomViewAbove extends ViewGroup {
 
@@ -329,7 +329,7 @@ public class CustomViewAbove extends ViewGroup {
         for (View v : mIgnoredViews) {
             //v.getHitRect(rect);
             //这里稍微做了修改,v.getHitRect只能获取相对于父控件的位置，如果v嵌套在一个viewGroup中，
-            // 那么添加这个v到mIgnoredViews中将不会游任何效果,例如：LinearLayout嵌套一个ViewerPager,将ViewPager加入mIgnoredViews后，依然无法接受到滑动事件
+            // 那么添加这个v到mIgnoredViews中将不会游任何效果,例如:LinearLayout嵌套一个ViewerPager,将ViewPager加入mIgnoredViews后，依然无法接受到滑动事件
             //所以这里改为v.getGlobalVisibleRect，获取v在整个屏幕的坐标，而MotionEvent的坐标也是相对于整个屏幕来测量的
             v.getGlobalVisibleRect(rect);
             if (rect.contains((int) ev.getX(), (int) ev.getY())) {

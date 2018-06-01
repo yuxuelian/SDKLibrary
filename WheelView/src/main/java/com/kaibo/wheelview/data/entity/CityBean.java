@@ -6,11 +6,11 @@ import android.arch.persistence.room.PrimaryKey;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * @author Administrator
- * @date 2018/4/24 0024 下午 3:43
- * GitHub：
- * email：
- * description：
+ * @author:Administrator
+ * @date:2018/4/24 0024 下午 3:43
+ * GitHub:
+ * email:
+ * description:
  */
 
 public class CityBean extends BaseAddressBean {

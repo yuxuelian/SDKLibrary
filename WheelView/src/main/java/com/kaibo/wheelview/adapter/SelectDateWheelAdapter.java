@@ -16,11 +16,11 @@ import java.util.List;
 import io.reactivex.annotations.NonNull;
 
 /**
- * @author Administrator
- * @date 2018/4/24 23:03
- * @GitHub：https://github.com/yuxuelian
- * @email：kaibo1hao@gmail.com
- * @description：时间选择适配器
+ * @author:Administrator
+ * @date:2018/4/24 23:03
+ * @GitHub:https://github.com/yuxuelian
+ * @email:kaibo1hao@gmail.com
+ * @description:时间选择适配器
  */
 public class SelectDateWheelAdapter extends BaseWheelAdapter {
 

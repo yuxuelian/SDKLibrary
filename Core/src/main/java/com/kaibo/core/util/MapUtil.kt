@@ -4,11 +4,11 @@ import java.util.*
 import kotlin.collections.Map.Entry
 
 /**
- * @author Administrator
- * @date 2018/4/13 0013 下午 1:32
- * GitHub：
- * email：
- * description：
+ * @author:Administrator
+ * @date:2018/4/13 0013 下午 1:32
+ * GitHub:
+ * email:
+ * description:
  */
 object MapUtil {
 

@@ -8,8 +8,11 @@ import android.graphics.Typeface
 import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.net.Uri
+import android.os.Build
 import android.os.Environment
 import android.provider.Settings
+import android.support.v4.content.FileProvider
+import androidx.core.net.toUri
 import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.FileInputStream
@@ -19,11 +22,11 @@ import java.security.cert.X509Certificate
 
 
 /**
- * @author Administrator
- * @date 2018/4/20 0020 下午 2:42
- * GitHub：
- * email：
- * description：
+ * @author:Administrator
+ * @date:2018/4/20 0020 下午 2:42
+ * GitHub:
+ * email:
+ * description:
  */
 
 /**
@@ -128,7 +131,7 @@ fun isRoot() = !(!File("/system/bin/su").exists() && !File("/system/xbin/su").ex
  */
 fun Context.sign(sign: String = "SHA1"): String {
     @SuppressLint("PackageManagerGetSignatures")
-    val cert = this.packageManager
+    val cert: ByteArray = this.packageManager
             .getPackageInfo(this.packageName, PackageManager.GET_SIGNATURES)
             .signatures[0]
             .toByteArray()
@@ -139,7 +142,7 @@ fun Context.sign(sign: String = "SHA1"): String {
             .generateCertificate(ByteArrayInputStream(cert)) as X509Certificate)
 
     //获得公钥
-    val publicKey = MessageDigest
+    val publicKey: ByteArray = MessageDigest
             .getInstance(sign)
             .digest(x509Certificate.encoded)
 
@@ -201,9 +204,32 @@ fun Context.sendSms(smsContent: String) {
     this.startActivity(intent)
 }
 
+/**
+ * 安装APK.
+ *
+ * @param apkPath 安装包的路径
+ */
+fun Context.installApk(apkPath: String) {
+    val intent = Intent(Intent.ACTION_VIEW)
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    val uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        FileProvider.getUriForFile(this, "${this.packageName}.fileProvider", apkPath.toFile())
+    } else {
+        apkPath.toUri()
+    }
+    intent.setDataAndType(uri, "application/vnd.android.package-archive")
+    this.startActivity(intent)
+}
 
-
-
+/**
+ * 卸载APP
+ *
+ * @param packageName 包名
+ */
+fun Context.uninstallApk(packageName: String) {
+    this.startActivity(Intent(Intent.ACTION_DELETE, "package:$packageName".toUri()))
+}
 
 
 

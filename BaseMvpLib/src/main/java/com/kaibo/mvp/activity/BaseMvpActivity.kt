@@ -9,10 +9,10 @@ import com.kaibo.core.toast.ToastUtils
 import java.lang.reflect.ParameterizedType
 
 /**
- * @author Administrator
- * @date 2018/3/19 0019 上午 11:32
- * GitHub：
- * email：
+ * @author:Administrator
+ * @date:2018/3/19 0019 上午 11:32
+ * GitHub:
+ * email:
  * description:
  * Activity  中使用    MVP
  */

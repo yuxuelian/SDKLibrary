@@ -14,11 +14,11 @@ import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 
 /**
- * @author Administrator
- * @date 2018/3/16 0016 上午 11:41
- * GitHub：
- * email：
- * description：
+ * @author:Administrator
+ * @date:2018/3/16 0016 上午 11:41
+ * GitHub:
+ * email:
+ * description:
  * 非  MVP 的 Activity  继承
  */
 

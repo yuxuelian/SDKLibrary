@@ -15,11 +15,11 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import java.lang.IllegalStateException
 
 /**
- * @author Administrator
- * @date 2018/3/22 21:57
- * GitHub：
- * email：
- * description：抽屉布局   上拉查看更多
+ * @author:Administrator
+ * @date:2018/3/22 21:57
+ * GitHub:
+ * email:
+ * description:抽屉布局   上拉查看更多
  */
 class BottomSheetLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : ViewGroup(context, attrs, defStyleAttr) {
 

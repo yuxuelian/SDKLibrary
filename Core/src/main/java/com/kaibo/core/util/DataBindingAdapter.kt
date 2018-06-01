@@ -5,11 +5,11 @@ import android.widget.ImageView
 import com.kaibo.core.glide.GlideApp
 
 /**
- * @author Administrator
- * @date 2018/2/22 0022 上午 9:44
- * GitHub：
- * email：
- * description：
+ * @author:Administrator
+ * @date:2018/2/22 0022 上午 9:44
+ * GitHub:
+ * email:
+ * description:
  */
 
 @BindingAdapter("glide_load_img")

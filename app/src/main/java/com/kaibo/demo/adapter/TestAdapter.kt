@@ -11,11 +11,11 @@ import com.kaibo.indicatrormanagerlib.entity.OptionEntity
 import kotlinx.android.synthetic.main.item_option.view.*
 
 /**
- * @author Administrator
- * @date 2018/4/13 0013 下午 3:49
- * GitHub：
- * email：
- * description：
+ * @author:Administrator
+ * @date:2018/4/13 0013 下午 3:49
+ * GitHub:
+ * email:
+ * description:
  */
 
 class TestAdapter(allOption: MutableList<OptionEntity>,

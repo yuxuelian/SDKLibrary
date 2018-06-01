@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * @author Administrator
+ * @author:Administrator
  */
 public class WheelRecycle {
 

@@ -1,17 +1,16 @@
 package com.kaibo.core.util
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import okhttp3.MediaType
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import java.io.File
 
 /**
- * @author Administrator
- * @date 2018/4/2 0002 上午 11:50
- * GitHub：
- * email：
- * description：
+ * @author:Administrator
+ * @date:2018/4/2 0002 上午 11:50
+ * GitHub:
+ * email:
+ * description:
  */
 
 /**
@@ -19,8 +18,20 @@ import okhttp3.RequestBody
  */
 fun String.isNotEmpty() = this != "" && this.toLowerCase() != "null"
 
-
 /**
  * 将  String  转成  RequestBody
  */
 fun String.toRequestBody(mediaType: MediaType) = RequestBody.create(mediaType, this)
+
+/**
+ * 将路径列表转换成  List<MultipartBody.Part>
+ *  适用于后台一个key接收文件数组的情况
+ */
+fun List<String>.toMultiBodyParts(key: String, mediaType: MediaType?) = this
+        .filter { it.isNotEmpty() }
+        .map {
+            val file = File(it)
+            MultipartBody.Part.createFormData(key, file.name, RequestBody.create(mediaType, file))
+        }
+
+fun String.toFile() = File(this)

@@ -12,11 +12,11 @@ import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
 /**
- * @author Administrator
- * @date 2018/5/11 0011 下午 2:01
- * @GitHub：https://github.com/yuxuelian
- * @email：
- * @description：
+ * @author:Administrator
+ * @date:2018/5/11 0011 下午 2:01
+ * @GitHub:https://github.com/yuxuelian
+ * @email:
+ * @description:
  * Fragment中使用    MVP
  */
 

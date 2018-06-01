@@ -11,7 +11,7 @@ import android.view.animation.Interpolator;
 import android.widget.Scroller;
 
 /**
- * @author Administrator
+ * @author:Administrator
  */
 public class WheelScroller {
 

@@ -1,11 +1,11 @@
 package com.kaibo.ndklib.encrypt;
 
 /**
- * @author Administrator
- * @date 2018/4/11 0011 下午 3:18
- * GitHub：
- * email：
- * description：
+ * @author:Administrator
+ * @date:2018/4/11 0011 下午 3:18
+ * GitHub:
+ * email:
+ * description:
  */
 public class EncryptUtils {
 

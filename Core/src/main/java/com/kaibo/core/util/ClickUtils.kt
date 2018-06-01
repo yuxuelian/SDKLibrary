@@ -1,11 +1,11 @@
 package com.kaibo.core.util
 
 /**
- * @author Administrator
- * @date 2018/5/14 0014 上午 10:47
- * @GitHub：https://github.com/yuxuelian
- * @email：
- * @description：
+ * @author:Administrator
+ * @date:2018/5/14 0014 上午 10:47
+ * @GitHub:https://github.com/yuxuelian
+ * @email:
+ * @description:
  */
 
 private var mExitTime: Long = 0

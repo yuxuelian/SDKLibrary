@@ -14,11 +14,11 @@ import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 
 /**
- * @author Administrator
- * @date 2018/3/17 16:33
- * GitHub：
- * email：
- * description：
+ * @author:Administrator
+ * @date:2018/3/17 16:33
+ * GitHub:
+ * email:
+ * description:
  * 将生命周期发送到出去   用于实现自动解除对RxJava的订阅
  */
 abstract class BaseBasePresenter<out V : IBaseView, out M : IBaseModel> :
