@@ -18,7 +18,6 @@ abstract class BaseDialogFragment : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(getLayoutRes(), container, false)
-
     }
 
     abstract fun getLayoutRes(): Int

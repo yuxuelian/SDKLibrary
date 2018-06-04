@@ -3,7 +3,6 @@ package com.kaibo.wheelview.data;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
-import android.content.Context;
 
 import com.kaibo.core.BaseApplication;
 import com.kaibo.wheelview.data.dao.CityDao;
@@ -29,7 +28,7 @@ public abstract class BaseCityDatabase extends RoomDatabase {
 
     static {
         //获取一下数据库文件
-        File database = BaseApplication.Companion.getInstance().getDatabasePath(BaseCityDatabase.CITY_NAME);
+        File database = BaseApplication.Companion.getBaseApplication().getDatabasePath(BaseCityDatabase.CITY_NAME);
         FileOutputStream fileOutputStream = null;
         InputStream inputStream = null;
         try {
@@ -37,7 +36,7 @@ public abstract class BaseCityDatabase extends RoomDatabase {
             if (!database.exists() && database.createNewFile()) {
                 byte[] buf = new byte[1024];
                 fileOutputStream = new FileOutputStream(database);
-                inputStream = BaseApplication.Companion.getInstance().getAssets().open("city.db");
+                inputStream = BaseApplication.Companion.getBaseApplication().getAssets().open("city.db");
                 int len;
                 while ((len = inputStream.read(buf)) != -1) {
                     fileOutputStream.write(buf, 0, len);
@@ -69,7 +68,7 @@ public abstract class BaseCityDatabase extends RoomDatabase {
         if (baseCityDatabase == null) {
             synchronized (BaseCityDatabase.class) {
                 if (baseCityDatabase == null) {
-                    baseCityDatabase = Room.databaseBuilder(BaseApplication.Companion.getInstance(), BaseCityDatabase.class, "city.db").build();
+                    baseCityDatabase = Room.databaseBuilder(BaseApplication.Companion.getBaseApplication(), BaseCityDatabase.class, "city.db").build();
                 }
             }
         }

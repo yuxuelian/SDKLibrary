@@ -1,12 +1,14 @@
 package com.kaibo.core.activity
 
+import android.content.Context
 import android.content.res.Configuration
-import android.content.res.Resources
+import android.os.Build
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.annotation.LayoutRes
 import android.support.v7.app.AppCompatActivity
 import com.kaibo.core.util.immersive
+import com.kaibo.core.util.changeLanguage
 
 /**
  * @author:Administrator
@@ -59,28 +61,19 @@ abstract class BaseActivity : AppCompatActivity() {
 
     }
 
-    /**
-     * 禁止字体随系统变化
-     */
-    override fun onConfigurationChanged(config: Configuration) {
-        //非默认值
-        if (config.fontScale != 1F) {
-            //调用一次
-            val newConfig = Configuration()
-            newConfig.setToDefaults()//设置默认
-            resources.updateConfiguration(newConfig, resources.displayMetrics)
-        }
-        super.onConfigurationChanged(config)
-    }
+//    override fun attachBaseContext(newBase: Context) {
+//        super.attachBaseContext(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            newBase.changeLanguage("zh")
+//        } else {
+//            newBase
+//        })
+//    }
 
-    override fun getResources(): Resources {
-        val res = super.getResources()
-        //非默认值
-        if (res.configuration.fontScale != 1F) {
-            val newConfig = Configuration()
-            newConfig.setToDefaults()//设置默认
-            res.updateConfiguration(newConfig, res.displayMetrics)
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        if (newConfig.fontScale != 1F) {
+            //强制设置为1F
+            newConfig.fontScale = 1F
         }
-        return res
+        super.onConfigurationChanged(newConfig)
     }
 }

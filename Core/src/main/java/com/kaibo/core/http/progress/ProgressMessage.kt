@@ -10,5 +10,8 @@ package com.kaibo.core.http.progress
 
 data class ProgressMessage(
         val currentLength: Long,
-        val fillLength: Long
-)
+        val fillLength: Long,
+        val done: Boolean = false
+) {
+    val rate: Double = (currentLength / fillLength).toDouble()
+}

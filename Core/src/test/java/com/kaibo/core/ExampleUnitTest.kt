@@ -92,6 +92,7 @@ class ExampleUnitTest {
 
     @Test
     fun test3() {
+        println((1000L / 1234L).toFloat())
         println(0.125456.leaveTwoDecimal())
     }
 

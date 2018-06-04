@@ -2,6 +2,7 @@ package com.kaibo.core.util
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Typeface
@@ -10,6 +11,7 @@ import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
+import android.os.LocaleList
 import android.provider.Settings
 import android.support.v4.content.FileProvider
 import androidx.core.net.toUri
@@ -19,6 +21,7 @@ import java.io.FileInputStream
 import java.security.MessageDigest
 import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
+import java.util.*
 
 
 /**
@@ -229,6 +232,27 @@ fun Context.installApk(apkPath: String) {
  */
 fun Context.uninstallApk(packageName: String) {
     this.startActivity(Intent(Intent.ACTION_DELETE, "package:$packageName".toUri()))
+}
+
+/**
+ * 包装Context用于更换语言
+ */
+fun Context.changeLanguage(language: String): ContextWrapper {
+    val newLocale = Locale(language)
+    val configuration = this.resources.configuration
+
+    //首先将设置改变成默认值
+    configuration.setToDefaults()
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        configuration.setLocale(newLocale)
+        val localeList = LocaleList(newLocale)
+        LocaleList.setDefault(localeList)
+        configuration.locales = localeList
+    } else {
+        configuration.setLocale(newLocale)
+    }
+    return ContextWrapper(this.createConfigurationContext(configuration))
 }
 
 

@@ -83,6 +83,7 @@ class ProgressRequestBody(key: String, private val requestBody: RequestBody) : R
                     super.write(source, byteCount)
                     if (byteCount == -1L) {
                         //完成
+                        observableEmitter?.onNext(ProgressMessage(fillLength, fillLength, true))
                         observableEmitter?.onComplete()
                     } else {
                         currentLength += byteCount

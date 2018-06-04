@@ -61,9 +61,9 @@ fun Activity.immersive(isLight: Boolean) {
 /**
  * 给Fragment中顶部的View设置状态栏高度的内边距
  */
-fun Fragment.immersiveTopView(view: View) {
+fun Fragment.immersiveTopView(topView: View) {
     context?.let {
-        view.setPadding(0, it.statusBarHeight, 0, 0)
+        topView.setPadding(0, it.statusBarHeight, 0, 0)
     }
 }
 

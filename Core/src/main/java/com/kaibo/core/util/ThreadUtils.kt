@@ -21,7 +21,7 @@ object ThreadUtils {
     }
 
     /**
-     * 全局线程池
+     * 普通线程池
      */
     val executorService: ExecutorService by lazy {
         ThreadPoolExecutor(CORE_POOL_SIZE,

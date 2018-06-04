@@ -5,6 +5,7 @@ import android.support.annotation.CallSuper
 import android.support.annotation.CheckResult
 import android.support.annotation.LayoutRes
 import android.support.v7.app.AppCompatActivity
+import com.kaibo.core.glide.GlideApp
 import com.trello.rxlifecycle2.LifecycleProvider
 import com.trello.rxlifecycle2.LifecycleTransformer
 import com.trello.rxlifecycle2.RxLifecycle
@@ -26,11 +27,15 @@ abstract class BaseRxLifecycleActivity : BaseActivity(), LifecycleProvider<Activ
 
     private val lifecycleSubject = BehaviorSubject.create<ActivityEvent>()
 
+
+    override fun setContentViewBefore(savedInstanceState: Bundle?) {
+        lifecycleSubject.onNext(ActivityEvent.CREATE)
+    }
+
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        lifecycleSubject.onNext(ActivityEvent.CREATE)
-        setContentView(getLayoutRes())
+
     }
 
     @CallSuper

@@ -62,6 +62,7 @@ class ProgressResponseBody(key: String, private val response: ResponseBody) : Re
                     val bytesRead: Long = super.read(sink, byteCount)
                     if (bytesRead == -1L) {
                         //下载完成
+                        observableEmitter?.onNext(ProgressMessage(currentLength, fillLength, true))
                         observableEmitter?.onComplete()
                     } else {
                         currentLength += bytesRead

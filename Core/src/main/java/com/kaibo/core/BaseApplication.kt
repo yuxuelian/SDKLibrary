@@ -17,20 +17,20 @@ import com.orhanobut.logger.Logger
 abstract class BaseApplication : Application() {
 
     companion object {
-        val Instance by lazy {
-            _instance
+        val baseApplication by lazy {
+            this.INSTANCE
         }
-        private lateinit var _instance: BaseApplication
+        private lateinit var INSTANCE: BaseApplication
     }
 
     override fun attachBaseContext(base: Context?) {
-        super.attachBaseContext(base)
         MultiDex.install(this)
+        super.attachBaseContext(base)
     }
 
     override fun onCreate() {
         super.onCreate()
-        _instance = this
+        INSTANCE = this
         ToastUtils.init(this)
         Logger.addLogAdapter(AndroidLogAdapter())
     }

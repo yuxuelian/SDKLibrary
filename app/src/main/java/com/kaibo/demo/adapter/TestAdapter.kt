@@ -5,6 +5,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.util.Log
 import android.view.View
 import com.chad.library.adapter.base.BaseViewHolder
+import com.kaibo.core.glide.GlideApp
 import com.kaibo.demo.entity.TestEntity
 import com.kaibo.indicatrormanagerlib.BaseIndicatorManagerRvAdapter
 import com.kaibo.indicatrormanagerlib.entity.OptionEntity
@@ -48,5 +49,4 @@ class TestAdapter(allOption: MutableList<OptionEntity>,
     override fun convertTabCenter(centerTabView: View) {
         Log.d("TestAdapter", "调用 convertTabCenter")
     }
-
 }
