@@ -1,10 +1,10 @@
 package com.kaibo.core.fragment.base
 
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import dagger.android.support.DaggerAppCompatDialogFragment
 
 /**
  * @author:Administrator
@@ -14,7 +14,7 @@ import android.view.ViewGroup
  * description:
  */
 
-abstract class BaseDialogFragment : DialogFragment() {
+abstract class BaseDialogFragment : DaggerAppCompatDialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(getLayoutRes(), container, false)

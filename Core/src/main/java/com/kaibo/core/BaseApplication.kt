@@ -1,11 +1,11 @@
 package com.kaibo.core
 
-import android.app.Application
 import android.content.Context
 import android.support.multidex.MultiDex
 import com.kaibo.core.toast.ToastUtils
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
+import dagger.android.support.DaggerApplication
 
 /**
  * @author:Administrator
@@ -14,7 +14,7 @@ import com.orhanobut.logger.Logger
  * email:
  * description:
  */
-abstract class BaseApplication : Application() {
+abstract class BaseApplication : DaggerApplication() {
 
     companion object {
         val baseApplication by lazy {

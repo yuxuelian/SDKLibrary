@@ -1,14 +1,11 @@
 package com.kaibo.core.activity
 
-import android.content.Context
 import android.content.res.Configuration
-import android.os.Build
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.annotation.LayoutRes
-import android.support.v7.app.AppCompatActivity
 import com.kaibo.core.util.immersive
-import com.kaibo.core.util.changeLanguage
+import dagger.android.support.DaggerAppCompatActivity
 
 /**
  * @author:Administrator
@@ -18,7 +15,7 @@ import com.kaibo.core.util.changeLanguage
  * description:
  */
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : DaggerAppCompatActivity() {
 
     /**
      * 是否沉浸式   Pair  的第一个参数表示是否沉浸式
