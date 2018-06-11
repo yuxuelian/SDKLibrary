@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_indicator_manger_test.*
 
 class IndicatorMangerTestActivity : AppCompatActivity() {
 
-    private val select = mutableListOf("要闻", "体育", "新时代", "汽车", "时尚", "国际", "电影", "财经", "游戏", "科技", "房产", "政务", "图片", "独家",
+    private val select = listOf("要闻", "体育", "新时代", "汽车", "时尚", "国际", "电影", "财经", "游戏", "科技", "房产", "政务", "图片", "独家",
             "娱乐", "军事", "文化", "视频", "股票", "动漫", "理财", "电竞", "数码", "星座", "教育", "美容", "旅游",
             "重庆", "深圳", "汕头", "东莞", "佛山", "江门", "湛江", "惠州", "中山", "揭阳", "韶关", "茂名", "肇庆", "梅州", "汕尾", "河源", "云浮", "四川")
             .map {

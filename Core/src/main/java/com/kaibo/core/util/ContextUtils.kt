@@ -226,7 +226,7 @@ fun Context.installApk(apkPath: String) {
 }
 
 /**
- * 卸载APP
+ * 跳转到卸载指定APP的activity
  *
  * @param packageName 包名
  */

@@ -11,7 +11,7 @@ buildscript {
         androidx_ktx_version = '0.3'
         android_multidex_version = '1.0.3'
         android_room_version = '1.1.0'
-        rxjava2_version = '2.1.9'
+        rxjava2_version = '2.1.14'
         rxandroid2_version = '2.0.1'
         rxlifecycle_version = '2.2.1'
         okhttp_version = '3.9.1'
@@ -27,6 +27,7 @@ buildscript {
         constraint_layout_version = '1.1.0'
         rxjava2_kotlin_version = '2.2.0'
         dagger2_version = '2.15'
+        rxbinding_version = '2.1.1'
     }
 
     repositories {

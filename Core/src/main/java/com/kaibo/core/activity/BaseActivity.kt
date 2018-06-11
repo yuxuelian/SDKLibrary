@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.annotation.LayoutRes
+import android.support.v7.app.AppCompatActivity
 import com.kaibo.core.util.immersive
 import dagger.android.support.DaggerAppCompatActivity
 
@@ -15,7 +16,7 @@ import dagger.android.support.DaggerAppCompatActivity
  * description:
  */
 
-abstract class BaseActivity : DaggerAppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity() {
 
     /**
      * 是否沉浸式   Pair  的第一个参数表示是否沉浸式

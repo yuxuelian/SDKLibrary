@@ -1,5 +1,6 @@
 package com.kaibo.core
 
+import android.app.Application
 import android.content.Context
 import android.support.multidex.MultiDex
 import com.kaibo.core.toast.ToastUtils
@@ -14,7 +15,7 @@ import dagger.android.support.DaggerApplication
  * email:
  * description:
  */
-abstract class BaseApplication : DaggerApplication() {
+abstract class BaseApplication : Application() {
 
     companion object {
         val baseApplication by lazy {

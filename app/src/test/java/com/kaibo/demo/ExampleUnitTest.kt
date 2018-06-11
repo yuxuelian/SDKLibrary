@@ -4,6 +4,7 @@ import org.junit.Test
 
 import org.junit.Assert.*
 import java.nio.charset.Charset
+import java.util.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -58,17 +59,20 @@ class ExampleUnitTest {
         arrayList2.forEachIndexed { index, s ->
             arrayList[index] = s
         }
-
     }
 
     @Test
     fun test2() {
         println(listOf(1, 2, 3, 3, 3) - listOf(3))
         println(Runtime.getRuntime().availableProcessors())
-        val exec = Runtime.getRuntime().exec("cd ")
-        exec.inputStream.bufferedReader(Charset.forName("gb2312")).lineSequence().forEach {
-            println(it)
-        }
+        val exec: Process = Runtime.getRuntime().exec("netstat -ano ")
+        exec
+                .inputStream
+                .bufferedReader(Charset.forName("gb2312"))
+                .lineSequence()
+                .forEach {
+                    println(it)
+                }
     }
 
     class Aaa() {
@@ -84,6 +88,49 @@ class ExampleUnitTest {
     @Test
     fun test3() {
         println(String.format("%02x", 20 and 0xFF))
+    }
+
+    fun fab(): (() -> Int) {
+        var last = 0
+        var current = 1
+
+        return {
+            val result = current
+            current += last
+            last = result
+            result
+        }
+
+    }
+
+    @Test
+    fun test5() {
+        val fab = fab()
+        (1..10).forEach {
+            println(fab())
+        }
+    }
+
+
+    @Test
+    fun test4() {
+        //        println(System.`in`.bufferedReader().readLine())
+        fun lambda(it: Int): Int {
+            return if (it <= 2) {
+                1
+            } else {
+                lambda(it - 1) + lambda(it - 2)
+            }
+        }
+        println(lambda(10))
+        (1..10).map(::lambda).forEach(::println)
+    }
+
+    @Test
+    fun test6() {
+        (0..100).forEach {
+            println(UUID.randomUUID())
+        }
     }
 
 }

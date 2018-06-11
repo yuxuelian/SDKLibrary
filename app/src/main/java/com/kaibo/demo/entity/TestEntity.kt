@@ -10,5 +10,6 @@ import com.kaibo.indicatrormanagerlib.entity.OptionEntity
  * email:
  * description:
  */
+
 @PoKo
 data class TestEntity(var str: String) : OptionEntity
