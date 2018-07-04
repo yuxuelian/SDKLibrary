@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import com.kaibo.core.fragment.base.BaseFragment
 import com.kaibo.mvp.contract.IBaseView
-import com.kaibo.mvp.model.BaseBaseModel
+import com.kaibo.mvp.model.BaseModel
 import com.kaibo.mvp.presenter.BaseFragmentPresenter
 import com.kaibo.core.toast.ToastUtils
 import java.lang.reflect.ParameterizedType
@@ -20,7 +20,7 @@ import java.lang.reflect.Type
  * Fragment中使用    MVP
  */
 
-abstract class BaseMvpFragment<out P : BaseFragmentPresenter<*, *>, out M : BaseBaseModel> :
+abstract class BaseMvpFragment<out P : BaseFragmentPresenter<*, *>, out M : BaseModel> :
         BaseFragment(),
         IBaseView {
 

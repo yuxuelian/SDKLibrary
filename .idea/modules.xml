@@ -2,11 +2,17 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Skin/Appcompat/Appcompat.iml" filepath="$PROJECT_DIR$/Skin/Appcompat/Appcompat.iml" />
       <module fileurl="file://$PROJECT_DIR$/BaseMvpLib/BaseMvpLib.iml" filepath="$PROJECT_DIR$/BaseMvpLib/BaseMvpLib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Core/Core.iml" filepath="$PROJECT_DIR$/Core/Core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Skin/Cardview/Cardview.iml" filepath="$PROJECT_DIR$/Skin/Cardview/Cardview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Skin/ConstraintLayout/ConstraintLayout.iml" filepath="$PROJECT_DIR$/Skin/ConstraintLayout/ConstraintLayout.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Skin/Design/Design.iml" filepath="$PROJECT_DIR$/Skin/Design/Design.iml" />
       <module fileurl="file://$PROJECT_DIR$/IndicatrorManagerLib/IndicatrorManagerLib.iml" filepath="$PROJECT_DIR$/IndicatrorManagerLib/IndicatrorManagerLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/NdkLib/NdkLib.iml" filepath="$PROJECT_DIR$/NdkLib/NdkLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/SDKLibrary.iml" filepath="$PROJECT_DIR$/SDKLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Core/SDKLibrary-Core.iml" filepath="$PROJECT_DIR$/Core/SDKLibrary-Core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Skin/Skin.iml" filepath="$PROJECT_DIR$/Skin/Skin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Skin/Core/Skin-Core.iml" filepath="$PROJECT_DIR$/Skin/Core/Skin-Core.iml" />
       <module fileurl="file://$PROJECT_DIR$/SwipeBackLib/SwipeBackLib.iml" filepath="$PROJECT_DIR$/SwipeBackLib/SwipeBackLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/SwipeMenuLib/SwipeMenuLib.iml" filepath="$PROJECT_DIR$/SwipeMenuLib/SwipeMenuLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/WeightLib/WeightLib.iml" filepath="$PROJECT_DIR$/WeightLib/WeightLib.iml" />

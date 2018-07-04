@@ -1,7 +1,7 @@
 package com.kaibo.demo.mvp.presenter
 
 import com.kaibo.demo.mvp.contract.MainContract
-import com.kaibo.mvp.presenter.BaseBasePresenter
+import com.kaibo.mvp.presenter.BasePresenter
 
 /**
  * @author:Administrator
@@ -11,7 +11,7 @@ import com.kaibo.mvp.presenter.BaseBasePresenter
  * description:
  */
 
-class MainPresenter : BaseBasePresenter<MainContract.IView, MainContract.IModel>(),
+class MainPresenter : BasePresenter<MainContract.IView, MainContract.IModel>(),
         MainContract.IPresenter {
 
     override fun queryOrderById(id: Long) {

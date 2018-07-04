@@ -34,8 +34,7 @@ internal class FixedSpeedScroller constructor(context: Context, private val mDur
 }
 
 fun ViewPager.setDuration(duration: Int) {
-    ViewPager::class
-            .java
+    ViewPager::class.java
             .getDeclaredField("mScroller")
             .apply {
                 isAccessible = true

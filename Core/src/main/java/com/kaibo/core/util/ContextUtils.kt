@@ -32,33 +32,33 @@ import java.util.*
  * description:
  */
 
-/**
- * 根据手机分辨率从DP转成PX
- * @param dpValue
- * @return
- */
-fun Context.dp2px(dpValue: Float) = dpValue * resources.displayMetrics.density
-
-/**
- * 将sp值转换为px值，保证文字大小不变
- * @param spValue
- * @return
- */
-fun Context.sp2px(spValue: Float) = spValue * resources.displayMetrics.scaledDensity
-
-/**
- * 根据手机的分辨率PX(像素)转成DP
- * @param pxValue
- * @return
- */
-fun Context.px2dp(pxValue: Float) = pxValue / resources.displayMetrics.density
-
-/**
- * 将px值转换为sp值，保证文字大小不变
- * @param pxValue
- * @return
- */
-fun Context.px2sp(pxValue: Float) = pxValue / resources.displayMetrics.scaledDensity
+///**
+// * 根据手机分辨率从DP转成PX
+// * @param dpValue
+// * @return
+// */
+//fun Context.dp2px(dpValue: Float) = dpValue * resources.displayMetrics.density
+//
+///**
+// * 将sp值转换为px值，保证文字大小不变
+// * @param spValue
+// * @return
+// */
+//fun Context.sp2px(spValue: Float) = spValue * resources.displayMetrics.scaledDensity
+//
+///**
+// * 根据手机的分辨率PX(像素)转成DP
+// * @param pxValue
+// * @return
+// */
+//fun Context.px2dp(pxValue: Float) = pxValue / resources.displayMetrics.density
+//
+///**
+// * 将px值转换为sp值，保证文字大小不变
+// * @param pxValue
+// * @return
+// */
+//fun Context.px2sp(pxValue: Float) = pxValue / resources.displayMetrics.scaledDensity
 
 /**
  * 获取当前APP的版本号

@@ -1,33 +1,37 @@
 package com.kaibo.demo.activity
 
 import android.Manifest
+import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
+import android.support.v4.view.PagerAdapter
+import android.support.v4.view.ViewPager
+import android.view.View
+import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.RxView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.jaredrummler.android.processes.AndroidProcesses
 import com.jaredrummler.android.processes.models.Statm
 import com.kaibo.core.toast.ToastUtils
-import com.kaibo.core.util.hasExternalStorage
-import com.kaibo.core.util.installApk
-import com.kaibo.core.util.sign
-import com.kaibo.core.util.statusBarHeight
+import com.kaibo.core.util.*
 import com.kaibo.demo.R
+import com.kaibo.demo.adapter.LoopPagerAdapter
 import com.kaibo.demo.mvp.contract.MainContract
 import com.kaibo.demo.mvp.model.MainModel
 import com.kaibo.demo.mvp.presenter.MainPresenter
 import com.kaibo.ndklib.encrypt.EncryptUtils
 import com.kaibo.swipemenulib.activity.BaseSwipeMenuActivity
+import com.kaibo.swipemenulib.weight.CustomViewAbove
 import com.kaibo.ui.drawable.ClockDrawable
 import com.kaibo.ui.drawable.PolygonLapsDrawable
 import com.orhanobut.logger.Logger
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.menu_layout.*
 import java.io.File
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 class MainActivity : BaseSwipeMenuActivity<MainPresenter, MainModel>(), MainContract.IView {
@@ -67,6 +71,12 @@ class MainActivity : BaseSwipeMenuActivity<MainPresenter, MainModel>(), MainCont
                 })
                 .subscribe {
 
+                }
+
+        RxView
+                .clicks(resume)
+                .subscribe {
+                    startFloatingService()
                 }
 
         RxView
@@ -130,6 +140,55 @@ class MainActivity : BaseSwipeMenuActivity<MainPresenter, MainModel>(), MainCont
 
         roundDrawableTest()
 //        polygonTest()
+
+        val data = intArrayOf(R.drawable.a, R.drawable.b).toMutableList()
+        val first = data.last()
+        val last = data.first()
+        data.add(0, first)
+        data.add(last)
+
+        loopPager.adapter = LoopPagerAdapter(this, data)
+        //默认选择到第一张
+        loopPager.setCurrentItem(1, false)
+        loopPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            var position = 0
+
+            override fun onPageScrollStateChanged(state: Int) {
+                Logger.d("---------$state")
+                if (state == ViewPager.SCROLL_STATE_IDLE) {
+                    if (position == data.size - 1) {
+                        //已经到了最后一张的时候,这种情况手动滑动和自动滑动都会出现,主动将currentItem移动到1的位置去
+                        loopPager.setCurrentItem(1, false)
+                    } else if (position == 0) {
+                        //移动到最后一张   这种情况只有手动滑动的时候才会出现,将currentItem移动到倒数第二张
+                        loopPager.setCurrentItem(data.size - 2, false)
+                    }
+                }
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+                this.position = position
+            }
+        })
+
+//        loopPager.setDuration(1000)
+
+        //启动轮播
+        Observable
+                .interval(2, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    loopPager.currentItem = loopPager.currentItem + 1
+                }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        checkOverlayPermission(requestCode, resultCode, data)
     }
 
     private fun roundDrawableTest() {

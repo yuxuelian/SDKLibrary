@@ -3,8 +3,8 @@ package com.kaibo.mvp.activity
 import android.os.Bundle
 import com.kaibo.core.activity.BaseActivity
 import com.kaibo.mvp.contract.IBaseView
-import com.kaibo.mvp.model.BaseBaseModel
-import com.kaibo.mvp.presenter.BaseBasePresenter
+import com.kaibo.mvp.model.BaseModel
+import com.kaibo.mvp.presenter.BasePresenter
 import com.kaibo.core.toast.ToastUtils
 import java.lang.reflect.ParameterizedType
 
@@ -17,7 +17,7 @@ import java.lang.reflect.ParameterizedType
  * Activity  中使用    MVP
  */
 
-abstract class BaseMvpActivity<out P : BaseBasePresenter<*, *>, out M : BaseBaseModel> :
+abstract class BaseMvpActivity<out P : BasePresenter<*, *>, out M : BaseModel> :
         BaseActivity(), IBaseView {
 
     protected val mPresenter: P

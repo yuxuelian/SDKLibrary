@@ -31,7 +31,6 @@ object ProgressObservable {
                 .doOnError {
                     observableEmitters.remove(key)
                 }
-                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
     }
 

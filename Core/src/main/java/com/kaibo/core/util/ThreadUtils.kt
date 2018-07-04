@@ -9,12 +9,13 @@ import java.util.concurrent.*
  * @email:
  * @description:
  */
+
 object ThreadUtils {
     private val MAX_POOL_SIZ = Runtime.getRuntime().availableProcessors()
     private const val CORE_POOL_SIZE = 0
     private const val KEEP_ALIVE_TIME = 60L
 
-    fun threadFactory(name: String, daemon: Boolean = false) = ThreadFactory {
+    private fun threadFactory(name: String, daemon: Boolean = false) = ThreadFactory {
         val result = Thread(it, name)
         result.isDaemon = daemon
         result

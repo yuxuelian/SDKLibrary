@@ -1,6 +1,6 @@
 package com.kaibo.mvp.simple
 
-import com.kaibo.mvp.presenter.BaseBasePresenter
+import com.kaibo.mvp.presenter.BasePresenter
 
 /**
  * @author:Administrator
@@ -11,7 +11,7 @@ import com.kaibo.mvp.presenter.BaseBasePresenter
  */
 
 
-class SimpleBasePresenter : BaseBasePresenter<SimpleContract.IView, SimpleContract.IModel>(), SimpleContract.IPresenter {
+class SimpleBasePresenter : BasePresenter<SimpleContract.IView, SimpleContract.IModel>(), SimpleContract.IPresenter {
 
 
 }

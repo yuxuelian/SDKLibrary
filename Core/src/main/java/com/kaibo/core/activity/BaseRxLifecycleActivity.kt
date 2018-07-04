@@ -3,9 +3,6 @@ package com.kaibo.core.activity
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.annotation.CheckResult
-import android.support.annotation.LayoutRes
-import android.support.v7.app.AppCompatActivity
-import com.kaibo.core.glide.GlideApp
 import com.trello.rxlifecycle2.LifecycleProvider
 import com.trello.rxlifecycle2.LifecycleTransformer
 import com.trello.rxlifecycle2.RxLifecycle

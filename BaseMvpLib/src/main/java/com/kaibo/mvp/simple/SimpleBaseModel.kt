@@ -1,6 +1,6 @@
 package com.kaibo.mvp.simple
 
-import com.kaibo.mvp.model.BaseBaseModel
+import com.kaibo.mvp.model.BaseModel
 
 /**
  * @author:Administrator
@@ -10,6 +10,6 @@ import com.kaibo.mvp.model.BaseBaseModel
  * @description:
  */
 
-class SimpleBaseModel : BaseBaseModel(), SimpleContract.IModel {
+class SimpleBaseModel : BaseModel(), SimpleContract.IModel {
 
 }

@@ -203,17 +203,14 @@ class ClockDrawable : Drawable(), Animatable {
             //是否继续绘制
             if (clockDrawable?.mRunning == true) {
                 this.sendEmptyMessageDelayed(0, 1000L)
-            } else {
-                return
+                //获取当前的时间
+                val calendar: Calendar = Calendar.getInstance()
+                clockDrawable.hour = calendar.get(Calendar.HOUR)
+                clockDrawable.minute = calendar.get(Calendar.MINUTE)
+                clockDrawable.second = calendar.get(Calendar.SECOND)
+                //触发重绘
+                clockDrawable.invalidateSelf()
             }
-
-            //获取当前的时间
-            val calendar: Calendar = Calendar.getInstance()
-            clockDrawable.hour = calendar.get(Calendar.HOUR)
-            clockDrawable.minute = calendar.get(Calendar.MINUTE)
-            clockDrawable.second = calendar.get(Calendar.SECOND)
-            //触发重绘
-            clockDrawable.invalidateSelf()
         }
     }
 }

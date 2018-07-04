@@ -2,6 +2,7 @@ package com.kaibo.core
 
 import com.kaibo.core.http.HttpRequestManager
 import com.kaibo.core.http.progress.ProgressObservable
+import com.kaibo.core.util.CommandUtil
 import com.kaibo.core.util.LunarCalendar
 import com.kaibo.core.util.ThreadUtils
 import com.kaibo.core.util.leaveTwoDecimal
@@ -92,8 +93,10 @@ class ExampleUnitTest {
 
     @Test
     fun test3() {
-        println((1000L / 1234L).toFloat())
-        println(0.125456.leaveTwoDecimal())
+//        println((1000L / 1234L).toFloat())
+//        println(0.125456.leaveTwoDecimal())
+
+        println(CommandUtil.exec("netstat -ano"))
     }
 
     @Test

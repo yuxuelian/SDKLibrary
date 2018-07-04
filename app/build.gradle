@@ -26,8 +26,14 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        buildConfigField 'String','APP_HOST','\"http://www.baidu.com\"'
-        buildConfigField 'int','COUNT',"${versionCode}"
+        multiDexEnabled true
+
+        ndk {
+            abiFilters 'armeabi-v7a', 'x86'
+        }
+
+        buildConfigField 'String', 'APP_HOST', '\"http://www.baidu.com\"'
+        buildConfigField 'int', 'COUNT', "${versionCode}"
     }
 
     signingConfigs {

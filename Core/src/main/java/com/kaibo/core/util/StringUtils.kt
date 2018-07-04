@@ -4,6 +4,7 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
+import java.security.MessageDigest
 
 /**
  * @author:Administrator
@@ -35,3 +36,21 @@ fun List<String>.toMultiBodyParts(key: String, mediaType: MediaType?) = this
         }
 
 fun String.toFile() = File(this)
+
+fun String.toMd5(): String {
+    val md5: MessageDigest = MessageDigest.getInstance("MD5")
+    md5.update(this.toByteArray())
+    val encryption: ByteArray = md5.digest()
+    val strBuf = StringBuffer()
+
+    encryption.forEach {
+        val enc = it.toInt()
+        if (Integer.toHexString(0xFF and enc).length == 1) {
+            strBuf.append("0").append(Integer.toHexString(0xFF and enc))
+        } else {
+            strBuf.append(Integer.toHexString(0xFF and enc))
+        }
+    }
+
+    return strBuf.toString()
+}

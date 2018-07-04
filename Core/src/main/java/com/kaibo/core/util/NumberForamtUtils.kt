@@ -13,4 +13,15 @@ package com.kaibo.core.util
  */
 fun Double.leaveTwoDecimal(): Double = Math.round(this * 100) / 100.0
 
+/**
+ * 字符转数字  如 '0'  ---->   0
+ * 只有0-9字符可以转换   其他字符返回 -1
+ */
+fun Char.toInt2() = if (this in '0'..'9') {
+    this.toInt() - 48
+} else {
+    throw IllegalArgumentException("只能转换数字字符")
+}
+
+
 
