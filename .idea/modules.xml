@@ -11,6 +11,7 @@
       <module fileurl="file://$PROJECT_DIR$/NdkLib/NdkLib.iml" filepath="$PROJECT_DIR$/NdkLib/NdkLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/SDKLibrary.iml" filepath="$PROJECT_DIR$/SDKLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/Core/SDKLibrary-Core.iml" filepath="$PROJECT_DIR$/Core/SDKLibrary-Core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Share/Share.iml" filepath="$PROJECT_DIR$/Share/Share.iml" />
       <module fileurl="file://$PROJECT_DIR$/Skin/Skin.iml" filepath="$PROJECT_DIR$/Skin/Skin.iml" />
       <module fileurl="file://$PROJECT_DIR$/Skin/Core/Skin-Core.iml" filepath="$PROJECT_DIR$/Skin/Core/Skin-Core.iml" />
       <module fileurl="file://$PROJECT_DIR$/SwipeBackLib/SwipeBackLib.iml" filepath="$PROJECT_DIR$/SwipeBackLib/SwipeBackLib.iml" />

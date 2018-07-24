@@ -8,8 +8,11 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.WindowManager
 import com.kaibo.core.R
+import com.kaibo.core.dialog.LoadingDialog
+import com.kaibo.core.util.bindToAutoDispose
 import com.kaibo.core.util.immersive
 import com.tbruyelle.rxpermissions2.RxPermissions
+import com.uber.autodispose.AutoDisposeConverter
 
 /**
  * @author:Administrator
@@ -28,17 +31,32 @@ abstract class BaseActivity : AppCompatActivity() {
         RxPermissions(this)
     }
 
+    private val loadingDialog by lazy {
+        LoadingDialog()
+    }
+
+    protected fun showLoading() {
+        if (!loadingDialog.isVisible) {
+            loadingDialog.show(supportFragmentManager)
+        }
+    }
+
+    protected fun hideLoading() {
+        if (loadingDialog.isVisible) {
+            loadingDialog.hide()
+        }
+    }
+
     /**
      * 是否沉浸式   Pair  的第一个参数表示是否沉浸式
      * 第二个参数    当第一个参数为true的时候  第二个参数才生效
      * 第二个参数表示是否使状态栏的颜色变成黑色
      */
-    protected open fun enableImmersive(): Pair<Boolean, Boolean> = Pair(true, true)
+    protected open fun enableImmersive(): Pair<Boolean, Boolean> = Pair(true, false)
 
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         //禁止应用内截屏
         window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
 
@@ -119,4 +137,9 @@ abstract class BaseActivity : AppCompatActivity() {
         }
         super.onConfigurationChanged(newConfig)
     }
+
+    /**
+     * Rx绑定生命周期
+     */
+    protected fun <T> bindLifecycle(): AutoDisposeConverter<T> = bindToAutoDispose(this)
 }

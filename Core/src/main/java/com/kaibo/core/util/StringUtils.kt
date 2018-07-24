@@ -22,16 +22,18 @@ fun String.isNotEmpty() = this != "" && this.toLowerCase() != "null"
 /**
  * 将  String  转成  RequestBody
  */
-fun String.toRequestBody(mediaType: MediaType) = RequestBody.create(mediaType, this)
+fun String.toRequestBody(mediaType: MediaType): RequestBody = RequestBody.create(mediaType, this)
 
 /**
  * 将路径列表转换成  List<MultipartBody.Part>
  *  适用于后台一个key接收文件数组的情况
  */
-fun List<String>.toMultiBodyParts(key: String, mediaType: MediaType?) = this
-        .filter { it.isNotEmpty() }
+fun List<String>.toMultiBodyParts(key: String, mediaType: MediaType?): List<MultipartBody.Part> = this
+        .filter {
+            it.isNotEmpty()
+        }
         .map {
-            val file = File(it)
+            val file = it.toFile()
             MultipartBody.Part.createFormData(key, file.name, RequestBody.create(mediaType, file))
         }
 

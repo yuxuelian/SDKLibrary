@@ -4,11 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Typeface
 import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.net.Uri
+import android.os.BatteryManager
 import android.os.Build
 import android.os.Environment
 import android.os.LocaleList
@@ -253,6 +255,17 @@ fun Context.changeLanguage(language: String): ContextWrapper {
         configuration.setLocale(newLocale)
     }
     return ContextWrapper(this.createConfigurationContext(configuration))
+}
+
+/**
+ * 获取电池电量  返回 0-100 的整数
+ */
+fun Context.getBatteryLevel(): Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+    val batteryManager: BatteryManager = getSystemService(Context.BATTERY_SERVICE) as BatteryManager
+    batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
+} else {
+    val intent: Intent = ContextWrapper(applicationContext).registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+    intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1) * 100 / intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
 }
 
 

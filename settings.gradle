@@ -3,6 +3,7 @@ include ':WeightLib'
 include ':NdkLib'
 include ':IndicatrorManagerLib'
 include ':WheelView'
+include ':Share'
 //继承
 include ':Core'
 include ':BaseMvpLib'
