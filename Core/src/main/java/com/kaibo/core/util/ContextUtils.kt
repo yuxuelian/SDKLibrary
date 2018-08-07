@@ -4,22 +4,23 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Typeface
 import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.net.Uri
-import android.os.BatteryManager
 import android.os.Build
 import android.os.Environment
 import android.os.LocaleList
 import android.provider.Settings
 import android.support.v4.content.FileProvider
 import androidx.core.net.toUri
+import com.kaibo.core.R
 import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.FileInputStream
+import java.io.FileOutputStream
 import java.security.MessageDigest
 import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
@@ -202,11 +203,84 @@ private fun replaceFont(staticTypefaceFieldName: String, newTypeface: Typeface) 
 /**
  * 以短信的方式发送字符串
  */
-fun Context.sendSms(smsContent: String) {
-    val smsToUri: Uri = Uri.parse("smsto:")
-    val intent = Intent(Intent.ACTION_SENDTO, smsToUri)
-    intent.putExtra("sms_body", smsContent)
-    this.startActivity(intent)
+fun Context.sendStringBySms(smsContent: String) {
+    val sendIntent = Intent(Intent.ACTION_SENDTO, "smsto:".toUri())
+    sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    sendIntent.putExtra("sms_body", smsContent)
+    this.startActivity(sendIntent)
+}
+
+/**
+ * 分享Bitmap
+ */
+fun Context.shareBitmapBySms(bitmap: Bitmap) {
+    val sendIntent = Intent(Intent.ACTION_SEND, "mms://".toUri())
+    //彩信附件类型
+    sendIntent.type = "image/JPEG"
+
+    //只选择短信的方式,过滤掉其他方式
+    packageManager
+            .queryIntentActivities(sendIntent, 0)
+            .forEach {
+                val activityName = it.activityInfo.name
+                if (activityName.toLowerCase().contains("mms") || activityName.toLowerCase().contains("messaging")) {
+                    //指定包名
+                    sendIntent.setPackage(it.activityInfo.packageName)
+                }
+            }
+    sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    //彩信的附件
+    val qrCodeBitmapFile = File(filesDir.path, "qr_code_bitmap.jpg")
+    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(qrCodeBitmapFile))
+    val uriForFile = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        //7.0以上使用FileProvider
+        FileProvider.getUriForFile(this, "${this.packageName}.fileProvider", qrCodeBitmapFile)
+    } else {
+        qrCodeBitmapFile.absolutePath.toUri()
+    }
+    sendIntent.putExtra(Intent.EXTRA_STREAM, uriForFile)
+    startActivity(Intent.createChooser(sendIntent, getString(R.string.share_qr_code_text)))
+}
+
+fun Context.shareBitmap(bitmap: Bitmap) {
+    val type = "image/JPEG"
+    val qrCodeBitmapFile = File(filesDir.path, "qr_code_bitmap.jpg")
+    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(qrCodeBitmapFile))
+    val imgUri: Uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        //7.0以上使用FileProvider
+        FileProvider.getUriForFile(this, "${this.packageName}.fileProvider", qrCodeBitmapFile)
+    } else {
+        qrCodeBitmapFile.absolutePath.toUri()
+    }
+    val shareIntent = Intent(Intent.ACTION_SEND)
+    shareIntent.type = type
+    val intentList: MutableList<Intent> = ArrayList()
+    var lastPackage = ""
+    packageManager
+            .queryIntentActivities(shareIntent, 0)
+            .forEach {
+                val activityName = it.activityInfo.name.toLowerCase()
+                val packageName = it.activityInfo.packageName
+                // 这里可以根据实际需要进行过滤
+                if (activityName.contains("mobileqq") || activityName.contains("tencent.mm") || activityName.contains("tencent.pb")
+                        || activityName.toLowerCase().contains("mms") || activityName.toLowerCase().contains("messaging")) {
+                    if (lastPackage != packageName) {
+                        val intent = Intent(Intent.ACTION_SEND)
+                        shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        intent.type = type
+                        intent.putExtra(Intent.EXTRA_STREAM, imgUri)
+                        intent.setPackage(packageName)
+                        intentList.add(intent)
+                        lastPackage = packageName
+                    }
+                }
+            }
+    val openInChooser: Intent = Intent.createChooser(intentList.removeAt(0), "请选择您要分享的方式")
+    val extraIntents = Array(intentList.size) {
+        intentList[it]
+    }
+    openInChooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, extraIntents)
+    startActivity(openInChooser)
 }
 
 /**
@@ -228,7 +302,7 @@ fun Context.installApk(apkPath: String) {
 }
 
 /**
- * 跳转到卸载指定APP的activity
+ * 卸载APP
  *
  * @param packageName 包名
  */
@@ -255,17 +329,6 @@ fun Context.changeLanguage(language: String): ContextWrapper {
         configuration.setLocale(newLocale)
     }
     return ContextWrapper(this.createConfigurationContext(configuration))
-}
-
-/**
- * 获取电池电量  返回 0-100 的整数
- */
-fun Context.getBatteryLevel(): Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-    val batteryManager: BatteryManager = getSystemService(Context.BATTERY_SERVICE) as BatteryManager
-    batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
-} else {
-    val intent: Intent = ContextWrapper(applicationContext).registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
-    intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1) * 100 / intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
 }
 
 

@@ -12,13 +12,13 @@
     android:paddingTop="4dp">
 
     <ImageView
-        android:id="@+id/toastIcon"
+        android:id="@+id/toast_icon"
         android:layout_width="22dp"
         android:layout_height="22dp"
         tools:src="@drawable/icon_error" />
 
     <TextView
-        android:id="@+id/toastText"
+        android:id="@+id/toast_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"

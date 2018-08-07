@@ -149,11 +149,11 @@ dependencies {
     //    }
 
     //----------------------------------RxBinding----------------------------------
-    api "com.jakewharton.rxbinding2:rxbinding:$rxbinding_version"
-    api "com.jakewharton.rxbinding2:rxbinding-design:$rxbinding_version"
-    api "com.jakewharton.rxbinding2:rxbinding-support-v4:$rxbinding_version"
-    api "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:$rxbinding_version"
-    api "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:$rxbinding_version"
+    api "com.jakewharton.rxbinding2:rxbinding-kotlin:$rxbinding_version"
+    api "com.jakewharton.rxbinding2:rxbinding-design-kotlin:$rxbinding_version"
+    api "com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin:$rxbinding_version"
+    api "com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:$rxbinding_version"
+    api "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7-kotlin:$rxbinding_version"
 
     //-----------------------------retrofit-----------------------------------
     api "com.squareup.okhttp3:okhttp:$okhttp_version"

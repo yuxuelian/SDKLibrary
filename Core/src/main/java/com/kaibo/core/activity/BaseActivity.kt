@@ -1,5 +1,6 @@
 package com.kaibo.core.activity
 
+import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.os.Bundle
 import android.support.annotation.CallSuper
@@ -59,6 +60,9 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         //禁止应用内截屏
         window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
+
+        //禁止横屏
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         //默认设置Activity为沉浸式
         val (enableImmersive, isLight) = enableImmersive()
