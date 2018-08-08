@@ -2,7 +2,7 @@ package com.kaibo.core.util
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.kaibo.core.http.WrapObjectDataBean
+import com.kaibo.core.http.BaseBean
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
@@ -13,6 +13,10 @@ import java.lang.reflect.Type
  * @email：kaibo1hao@gmail.com
  * @description：
  */
+
+//val gson = GsonBuilder()
+//        .excludeFieldsWithoutExposeAnnotation()
+//        .create()
 
 val gson = Gson()
 
@@ -33,17 +37,17 @@ inline fun <reified T> String.fromJsonArray(): List<T> {
 /**
  * JSon数据是包裹的JsonObject
  */
-inline fun <reified T> String.fromWrapJsonObject(): WrapObjectDataBean<T> {
-    val type = ParameterizedTypeImpl(WrapObjectDataBean::class.java, arrayOf(T::class.java))
+inline fun <reified T> String.fromWrapJsonObject(): BaseBean<T> {
+    val type = ParameterizedTypeImpl(BaseBean::class.java, arrayOf(T::class.java))
     return gson.fromJson(this, type)
 }
 
 /**
  * JSon数据是包裹的JsonArray
  */
-inline fun <reified T> String.fromWrapJsonArray(): WrapObjectDataBean<List<T>> {
+inline fun <reified T> String.fromWrapJsonArray(): BaseBean<List<T>> {
     val listType = ParameterizedTypeImpl(List::class.java, arrayOf(T::class.java))
-    val type = ParameterizedTypeImpl(WrapObjectDataBean::class.java, arrayOf(listType))
+    val type = ParameterizedTypeImpl(BaseBean::class.java, arrayOf(listType))
     return gson.fromJson(this, type)
 }
 

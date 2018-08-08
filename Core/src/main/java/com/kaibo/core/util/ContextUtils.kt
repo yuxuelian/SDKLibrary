@@ -15,8 +15,6 @@ import android.os.Environment
 import android.os.LocaleList
 import android.provider.Settings
 import android.support.v4.content.FileProvider
-import androidx.core.net.toUri
-import com.kaibo.core.R
 import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.FileInputStream
@@ -25,6 +23,7 @@ import java.security.MessageDigest
 import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 /**
@@ -210,60 +209,31 @@ fun Context.sendStringBySms(smsContent: String) {
     this.startActivity(sendIntent)
 }
 
-/**
- * 分享Bitmap
- */
-fun Context.shareBitmapBySms(bitmap: Bitmap) {
-    val sendIntent = Intent(Intent.ACTION_SEND, "mms://".toUri())
-    //彩信附件类型
-    sendIntent.type = "image/JPEG"
-
-    //只选择短信的方式,过滤掉其他方式
-    packageManager
-            .queryIntentActivities(sendIntent, 0)
-            .forEach {
-                val activityName = it.activityInfo.name
-                if (activityName.toLowerCase().contains("mms") || activityName.toLowerCase().contains("messaging")) {
-                    //指定包名
-                    sendIntent.setPackage(it.activityInfo.packageName)
-                }
-            }
-    sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    //彩信的附件
-    val qrCodeBitmapFile = File(filesDir.path, "qr_code_bitmap.jpg")
-    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(qrCodeBitmapFile))
-    val uriForFile = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        //7.0以上使用FileProvider
-        FileProvider.getUriForFile(this, "${this.packageName}.fileProvider", qrCodeBitmapFile)
-    } else {
-        qrCodeBitmapFile.absolutePath.toUri()
-    }
-    sendIntent.putExtra(Intent.EXTRA_STREAM, uriForFile)
-    startActivity(Intent.createChooser(sendIntent, getString(R.string.share_qr_code_text)))
-}
-
 fun Context.shareBitmap(bitmap: Bitmap) {
-    val type = "image/JPEG"
-    val qrCodeBitmapFile = File(filesDir.path, "qr_code_bitmap.jpg")
-    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(qrCodeBitmapFile))
+    val type = "image/*"
+    val qrCodeBitmapFile = File(Environment.getExternalStorageDirectory(), "qr_code_bitmap.png")
+    bitmap.compress(Bitmap.CompressFormat.PNG, 100, FileOutputStream(qrCodeBitmapFile))
     val imgUri: Uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         //7.0以上使用FileProvider
         FileProvider.getUriForFile(this, "${this.packageName}.fileProvider", qrCodeBitmapFile)
     } else {
-        qrCodeBitmapFile.absolutePath.toUri()
+        Uri.fromFile(qrCodeBitmapFile)
     }
     val shareIntent = Intent(Intent.ACTION_SEND)
     shareIntent.type = type
     val intentList: MutableList<Intent> = ArrayList()
     var lastPackage = ""
-    packageManager
-            .queryIntentActivities(shareIntent, 0)
+    packageManager.queryIntentActivities(shareIntent, 0)
             .forEach {
                 val activityName = it.activityInfo.name.toLowerCase()
                 val packageName = it.activityInfo.packageName
                 // 这里可以根据实际需要进行过滤
-                if (activityName.contains("mobileqq") || activityName.contains("tencent.mm") || activityName.contains("tencent.pb")
-                        || activityName.toLowerCase().contains("mms") || activityName.toLowerCase().contains("messaging")) {
+                if (activityName.toLowerCase().contains("mobileqq") ||
+                        activityName.toLowerCase().contains("tencent.mm") ||
+                        activityName.toLowerCase().contains("tencent.pb") ||
+                        activityName.toLowerCase().contains("mms") ||
+                        activityName.toLowerCase().contains("messaging")) {
+
                     if (lastPackage != packageName) {
                         val intent = Intent(Intent.ACTION_SEND)
                         shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -276,11 +246,45 @@ fun Context.shareBitmap(bitmap: Bitmap) {
                 }
             }
     val openInChooser: Intent = Intent.createChooser(intentList.removeAt(0), "请选择您要分享的方式")
-    val extraIntents = Array(intentList.size) {
-        intentList[it]
-    }
-    openInChooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, extraIntents)
+    openInChooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentList.toTypedArray())
     startActivity(openInChooser)
+
+//    不加限制分享
+//    val shareFile = File(Environment.getExternalStorageDirectory(), "share_qr_code_temp.png")
+//    bitmap.compress(Bitmap.CompressFormat.PNG, 100, FileOutputStream(shareFile))
+//    val imgUri: Uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//        //7.0以上使用FileProvider
+//        FileProvider.getUriForFile(this, "${this.packageName}.fileProvider", shareFile)
+//    } else {
+//        Uri.fromFile(shareFile)
+//    }
+//    val shareIntent = Intent(Intent.ACTION_SEND)
+//    shareIntent.type = "image/*"
+//    shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//    shareIntent.putExtra(Intent.EXTRA_STREAM, imgUri)
+//    startActivity(Intent.createChooser(shareIntent, "分享到"))
+}
+
+/**
+ * 分享多张图片
+ */
+fun Context.shareMultipleBitmap(bitmapList: List<Bitmap>) {
+    val uriList: ArrayList<Uri> = ArrayList(bitmapList.mapIndexed { index, bitmap ->
+        val shareFile = File(Environment.getExternalStorageDirectory(), "share_qr_code_temp$index.png")
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, FileOutputStream(shareFile))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            //7.0以上使用FileProvider
+            FileProvider.getUriForFile(this, "${this.packageName}.fileProvider", shareFile)
+        } else {
+            Uri.fromFile(shareFile)
+        }
+    })
+
+    val shareIntent = Intent(Intent.ACTION_SEND_MULTIPLE)
+    shareIntent.type = "image/*"
+    shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uriList)
+    startActivity(Intent.createChooser(shareIntent, "分享到"))
 }
 
 /**
@@ -331,8 +335,15 @@ fun Context.changeLanguage(language: String): ContextWrapper {
     return ContextWrapper(this.createConfigurationContext(configuration))
 }
 
-
-
-
+/**
+ * 拨打电话（跳转到拨号界面，用户手动点击拨打）
+ *
+ * @param phoneNum 电话号码
+ */
+fun Context.callPhone(phoneNum: String) {
+    val intent = Intent(Intent.ACTION_DIAL)
+    intent.data = Uri.parse("tel:$phoneNum")
+    this.startActivity(intent)
+}
 
 

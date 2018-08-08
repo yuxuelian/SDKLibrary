@@ -1,16 +1,13 @@
 package com.kaibo.core.http
 
-import com.kaibo.core.http.interceptor.ProgressInterceptor
-import com.kaibo.core.util.isNotEmpty
 import io.reactivex.schedulers.Schedulers
+import okhttp3.Interceptor
 import okhttp3.MediaType
-import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
-import okhttp3.RequestBody
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.File
 import java.util.concurrent.TimeUnit
 
 /**
@@ -20,22 +17,23 @@ import java.util.concurrent.TimeUnit
  * email:
  * description:
  */
+
 object HttpRequestManager {
 
-    private const val BASE_URL = "http://localhost:8080/"
+    internal var BASE_URL = "http://192.168.3.98:3010/mock/15/"
 
     //缓存大小   20M
     private const val CACHE_SIZE = 1024 * 1024 * 20L
 
-    //连接超时时间
+    //连接超时时间  30s
     private const val CONNECT_TIMEOUT_TIME = 30L
-    //读超时时间
+    //读超时时间  30s
     private const val READ_TIMEOUT_TIME = 30L
-    //写超时时间
+    //写超时时间  30s
     private const val WRITE_TIMEOUT_TIME = 30L
 
     //上传图片
-    val IMAGE_MEDIA_TYPE: MediaType? = MediaType.parse("image/png")
+    val IMAGE_MEDIA_TYPE: MediaType? = MediaType.parse("image/*")
     //上传json
     val JSON: MediaType? = MediaType.parse("application/json; charset=utf-8")
     //普通文本
@@ -43,22 +41,43 @@ object HttpRequestManager {
     //文件
     val FORM_DATA: MediaType? = MediaType.parse("multipart/form-data")
 
+    private val interceptors: MutableList<Interceptor> = ArrayList()
+
+    /**
+     * 此方法需要在  okHttpClient  第一次被使用之前调用   否则无效
+     */
+    fun setOtherInterceptor(vararg interceptors: Interceptor) {
+        this.interceptors.addAll(interceptors)
+    }
+
     /**
      * 全局唯一一个 OkHttpClient  实例
      */
     val okHttpClient: OkHttpClient by lazy {
-        OkHttpClient
+        val builder: OkHttpClient.Builder = OkHttpClient
                 .Builder()
                 //进度拦截器
-                .addInterceptor(ProgressInterceptor())
-//            .addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
+//                .addInterceptor(ProgressInterceptor())
+                .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                .addInterceptor {
+                    it.proceed(it.request()
+                            .newBuilder()
+                            .addHeader("Connection", "close")
+                            .build())
+                }
                 //失败重连
                 .retryOnConnectionFailure(false)
                 .connectTimeout(CONNECT_TIMEOUT_TIME, TimeUnit.SECONDS)
                 .readTimeout(READ_TIMEOUT_TIME, TimeUnit.SECONDS)
                 .writeTimeout(WRITE_TIMEOUT_TIME, TimeUnit.SECONDS)
 //           .cache(Cache(File("${BaseApplication.INSTANCE.cacheDir.absolutePath}${File.separator}okHttpCaches"), CACHE_SIZE))
-                .build()
+
+        //添加别的拦截器
+        interceptors.forEach {
+            builder.addInterceptor(it)
+        }
+
+        builder.build()
     }
 
     /**
@@ -69,7 +88,6 @@ object HttpRequestManager {
                 .Builder()
                 .client(okHttpClient)
                 .baseUrl(BASE_URL)
-//                .addConverterFactory(FastJsonConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 //同步发出请求
 //            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

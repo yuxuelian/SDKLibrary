@@ -5,7 +5,7 @@
     This layout file is inflated and used as the ListView to display the items.
     Assign an ID so its state will be saved/restored.
 -->
-<view xmlns:android="http://schemas.android.com/apk/res/android"
+<com.kaibo.mvp.view xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/select_dialog_listview"
     style="@style/Widget.AppCompat.ListView"

@@ -1,5 +1,8 @@
 package com.kaibo.core.util
 
+import java.text.SimpleDateFormat
+import java.util.*
+
 /**
  * @author:Administrator
  * @date:2018/4/2 0002 下午 3:49
@@ -23,5 +26,12 @@ fun Char.toInt2() = if (this in '0'..'9') {
     throw IllegalArgumentException("只能转换数字字符")
 }
 
+/**
+ * 将Long转成时间
+ */
+fun Long.toDate(format: String = "yyyy-MM-dd HH:mm:ss"): String {
+    val dateFormat = SimpleDateFormat(format, Locale.CHINA)
+    return dateFormat.format(this)
+}
 
 

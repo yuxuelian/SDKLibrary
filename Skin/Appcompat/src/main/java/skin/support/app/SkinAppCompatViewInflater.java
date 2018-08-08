@@ -145,7 +145,7 @@ public class SkinAppCompatViewInflater implements SkinLayoutInflater, SkinWrappe
         // We only want the View to inherit its context if we're running pre-v21
         final boolean inheritContext = isPre21 && shouldInheritContext(context, (ViewParent) parent);
 
-        // We can emulate Lollipop's android:theme attribute propagating down the view hierarchy
+        // We can emulate Lollipop's android:theme attribute propagating down the com.kaibo.mvp.view hierarchy
         // by using the parent's context
         if (inheritContext && parent != null) {
             context = parent.getContext();
@@ -154,7 +154,7 @@ public class SkinAppCompatViewInflater implements SkinLayoutInflater, SkinWrappe
         boolean readAppTheme = true; /* Read read app:theme as a fallback at all times for legacy reasons */
         boolean wrapContext = VectorEnabledTintResources.shouldBeUsed(); /* Only tint wrap the context if enabled */
 
-        // We can emulate Lollipop's android:theme attribute propagating down the view hierarchy
+        // We can emulate Lollipop's android:theme attribute propagating down the com.kaibo.mvp.view hierarchy
         // by using the parent's context
         if (inheritContext && parent != null) {
             context = parent.getContext();
@@ -178,16 +178,16 @@ public class SkinAppCompatViewInflater implements SkinLayoutInflater, SkinWrappe
             final View windowDecor = ((Activity) context).getWindow().getDecorView();
             while (true) {
                 if (parent == null) {
-                    // Bingo. We've hit a view which has a null parent before being terminated from
-                    // the loop. This is (most probably) because it's the root view in an inflation
+                    // Bingo. We've hit a com.kaibo.mvp.view which has a null parent before being terminated from
+                    // the loop. This is (most probably) because it's the root com.kaibo.mvp.view in an inflation
                     // call, therefore we should inherit. This works as the inflated layout is only
                     // added to the hierarchy at the end of the inflate() call.
                     return true;
                 } else if (parent == windowDecor || !(parent instanceof View)
                         || ViewCompat.isAttachedToWindow((View) parent)) {
-                    // We have either hit the window's decor view, a parent which isn't a View
-                    // (i.e. ViewRootImpl), or an attached view, so we know that the original parent
-                    // is currently added to the view hierarchy. This means that it has not be
+                    // We have either hit the window's decor com.kaibo.mvp.view, a parent which isn't a View
+                    // (i.e. ViewRootImpl), or an attached com.kaibo.mvp.view, so we know that the original parent
+                    // is currently added to the com.kaibo.mvp.view hierarchy. This means that it has not be
                     // inflated in the current inflate() call and we should not inherit the context.
                     return false;
                 }

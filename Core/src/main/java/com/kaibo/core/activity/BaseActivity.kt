@@ -8,12 +8,14 @@ import android.support.annotation.LayoutRes
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.WindowManager
-import com.kaibo.core.R
-import com.kaibo.core.dialog.LoadingDialog
-import com.kaibo.core.util.bindToAutoDispose
-import com.kaibo.core.util.immersive
+import com.tbruyelle.rxpermissions2.Permission
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.uber.autodispose.AutoDisposeConverter
+import com.kaibo.core.R
+import com.kaibo.core.dialog.LoadingDialog
+import com.kaibo.core.toast.ToastUtils
+import com.kaibo.core.util.bindToAutoDispose
+import com.kaibo.core.util.immersive
 
 /**
  * @author:Administrator
@@ -25,24 +27,44 @@ import com.uber.autodispose.AutoDisposeConverter
 
 abstract class BaseActivity : AppCompatActivity() {
 
-    /**
-     * 给每个Activity定义一个 rxPermissions 方便动态权限申请
-     */
-    protected val rxPermissions by lazy {
+    private val rxPermissions by lazy {
         RxPermissions(this)
+    }
+
+    /**
+     * 封装一下权限申请后的处理逻辑
+     */
+    protected fun easyRequestPermission(permissionName: String, invoke: () -> Unit) {
+        if (!rxPermissions.isGranted(permissionName)) {
+            rxPermissions
+                    .requestEach(permissionName)
+                    .subscribe { permission: Permission ->
+                        if (permission.granted) {
+                            invoke.invoke()
+                        } else {
+                            if (!permission.shouldShowRequestPermissionRationale) {
+                                ToastUtils.showError("所需权限被拒绝,无法进行相关操作")
+                            } else {
+                                ToastUtils.showError("所需权限被永久拒绝,请到安全中心开启")
+                            }
+                        }
+                    }
+        } else {
+            invoke.invoke()
+        }
     }
 
     private val loadingDialog by lazy {
         LoadingDialog()
     }
 
-    protected fun showLoading() {
+    protected open fun showLoading() {
         if (!loadingDialog.isVisible) {
             loadingDialog.show(supportFragmentManager)
         }
     }
 
-    protected fun hideLoading() {
+    protected open fun hideLoading() {
         if (loadingDialog.isVisible) {
             loadingDialog.hide()
         }

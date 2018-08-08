@@ -1,5 +1,7 @@
 package com.kaibo.core.dialog
 
+import android.app.Dialog
+import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
@@ -7,8 +9,9 @@ import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.kaibo.core.R
+import android.view.Window
 import com.uber.autodispose.AutoDisposeConverter
+import com.kaibo.core.R
 import com.kaibo.core.util.bindToAutoDispose
 
 /**
@@ -23,6 +26,13 @@ abstract class BaseDialog : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(getLayoutRes(), container, false)
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = super.onCreateDialog(savedInstanceState)
+        //设置为无标题
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        return dialog
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

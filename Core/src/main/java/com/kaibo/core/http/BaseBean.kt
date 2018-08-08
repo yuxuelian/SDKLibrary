@@ -1,7 +1,7 @@
 package com.kaibo.core.http
 
+import com.google.gson.annotations.SerializedName
 import com.kaibo.core.annotation.PoKo
-
 
 /**
  * @author kaibo
@@ -12,8 +12,8 @@ import com.kaibo.core.annotation.PoKo
  */
 
 @PoKo
-data class WrapObjectDataBean<T>(
-        val code: Int,
-        val msg: String,
-        val data: T
+data class BaseBean<T>(
+        @SerializedName("code") val code: Int,
+        @SerializedName("msg") val msg: String,
+        @SerializedName("data") val data: T
 )

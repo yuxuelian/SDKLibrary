@@ -47,7 +47,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Numeric wheel view.
+ * Numeric wheel com.kaibo.mvp.view.
  *
  * @author:Administrator
  */
@@ -220,7 +220,7 @@ public class WheelView extends View {
     /**
      * 获取适配器
      *
-     * @return the view adapter
+     * @return the com.kaibo.mvp.view adapter
      */
     public WheelViewAdapter getViewAdapter() {
         return viewAdapter;
@@ -229,7 +229,7 @@ public class WheelView extends View {
     /**
      * 设置适配器
      *
-     * @param viewAdapter the view adapter
+     * @param viewAdapter the com.kaibo.mvp.view adapter
      */
     public void setViewAdapter(WheelViewAdapter viewAdapter) {
         if (this.viewAdapter != null) {
@@ -828,7 +828,7 @@ public class WheelView extends View {
     }
 
     /**
-     * Updates view. Rebuilds items and label if necessary, recalculate items sizes.
+     * Updates com.kaibo.mvp.view. Rebuilds items and label if necessary, recalculate items sizes.
      */
     private void updateView() {
         if (rebuildItems()) {
@@ -848,7 +848,7 @@ public class WheelView extends View {
     }
 
     /**
-     * Builds view for measuring
+     * Builds com.kaibo.mvp.view for measuring
      */
     private void buildViewForMeasuring() {
         if (itemsLayout != null) {
@@ -866,10 +866,10 @@ public class WheelView extends View {
     }
 
     /**
-     * Adds view for item to items layout
+     * Adds com.kaibo.mvp.view for item to items layout
      *
      * @param index the item index
-     * @param first the flag indicates if view should be first
+     * @param first the flag indicates if com.kaibo.mvp.view should be first
      * @return true if corresponding item exists and is added
      */
     private boolean addViewItem(int index, boolean first) {
@@ -896,10 +896,10 @@ public class WheelView extends View {
     }
 
     /**
-     * Returns view for specified item
+     * Returns com.kaibo.mvp.view for specified item
      *
      * @param index the item index
-     * @return item view or empty view if index is out of bounds
+     * @return item com.kaibo.mvp.view or empty com.kaibo.mvp.view if index is out of bounds
      */
     private View getItemView(int index) {
         if (viewAdapter == null || viewAdapter.getCount() == 0) {

@@ -15,7 +15,7 @@ object ThreadUtils {
     private const val CORE_POOL_SIZE = 0
     private const val KEEP_ALIVE_TIME = 60L
 
-    private fun threadFactory(name: String, daemon: Boolean = false) = ThreadFactory {
+    fun threadFactory(name: String, daemon: Boolean = false) = ThreadFactory {
         val result = Thread(it, name)
         result.isDaemon = daemon
         result

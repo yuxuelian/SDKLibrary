@@ -67,6 +67,12 @@ fun Fragment.immersiveTopView(topView: View) {
     }
 }
 
+val Context.deviceWidth
+    get() = this.resources.displayMetrics.widthPixels
+
+val Context.deviceHeight
+    get() = this.resources.displayMetrics.heightPixels
+
 fun ViewGroup.inflate(layoutRes: Int): View? {
     return LayoutInflater.from(context).inflate(layoutRes, this, false)
 }

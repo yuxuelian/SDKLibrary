@@ -2,7 +2,6 @@ package com.kaibo.core.http.body
 
 import com.kaibo.core.http.progress.ProgressMessage
 import com.kaibo.core.http.progress.ProgressObservable
-import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 import okhttp3.MediaType
 import okhttp3.ResponseBody
@@ -16,6 +15,8 @@ import okio.*
  * email:
  * description:下载文件下载进度监听
  */
+
+
 class ProgressResponseBody(key: String, private val response: ResponseBody) : ResponseBody() {
 
     /**

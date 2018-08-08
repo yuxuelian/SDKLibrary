@@ -17,12 +17,12 @@ object LinAuthentication {
     /**
      * 默认秘钥
      */
-    const val key = "BV6NVZYTWEKSI4E3"
+    const val KEY = "BV6NVZYTWEKSI4E3"
 
     private const val startTime: Long = 0
     private const val timeStep: Long = 120
 
-    fun getCurrentCode(secret: String): String {
+    fun getCurrentCode(secret: String = LinAuthentication.KEY): String {
         val otpState = getValueAtTime(System.currentTimeMillis() / 1000)
         return computePin(secret, otpState)
     }

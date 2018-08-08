@@ -2,7 +2,6 @@ package com.kaibo.core.http.progress
 
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.ConcurrentHashMap
 
@@ -31,7 +30,7 @@ object ProgressObservable {
                 .doOnError {
                     observableEmitters.remove(key)
                 }
-//                .observeOn(AndroidSchedulers.mainThread())
+//                .toMainThread()
     }
 
     operator fun get(key: String): ObservableEmitter<ProgressMessage>? = observableEmitters[key]

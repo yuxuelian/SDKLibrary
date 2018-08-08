@@ -2,7 +2,6 @@ package com.kaibo.core.adapter
 
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.ViewGroup
 
 interface Item {
@@ -33,8 +32,10 @@ class ItemAdapter(private val itemManager: ItemManagerAbstract) : RecyclerView.A
     override fun getItemViewType(position: Int) = ItemManager.getViewType(itemManager[position].controller)
 }
 
-fun RecyclerView.withItems(items: List<Item>) {
-    adapter = ItemAdapter(ItemManager(items.toMutableList()))
+fun RecyclerView.withItems(items: List<Item>): ItemManager {
+    val itemManager = ItemManager(items.toMutableList())
+    this.adapter = ItemAdapter(itemManager)
+    return itemManager
 }
 
 fun RecyclerView.withItems(init: MutableList<Item>.() -> Unit) = withItems(mutableListOf<Item>().apply(init))
@@ -47,6 +48,11 @@ class ItemManager(private val delegated: MutableList<Item> = mutableListOf()) : 
     override var observer: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
     private val itemListSnapshot: List<Item> get() = delegated
 
+    /**
+     * 加载更多Item
+     */
+    internal var loadMoreItem: LoadMoreItem? = null
+
     init {
         ensureControllers(delegated)
     }
@@ -55,10 +61,10 @@ class ItemManager(private val delegated: MutableList<Item> = mutableListOf()) : 
         // companion object保证了单例 因此ViewType肯定是从0开始
         private var viewType = 0
 
-        // controller to view type
+        // controller to com.kaibo.mvp.view type
         private val c2vt = mutableMapOf<ItemController, Int>()
 
-        // view type to controller
+        // com.kaibo.mvp.view type to controller
         private val vt2c = mutableMapOf<Int, ItemController>()
 
         /**
@@ -158,8 +164,7 @@ class ItemManager(private val delegated: MutableList<Item> = mutableListOf()) : 
         observer?.notifyItemChanged(index)
     }
 
-    fun refreshAll(elements: List<Item>) {
-        val tag = "refresh diff"
+    private fun refreshAll(elements: List<Item>) {
         val diffCallback = object : DiffUtil.Callback() {
             override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
                 val oldItem = delegated[oldItemPosition]
@@ -183,14 +188,184 @@ class ItemManager(private val delegated: MutableList<Item> = mutableListOf()) : 
         result.dispatchUpdatesTo(observer)
     }
 
-    fun refreshAll(init: MutableList<Item>.() -> Unit) = refreshAll(mutableListOf<Item>().apply(init))
+    /**
+     * 创建了一个全新的 mutableList 替换 上次设置的 mutableList
+     */
+    fun refreshAll(init: MutableList<Item>.() -> Unit) {
+        val itemList = mutableListOf<Item>().apply(init)
+        loadMoreItem?.let {
+            //如果 loadMoreItem 不为null  直接添加
+            itemList.add(it)
+        }
+        refreshAll(itemList)
+    }
 
+    /**
+     * 在上次的 mutableList 基础上再增加新的 mutableList
+     */
     fun autoRefresh(init: MutableList<Item>.() -> Unit) {
         val snapshot = this.itemListSnapshot.toMutableList()
         snapshot.apply(init)
+        loadMoreItem?.let {
+            //如果 loadMoreItem 不为null  移动到最后去
+            if (!snapshot.contains(it)) {
+                //不存在就添加
+                snapshot.add(it)
+            } else {
+                //存在就交换
+                snapshot.swap(snapshot.indexOf(it), snapshot.size - 1)
+            }
+        }
         refreshAll(snapshot)
     }
 }
+
+/**
+ * 交换 MutableList 中指定的两个位置的元素
+ */
+fun <E> MutableList<E>.swap(position1: Int, position2: Int) {
+    val e: E = this.removeAt(position1)
+    if (position1 == size) {
+        this.add(e)
+    } else {
+        this.add(position2, e)
+    }
+}
+
+//--------------------------------------------------加载更多--------------------------------------------------------------------
+
+/**
+ * 扩展一个加载更多的方法
+ */
+fun RecyclerView.setLoadMoreListener(
+        itemManager: ItemManager,
+        loadMore: LoadMoreItem = DefaultLoadMoreItem(),
+        loadMoreListener: () -> Unit): LoadMoreManager {
+    //设置加载更多Item
+    itemManager.loadMoreItem = loadMore
+    return LoadMoreManager(this, itemManager, loadMore.apply { this.loadMoreClick = loadMoreListener }, loadMoreListener)
+}
+
+/**
+ * 自定义加载更多View需要用到
+ */
+interface LoadMoreItem : Item {
+
+    /**
+     * 加载更多状态
+     */
+    var loadMoreStatus: LoadMoreStatus
+
+    /**
+     * 点击回调加载更多
+     */
+    var loadMoreClick: (() -> Unit)?
+}
+
+/**
+ * 加载更多状态
+ */
+enum class LoadMoreStatus {
+    /**
+     * 正在加载更多状态
+     */
+    Loading,
+    /**
+     * 可加载更多状态
+     */
+    Ready,
+    /**
+     * 加载失败
+     */
+    Fail,
+    /**
+     * 加载结束
+     */
+    End;
+}
+
+/**
+ * 加载更多管理
+ */
+class LoadMoreManager(rv: RecyclerView,
+                      private val itemManager: ItemManager,
+                      private val loadMoreItem: LoadMoreItem,
+                      private val loadMoreListener: () -> Unit) {
+
+    private var loadMoreStatus: LoadMoreStatus = LoadMoreStatus.Ready
+
+    init {
+        //同步状态
+        loadMoreItem.loadMoreStatus = LoadMoreStatus.Ready
+
+        //自动加载更多
+//        rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+//                if (newState == RecyclerView.SCROLL_STATE_IDLE &&
+//                        !recyclerView.canScrollVertically(1) &&
+//                        loadMoreStatus == LoadMoreStatus.Ready) {
+//                    loadMoreStatus = LoadMoreStatus.Loading
+//                    loadMoreItem.loadMoreStatus = LoadMoreStatus.Loading
+//                    //刷新一下  这里的刷新主要是刷新  loadMoreItem  显示的状态
+//                    itemManager.autoRefresh { }
+//                    //回调加载更多
+//                    loadMoreListener.invoke()
+//                }
+//            }
+//        })
+    }
+
+    /**
+     * 清除数据   并主动启动加载更多
+     */
+    fun clearAndStartLoading() {
+        //加载更多结束
+        loadMoreStatus = LoadMoreStatus.Loading
+        loadMoreItem.loadMoreStatus = LoadMoreStatus.Loading
+        itemManager.refreshAll { }
+        //回调加载更多
+        loadMoreListener.invoke()
+    }
+
+    /**
+     * 恢复状态为可加载更多状态
+     */
+    fun reset() {
+        setLoadMoreComplete {}
+    }
+
+    /**
+     * 本次加载更多成功
+     */
+    fun setLoadMoreComplete(init: MutableList<Item>.() -> Unit) {
+        //加载更多结束
+        loadMoreStatus = LoadMoreStatus.Ready
+        loadMoreItem.loadMoreStatus = LoadMoreStatus.Ready
+        //刷新一下  这里的刷新主要是刷新  loadMoreItem  显示的状态
+        itemManager.autoRefresh(init)
+    }
+
+    /**
+     * 加载更多失败
+     */
+    fun setLoadMoreFail() {
+        //加载更多失败
+        loadMoreItem.loadMoreStatus = LoadMoreStatus.Fail
+        //刷新一下  这里的刷新主要是刷新  loadMoreItem  显示的状态
+        itemManager.autoRefresh {}
+    }
+
+    /**
+     * 加载更多结束
+     */
+    fun setLoadMoreEnd(init: MutableList<Item>.() -> Unit) {
+        //加载更多结束
+        loadMoreItem.loadMoreStatus = LoadMoreStatus.End
+        //刷新一下  这里的刷新主要是刷新  loadMoreItem  显示的状态
+        itemManager.autoRefresh(init)
+    }
+}
+
 
 
 

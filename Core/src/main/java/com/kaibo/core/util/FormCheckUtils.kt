@@ -12,7 +12,7 @@ package com.kaibo.core.util
  * 判断字符串是否是合法的手机号
  */
 fun CharSequence.isPhoneValid(): Boolean {
-    return Regex("""^[1][3,4,5,7,8][0-9]{9}${'$'}""").matches(this)
+    return Regex(pattern = """^[1][34578][0-9]{9}${'$'}""").matches(this)
 }
 
 /**
@@ -32,8 +32,8 @@ fun CharSequence.isPwdValid(): Boolean {
 /**
  * 判断名字是否合法
  */
-fun CharSequence.isNameValid(): Boolean {
-    return this.length in 2..4
+fun CharSequence.isUserNameValid(): Boolean {
+    return this.length in 2..6
 }
 
 /**

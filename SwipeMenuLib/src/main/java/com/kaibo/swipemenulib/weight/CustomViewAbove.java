@@ -874,7 +874,7 @@ public class CustomViewAbove extends ViewGroup {
      * Tests scrollability within child views of v given a delta of dx.
      *
      * @param v      BaseView to test for horizontal scrollability
-     * @param checkV Whether the view v passed should itself be checked for scrollability (true),
+     * @param checkV Whether the com.kaibo.mvp.view v passed should itself be checked for scrollability (true),
      *               or just its children (false).
      * @param dx     Delta scrolled in pixels
      * @param x      X coordinate of the active touch point
@@ -905,14 +905,14 @@ public class CustomViewAbove extends ViewGroup {
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        // Let the focused view and/or our descendants get the key first
+        // Let the focused com.kaibo.mvp.view and/or our descendants get the key first
         return super.dispatchKeyEvent(event) || executeKeyEvent(event);
     }
 
     /**
-     * You can call this function yourself to have the scroll view perform
+     * You can call this function yourself to have the scroll com.kaibo.mvp.view perform
      * scrolling from a key event, just as if the event had been dispatched to
-     * it by the view hierarchy.
+     * it by the com.kaibo.mvp.view hierarchy.
      *
      * @param event The key event to execute.
      * @return Return true if the event was handled, else false.

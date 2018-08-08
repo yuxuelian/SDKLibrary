@@ -341,7 +341,7 @@ public class SwipeMenuLayout extends RelativeLayout {
                 break;
             case SLIDING_CONTENT:
                 mActionbarOverlay = actionbarOverlay;
-                // take the above view out of
+                // take the above com.kaibo.mvp.view out of
                 ViewGroup contentParent = (ViewGroup) activity.findViewById(android.R.id.content);
                 View content = contentParent.getChildAt(0);
                 contentParent.removeView(content);
@@ -358,8 +358,8 @@ public class SwipeMenuLayout extends RelativeLayout {
     }
 
     /**
-     * Set the above view content from a layout resource. The resource will be inflated, adding all top-level views
-     * to the above view.
+     * Set the above com.kaibo.mvp.view content from a layout resource. The resource will be inflated, adding all top-level views
+     * to the above com.kaibo.mvp.view.
      *
      * @param res the new content
      */
@@ -368,7 +368,7 @@ public class SwipeMenuLayout extends RelativeLayout {
     }
 
     /**
-     * Set the above view content to the given BaseView.
+     * Set the above com.kaibo.mvp.view content to the given BaseView.
      *
      * @param view The desired content to display.
      */
@@ -387,8 +387,8 @@ public class SwipeMenuLayout extends RelativeLayout {
     }
 
     /**
-     * Set the behind view (menu) content from a layout resource. The resource will be inflated, adding all top-level views
-     * to the behind view.
+     * Set the behind com.kaibo.mvp.view (menu) content from a layout resource. The resource will be inflated, adding all top-level views
+     * to the behind com.kaibo.mvp.view.
      *
      * @param res the new content
      */
@@ -397,7 +397,7 @@ public class SwipeMenuLayout extends RelativeLayout {
     }
 
     /**
-     * Set the behind view (menu) content to the given BaseView.
+     * Set the behind com.kaibo.mvp.view (menu) content to the given BaseView.
      *
      * @param view The desired content to display.
      */
@@ -415,8 +415,8 @@ public class SwipeMenuLayout extends RelativeLayout {
     }
 
     /**
-     * Set the secondary behind view (right menu) content from a layout resource. The resource will be inflated, adding all top-level views
-     * to the behind view.
+     * Set the secondary behind com.kaibo.mvp.view (right menu) content from a layout resource. The resource will be inflated, adding all top-level views
+     * to the behind com.kaibo.mvp.view.
      *
      * @param res the new content
      */
@@ -425,7 +425,7 @@ public class SwipeMenuLayout extends RelativeLayout {
     }
 
     /**
-     * Set the secondary behind view (right menu) content to the given BaseView.
+     * Set the secondary behind com.kaibo.mvp.view (right menu) content to the given BaseView.
      *
      * @param view The desired content to display.
      */
@@ -503,14 +503,14 @@ public class SwipeMenuLayout extends RelativeLayout {
     }
 
     /**
-     * Opens the menu and shows the menu view.
+     * Opens the menu and shows the menu com.kaibo.mvp.view.
      */
     public void showMenu() {
         showMenu(true);
     }
 
     /**
-     * Opens the menu and shows the menu view.
+     * Opens the menu and shows the menu com.kaibo.mvp.view.
      *
      * @param animate true to animate the transition, false to ignore animation
      */
@@ -519,7 +519,7 @@ public class SwipeMenuLayout extends RelativeLayout {
     }
 
     /**
-     * Opens the menu and shows the secondary menu view. Will default to the regular menu
+     * Opens the menu and shows the secondary menu com.kaibo.mvp.view. Will default to the regular menu
      * if there is only one.
      */
     public void showSecondaryMenu() {
@@ -527,7 +527,7 @@ public class SwipeMenuLayout extends RelativeLayout {
     }
 
     /**
-     * Opens the menu and shows the secondary (right) menu view. Will default to the regular menu
+     * Opens the menu and shows the secondary (right) menu com.kaibo.mvp.view. Will default to the regular menu
      * if there is only one.
      *
      * @param animate true to animate the transition, false to ignore animation
@@ -537,14 +537,14 @@ public class SwipeMenuLayout extends RelativeLayout {
     }
 
     /**
-     * Closes the menu and shows the above view.
+     * Closes the menu and shows the above com.kaibo.mvp.view.
      */
     public void showContent() {
         showContent(true);
     }
 
     /**
-     * Closes the menu and shows the above view.
+     * Closes the menu and shows the above com.kaibo.mvp.view.
      *
      * @param animate true to animate the transition, false to ignore animation
      */
@@ -573,18 +573,18 @@ public class SwipeMenuLayout extends RelativeLayout {
     }
 
     /**
-     * Checks if is the behind view showing.
+     * Checks if is the behind com.kaibo.mvp.view showing.
      *
-     * @return Whether or not the behind view is showing
+     * @return Whether or not the behind com.kaibo.mvp.view is showing
      */
     public boolean isMenuShowing() {
         return mViewAbove.getCurrentItem() == 0 || mViewAbove.getCurrentItem() == 2;
     }
 
     /**
-     * Checks if is the behind view showing.
+     * Checks if is the behind com.kaibo.mvp.view showing.
      *
-     * @return Whether or not the behind view is showing
+     * @return Whether or not the behind com.kaibo.mvp.view is showing
      */
     public boolean isSecondaryMenuShowing() {
         return mViewAbove.getCurrentItem() == 2;
@@ -593,7 +593,7 @@ public class SwipeMenuLayout extends RelativeLayout {
     /**
      * Gets the behind offset.
      *
-     * @return The margin on the right of the screen that the behind view scrolls to
+     * @return The margin on the right of the screen that the behind com.kaibo.mvp.view scrolls to
      */
     public int getBehindOffset() {
         return ((RelativeLayout.LayoutParams) mViewBehind.getLayoutParams()).rightMargin;
@@ -602,7 +602,7 @@ public class SwipeMenuLayout extends RelativeLayout {
     /**
      * Sets the behind offset.
      *
-     * @param i The margin, in pixels, on the right of the screen that the behind view scrolls to.
+     * @param i The margin, in pixels, on the right of the screen that the behind com.kaibo.mvp.view scrolls to.
      */
     public void setBehindOffset(int i) {
         //		RelativeLayout.LayoutParams params = ((RelativeLayout.LayoutParams)mViewBehind.getLayoutParams());
@@ -708,7 +708,7 @@ public class SwipeMenuLayout extends RelativeLayout {
      * Sets the behind scroll scale.
      *
      * @param f The scale of the parallax scroll (i.e. 1.0f scrolls 1 pixel for every
-     *          1 pixel that the above view scrolls and 0.0f scrolls 0 pixels)
+     *          1 pixel that the above com.kaibo.mvp.view scrolls and 0.0f scrolls 0 pixels)
      */
     public void setBehindScrollScale(float f) {
         if (f < 0 && f > 1) {
@@ -849,9 +849,9 @@ public class SwipeMenuLayout extends RelativeLayout {
     }
 
     /**
-     * Sets the selected view. The selector will be drawn here
+     * Sets the selected com.kaibo.mvp.view. The selector will be drawn here
      *
-     * @param v the new selected view
+     * @param v the new selected com.kaibo.mvp.view
      */
     public void setSelectedView(View v) {
         mViewBehind.setSelectedView(v);
@@ -878,7 +878,7 @@ public class SwipeMenuLayout extends RelativeLayout {
     /**
      * Add a BaseView ignored by the Touch Down event when mode is Fullscreen
      *
-     * @param v a view to be ignored
+     * @param v a com.kaibo.mvp.view to be ignored
      */
     public void addIgnoredView(View v) {
         mViewAbove.addIgnoredView(v);
@@ -887,7 +887,7 @@ public class SwipeMenuLayout extends RelativeLayout {
     /**
      * Remove a BaseView ignored by the Touch Down event when mode is Fullscreen
      *
-     * @param v a view not wanted to be ignored anymore
+     * @param v a com.kaibo.mvp.view not wanted to be ignored anymore
      */
     public void removeIgnoredView(View v) {
         mViewAbove.removeIgnoredView(v);
@@ -968,7 +968,7 @@ public class SwipeMenuLayout extends RelativeLayout {
         }
 
         /* (non-Javadoc)
-         * @see android.view.AbsSavedState#writeToParcel(android.os.Parcel, int)
+         * @see android.com.kaibo.mvp.view.AbsSavedState#writeToParcel(android.os.Parcel, int)
          */
         @Override
         public void writeToParcel(Parcel out, int flags) {
@@ -992,7 +992,7 @@ public class SwipeMenuLayout extends RelativeLayout {
     }
 
     /* (non-Javadoc)
-     * @see android.view.BaseView#onSaveInstanceState()
+     * @see android.com.kaibo.mvp.view.BaseView#onSaveInstanceState()
      */
     @Override
     protected Parcelable onSaveInstanceState() {
@@ -1002,7 +1002,7 @@ public class SwipeMenuLayout extends RelativeLayout {
     }
 
     /* (non-Javadoc)
-     * @see android.view.BaseView#onRestoreInstanceState(android.os.Parcelable)
+     * @see android.com.kaibo.mvp.view.BaseView#onRestoreInstanceState(android.os.Parcelable)
      */
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
@@ -1012,7 +1012,7 @@ public class SwipeMenuLayout extends RelativeLayout {
     }
 
     /* (non-Javadoc)
-     * @see android.view.ViewGroup#fitSystemWindows(android.graphics.Rect)
+     * @see android.com.kaibo.mvp.view.ViewGroup#fitSystemWindows(android.graphics.Rect)
      */
     @SuppressLint("NewApi")
     @Override

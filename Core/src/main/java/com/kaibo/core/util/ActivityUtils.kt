@@ -8,14 +8,13 @@ import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
 
 /**
- * This provides methods to help Activities load their UI.
+ * @author kaibo
+ * @date 2018/6/26 10:31
+ * @GitHub：https://github.com/yuxuelian
+ * @email：kaibo1hao@gmail.com
+ * @description：
  */
 
-/**
- * The `fragment` is added to the container view with id `frameId`. The operation is
- * performed by the `fragmentManager`.
- *
- */
 fun FragmentActivity.addFragmentToActivity(frameId: Int, fragment: Fragment) {
     supportFragmentManager.beginTransaction().add(frameId, fragment).commit()
 }
@@ -29,3 +28,4 @@ inline fun <reified T : Activity> Activity.animStartActivityForResult(requestCod
     startActivityForResult<T>(requestCode, *params)
     overridePendingTransition(R.anim.translation_right_in, R.anim.translation_right_out)
 }
+

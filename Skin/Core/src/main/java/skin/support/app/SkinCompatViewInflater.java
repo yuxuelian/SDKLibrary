@@ -30,7 +30,7 @@ public class SkinCompatViewInflater {
 
     private static final String[] sClassPrefixList = {
             "android.widget.",
-            "android.view.",
+            "android.com.kaibo.mvp.view.",
             "android.webkit."
     };
 
@@ -51,7 +51,7 @@ public class SkinCompatViewInflater {
         }
 
         if (view != null) {
-            // If we have created a view, check it's android:onClick
+            // If we have created a com.kaibo.mvp.view, check it's android:onClick
             checkOnClickListener(view, attrs);
         }
 
@@ -85,7 +85,7 @@ public class SkinCompatViewInflater {
     }
 
     public View createViewFromTag(Context context, String name, AttributeSet attrs) {
-        if ("view".equals(name)) {
+        if ("com.kaibo.mvp.view".equals(name)) {
             name = attrs.getAttributeValue(null, "class");
         }
 
@@ -126,7 +126,7 @@ public class SkinCompatViewInflater {
         if (!(context instanceof ContextWrapper) ||
                 (Build.VERSION.SDK_INT >= 15 && !ViewCompat.hasOnClickListeners(view))) {
             // Skip our compat functionality if: the Context isn't a ContextWrapper, or
-            // the view doesn't have an OnClickListener (we can only rely on this on API 15+ so
+            // the com.kaibo.mvp.view doesn't have an OnClickListener (we can only rely on this on API 15+ so
             // always use our compat code on older devices)
             return;
         }
@@ -223,7 +223,7 @@ public class SkinCompatViewInflater {
                     + mHostView.getContext().getResources().getResourceEntryName(id) + "'";
             throw new IllegalStateException("Could not find method " + mMethodName
                     + "(View) in a parent or ancestor Context for android:onClick "
-                    + "attribute defined on view " + mHostView.getClass() + idText);
+                    + "attribute defined on com.kaibo.mvp.view " + mHostView.getClass() + idText);
         }
     }
 }

@@ -5,7 +5,9 @@ import android.view.WindowManager
 import android.widget.DatePicker
 import com.jakewharton.rxbinding2.view.clicks
 import com.kaibo.core.R
+import com.kaibo.core.util.toTimeMillis
 import kotlinx.android.synthetic.main.dialog_date_picker.*
+import java.util.*
 
 /**
  * @author kaibo
@@ -37,11 +39,18 @@ class DatePickerDialog : BaseSheetDialog() {
 
         //禁止弹出软键盘
         date_picker.descendantFocusability = DatePicker.FOCUS_BLOCK_DESCENDANTS
-        //设置最小能选择的日期
-        date_picker.minDate = System.currentTimeMillis()
         //设置最大日期
         arguments?.let {
-            date_picker.maxDate = it.getLong("maxDate")
+            //设置最小值
+            val minDate = it.getLong("minDate")
+            if (minDate != 0L) {
+                date_picker.minDate = minDate
+            }
+            //设置最大值
+            val maxDate = it.getLong("maxDate")
+            if (maxDate != 0L) {
+                date_picker.maxDate = maxDate
+            }
         }
     }
 }

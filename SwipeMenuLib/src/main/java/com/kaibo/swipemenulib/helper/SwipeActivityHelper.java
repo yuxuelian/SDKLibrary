@@ -71,7 +71,7 @@ public class SwipeActivityHelper {
     }
 
     /**
-     * Controls whether the ActionBar slides along with the above view when the menu is opened,
+     * Controls whether the ActionBar slides along with the above com.kaibo.mvp.view when the menu is opened,
      * or if it stays in place.
      *
      * @param slidingActionBarEnabled True if you want the ActionBar to slide along with the SlidingMenu,
@@ -85,10 +85,10 @@ public class SwipeActivityHelper {
     }
 
     /**
-     * Finds a view that was identified by the id attribute from the XML that was processed in onCreate(Bundle).
+     * Finds a com.kaibo.mvp.view that was identified by the id attribute from the XML that was processed in onCreate(Bundle).
      *
-     * @param id the resource id of the desired view
-     * @return The view if found or null otherwise.
+     * @param id the resource id of the desired com.kaibo.mvp.view
+     * @return The com.kaibo.mvp.view if found or null otherwise.
      */
     public <T extends View> T findViewById(int id) {
         T v;
@@ -114,17 +114,17 @@ public class SwipeActivityHelper {
     }
 
     /**
-     * Register the above content view.
+     * Register the above content com.kaibo.mvp.view.
      *
-     * @param view the above content view to register
+     * @param view the above content com.kaibo.mvp.view to register
      */
     public void registerAboveContentView(View view) {
         mViewAbove = view;
     }
 
     /**
-     * Set the behind view content to an explicit view. This view is placed directly into the behind view 's view hierarchy.
-     * It can itself be a complex view hierarchy.
+     * Set the behind com.kaibo.mvp.view content to an explicit com.kaibo.mvp.view. This com.kaibo.mvp.view is placed directly into the behind com.kaibo.mvp.view 's com.kaibo.mvp.view hierarchy.
+     * It can itself be a complex com.kaibo.mvp.view hierarchy.
      *
      * @param view The desired content to display.
      */

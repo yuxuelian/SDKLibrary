@@ -2,7 +2,6 @@ package com.kaibo.core.dialog
 
 import android.os.Bundle
 import android.view.Gravity
-import com.kaibo.core.dialog.BaseDialog
 import com.kaibo.core.R
 
 /**
