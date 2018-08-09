@@ -8,6 +8,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
+    <!--8.0安装apk-->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
     <application android:extractNativeLibs="false">
 
         <!-- 全面屏适配 -->
@@ -28,9 +31,6 @@
         </provider>
         <!-- 7.0文件权限结束 -->
 
-        <service
-            android:name=".service.FloatingService"
-            android:exported="false" />
-
+        <activity android:name=".activity.AppInstallApkActivity" />
     </application>
 </manifest>

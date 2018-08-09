@@ -27,7 +27,7 @@ import com.kaibo.core.util.immersive
 
 abstract class BaseActivity : AppCompatActivity() {
 
-    private val rxPermissions by lazy {
+    protected val rxPermissions by lazy {
         RxPermissions(this)
     }
 

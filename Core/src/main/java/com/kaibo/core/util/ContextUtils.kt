@@ -34,34 +34,6 @@ import kotlin.collections.ArrayList
  * description:
  */
 
-///**
-// * 根据手机分辨率从DP转成PX
-// * @param dpValue
-// * @return
-// */
-//fun Context.dp2px(dpValue: Float) = dpValue * resources.displayMetrics.density
-//
-///**
-// * 将sp值转换为px值，保证文字大小不变
-// * @param spValue
-// * @return
-// */
-//fun Context.sp2px(spValue: Float) = spValue * resources.displayMetrics.scaledDensity
-//
-///**
-// * 根据手机的分辨率PX(像素)转成DP
-// * @param pxValue
-// * @return
-// */
-//fun Context.px2dp(pxValue: Float) = pxValue / resources.displayMetrics.density
-//
-///**
-// * 将px值转换为sp值，保证文字大小不变
-// * @param pxValue
-// * @return
-// */
-//fun Context.px2sp(pxValue: Float) = pxValue / resources.displayMetrics.scaledDensity
-
 /**
  * 获取当前APP的版本号
  */
@@ -136,21 +108,11 @@ fun isRoot() = !(!File("/system/bin/su").exists() && !File("/system/xbin/su").ex
  */
 fun Context.sign(sign: String = "SHA1"): String {
     @SuppressLint("PackageManagerGetSignatures")
-    val cert: ByteArray = this.packageManager
-            .getPackageInfo(this.packageName, PackageManager.GET_SIGNATURES)
-            .signatures[0]
-            .toByteArray()
-
+    val cert: ByteArray = this.packageManager.getPackageInfo(this.packageName, PackageManager.GET_SIGNATURES).signatures[0].toByteArray()
     //X509证书，X.509是一种非常通用的证书格式
-    val x509Certificate = (CertificateFactory
-            .getInstance("X509")
-            .generateCertificate(ByteArrayInputStream(cert)) as X509Certificate)
-
+    val x509Certificate = CertificateFactory.getInstance("X509").generateCertificate(ByteArrayInputStream(cert)) as X509Certificate
     //获得公钥
-    val publicKey: ByteArray = MessageDigest
-            .getInstance(sign)
-            .digest(x509Certificate.encoded)
-
+    val publicKey: ByteArray = MessageDigest.getInstance(sign).digest(x509Certificate.encoded)
     //字节到十六进制的格式转换
     return byte2HexFormatted(publicKey)
 }
@@ -169,13 +131,11 @@ private fun byte2HexFormatted(arr: ByteArray): String {
 
 /**
  * 给app设置一个通用字体.一般在Application的onCreate方法中调用
- *
- * @param context                 context
  * @param staticTypefaceFieldName 被替换掉的系统字体类型
  * @param fontName           用于替换的字体文件名(文件放在assets目录下)
  */
 fun Context.setFont(staticTypefaceFieldName: String, fontName: String) {
-    val regular = Typeface.createFromAsset(assets, fontName)
+    val regular: Typeface = Typeface.createFromAsset(assets, fontName)
     replaceFont(staticTypefaceFieldName, regular)
 }
 
@@ -190,8 +150,7 @@ fun Context.setFont(staticTypefaceFieldName: String, fontName: String) {
  * @param newTypeface             用于替换的字体文件
  */
 private fun replaceFont(staticTypefaceFieldName: String, newTypeface: Typeface) {
-    Typeface::class
-            .java
+    Typeface::class.java
             .getDeclaredField(staticTypefaceFieldName)
             .apply {
                 isAccessible = true
@@ -223,28 +182,27 @@ fun Context.shareBitmap(bitmap: Bitmap) {
     shareIntent.type = type
     val intentList: MutableList<Intent> = ArrayList()
     var lastPackage = ""
-    packageManager.queryIntentActivities(shareIntent, 0)
-            .forEach {
-                val activityName = it.activityInfo.name.toLowerCase()
-                val packageName = it.activityInfo.packageName
-                // 这里可以根据实际需要进行过滤
-                if (activityName.toLowerCase().contains("mobileqq") ||
-                        activityName.toLowerCase().contains("tencent.mm") ||
-                        activityName.toLowerCase().contains("tencent.pb") ||
-                        activityName.toLowerCase().contains("mms") ||
-                        activityName.toLowerCase().contains("messaging")) {
+    packageManager.queryIntentActivities(shareIntent, 0).forEach {
+        val activityName = it.activityInfo.name.toLowerCase()
+        val packageName = it.activityInfo.packageName
+        // 这里可以根据实际需要进行过滤
+        if (activityName.toLowerCase().contains("mobileqq") ||
+                activityName.toLowerCase().contains("tencent.mm") ||
+                activityName.toLowerCase().contains("tencent.pb") ||
+                activityName.toLowerCase().contains("mms") ||
+                activityName.toLowerCase().contains("messaging")) {
 
-                    if (lastPackage != packageName) {
-                        val intent = Intent(Intent.ACTION_SEND)
-                        shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        intent.type = type
-                        intent.putExtra(Intent.EXTRA_STREAM, imgUri)
-                        intent.setPackage(packageName)
-                        intentList.add(intent)
-                        lastPackage = packageName
-                    }
-                }
+            if (lastPackage != packageName) {
+                val intent = Intent(Intent.ACTION_SEND)
+                shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                intent.type = type
+                intent.putExtra(Intent.EXTRA_STREAM, imgUri)
+                intent.setPackage(packageName)
+                intentList.add(intent)
+                lastPackage = packageName
             }
+        }
+    }
     val openInChooser: Intent = Intent.createChooser(intentList.removeAt(0), "请选择您要分享的方式")
     openInChooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentList.toTypedArray())
     startActivity(openInChooser)
@@ -295,7 +253,7 @@ fun Context.shareMultipleBitmap(bitmapList: List<Bitmap>) {
 fun Context.installApk(apkPath: String) {
     val intent = Intent(Intent.ACTION_VIEW)
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    val uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+    val uri: Uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         FileProvider.getUriForFile(this, "${this.packageName}.fileProvider", apkPath.toFile())
     } else {
