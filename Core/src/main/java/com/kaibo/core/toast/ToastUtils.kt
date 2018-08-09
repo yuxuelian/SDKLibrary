@@ -2,9 +2,7 @@ package com.kaibo.core.toast
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.ColorStateList
 import android.graphics.Color
-import android.os.Build
 import android.support.annotation.ColorInt
 import android.support.annotation.DrawableRes
 import android.view.LayoutInflater
@@ -12,6 +10,7 @@ import android.view.View
 import android.widget.Toast
 import com.kaibo.core.R
 import kotlinx.android.synthetic.main.toast_layout.view.*
+import org.jetbrains.anko.backgroundResource
 
 
 /**
@@ -36,56 +35,55 @@ object ToastUtils {
     }
 
     @ColorInt
-    private val DEFAULT_TEXT_COLOR = Color.parseColor("#FFFFFF")
+    private val DEFAULT_TEXT_COLOR = Color.WHITE
 
-    @ColorInt
-    private val INFO_COLOR = Color.parseColor("#3F51B5")
+    @DrawableRes
+    private val INFO_COLOR = R.drawable.corners_info_toast_bg
 
-    @ColorInt
-    private val SUCCESS_COLOR = Color.parseColor("#388E3C")
+    @DrawableRes
+    private val SUCCESS_COLOR = R.drawable.corners_success_toast_bg
 
-    @ColorInt
-    private val WARNING_COLOR = Color.parseColor("#FFA900")
+    @DrawableRes
+    private val WARNING_COLOR = R.drawable.corners_warning_toast_bg
 
-    @ColorInt
-    private val ERROR_COLOR = Color.parseColor("#FD4C5B")
+    @DrawableRes
+    private val ERROR_COLOR = R.drawable.corners_error_toast_bg
 
     @JvmOverloads
-    fun showInfo(msg: CharSequence?, @ColorInt textColor: Int = DEFAULT_TEXT_COLOR, @ColorInt tintColor: Int = INFO_COLOR, showIcon: Boolean = true) {
+    fun showInfo(msg: CharSequence?, @ColorInt textColor: Int = DEFAULT_TEXT_COLOR, @DrawableRes tintColor: Int = INFO_COLOR, showIcon: Boolean = true) {
         if (!isInit) {
             throw IllegalStateException("please call init method")
         }
-        set(tintColor, showIcon, textColor, msg, R.drawable.icon_info)
+        set(showIcon, textColor, tintColor, msg, R.drawable.icon_info)
     }
 
     @JvmOverloads
-    fun showSuccess(msg: CharSequence?, @ColorInt textColor: Int = DEFAULT_TEXT_COLOR, @ColorInt tintColor: Int = SUCCESS_COLOR, showIcon: Boolean = true) {
+    fun showSuccess(msg: CharSequence?, @ColorInt textColor: Int = DEFAULT_TEXT_COLOR, @DrawableRes tintColor: Int = SUCCESS_COLOR, showIcon: Boolean = true) {
         if (!isInit) {
             throw IllegalStateException("please call init method")
         }
-        set(tintColor, showIcon, textColor, msg, R.drawable.icon_success)
+        set(showIcon, textColor, tintColor, msg, R.drawable.icon_success)
     }
 
     @JvmOverloads
-    fun showWarning(msg: CharSequence?, @ColorInt textColor: Int = DEFAULT_TEXT_COLOR, @ColorInt tintColor: Int = WARNING_COLOR, showIcon: Boolean = true) {
+    fun showWarning(msg: CharSequence?, @ColorInt textColor: Int = DEFAULT_TEXT_COLOR, @DrawableRes tintColor: Int = WARNING_COLOR, showIcon: Boolean = true) {
         if (!isInit) {
             throw IllegalStateException("please call init method")
         }
-        set(tintColor, showIcon, textColor, msg, R.drawable.icon_warning)
+        set(showIcon, textColor, tintColor, msg, R.drawable.icon_warning)
     }
 
     @JvmOverloads
-    fun showError(msg: CharSequence?, @ColorInt textColor: Int = DEFAULT_TEXT_COLOR, @ColorInt tintColor: Int = ERROR_COLOR, showIcon: Boolean = true) {
+    fun showError(msg: CharSequence?, @ColorInt textColor: Int = DEFAULT_TEXT_COLOR, @DrawableRes tintColor: Int = ERROR_COLOR, showIcon: Boolean = true) {
         if (!isInit) {
             throw IllegalStateException("please call init method")
         }
-        set(tintColor, showIcon, textColor, msg, R.drawable.icon_error)
+        set(showIcon, textColor, tintColor, msg, R.drawable.icon_error)
     }
 
-    private fun set(@ColorInt tintColor: Int, showIcon: Boolean, @ColorInt textColor: Int, msg: CharSequence?, @DrawableRes icon: Int) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            toast.view.backgroundTintList = ColorStateList.valueOf(tintColor)
-        }
+    private fun set(showIcon: Boolean, @ColorInt textColor: Int, @DrawableRes bgDrawable: Int, msg: CharSequence?, @DrawableRes icon: Int) {
+        toast.view.backgroundResource = bgDrawable
+
         toast.view.toast_icon.visibility = if (showIcon) View.VISIBLE else View.GONE
         toast.view.toast_icon.setImageResource(icon)
         toast.view.toast_text.setTextColor(textColor)
