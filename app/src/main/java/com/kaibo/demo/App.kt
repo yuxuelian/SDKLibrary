@@ -9,10 +9,7 @@ import com.kaibo.core.BaseApplication
  * email:
  * description:
  */
-class App : BaseApplication() {
 
-    override fun onCreate() {
-        super.onCreate()
-    }
+class App : BaseApplication() {
 
 }

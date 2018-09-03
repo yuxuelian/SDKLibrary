@@ -6,7 +6,8 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import com.kaibo.core.R
-import com.kaibo.core.util.installApk
+import com.kaibo.core.utl.installApk
+import org.jetbrains.anko.sp
 
 
 /**

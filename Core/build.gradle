@@ -1,16 +1,18 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-allopen'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-noarg'
-apply plugin: 'kotlin-allopen'
+
+//apply plugin: 'kotlinx-serialization'
 
 noArg {
-    annotation("com.kaibo.base.annotation.PoKo")
+    annotation("com.kaibo.core.annotation.PoKo")
 }
 
 allOpen {
-    annotation("com.kaibo.base.annotation.PoKo")
+    annotation("com.kaibo.core.annotation.PoKo")
 }
 
 android {
@@ -22,7 +24,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
-        versionName POM_VERSION
+        versionName '1.0.0'
         multiDexEnabled true
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -94,11 +96,23 @@ configurations.all {
 }
 
 dependencies {
-    api fileTree(include: ['*.jar'], dir: 'libs')
-    api "com.android.support.constraint:constraint-layout:$constraint_layout_version"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //-----------------------------Test---------------------------------------
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     //-----------------------------kotlin-------------------------------------
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    //序列化框架的重要部分：运行时库
+//    api 'org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.6.1'
+
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger2_version"
+    kapt "com.alibaba:arouter-compiler:$arouter_compiler_version"
+    kapt "com.android.databinding:compiler:$gradle_plugin_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger2_version"
+    kapt "android.arch.persistence.room:compiler:$android_room_version"
 
     //-----------------------------support------------------------------------
     api "com.android.support:design:$android_support_version"
@@ -107,11 +121,12 @@ dependencies {
     api "com.android.support:cardview-v7:$android_support_version"
     api "com.android.support:appcompat-v7:$android_support_version"
     api "com.android.support:recyclerview-v7:$android_support_version"
+    //约束布局
+    api "com.android.support.constraint:constraint-layout:$constraint_layout_version"
 
     //-----------------------------Room---------------------------------------
     api "android.arch.persistence.room:runtime:$android_room_version"
     api "android.arch.persistence.room:rxjava2:$android_room_version"
-    kapt "android.arch.persistence.room:compiler:$android_room_version"
 
     //6.0动态权限
     api 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5'
@@ -130,24 +145,6 @@ dependencies {
     api "com.trello.rxlifecycle2:rxlifecycle:$rxlifecycle_version"
     api "com.trello.rxlifecycle2:rxlifecycle-android:$rxlifecycle_version"
 
-//        api "com.trello.rxlifecycle2:rxlifecycle-components:$rxlifecycle_version"
-
-    //    api "com.trello.rxlifecycle2:rxlifecycle-components-preference:$rxlifecycle_version"
-
-    //    api "com.trello.rxlifecycle2:rxlifecycle-navi:$rxlifecycle_version"
-
-    //    api "com.trello.rxlifecycle2:rxlifecycle-android-lifecycle:$rxlifecycle_version"
-
-    //    api "com.trello.rxlifecycle2:rxlifecycle-kotlin:$rxlifecycle_version"
-
-    //    api "com.trello.rxlifecycle2:rxlifecycle-android-lifecycle-kotlin:$rxlifecycle_version"
-
-    //    api("com.hwangjr.rxbus:rxbus:1.0.6") {
-
-    //        exclude group: 'com.jakewharton.timber', module: 'timber'
-
-    //    }
-
     //----------------------------------RxBinding----------------------------------
     api "com.jakewharton.rxbinding2:rxbinding-kotlin:$rxbinding_version"
     api "com.jakewharton.rxbinding2:rxbinding-design-kotlin:$rxbinding_version"
@@ -162,14 +159,6 @@ dependencies {
     api "com.squareup.retrofit2:converter-gson:$retrofit_version"
     api "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
 
-    //-----------------------------fastjson-----------------------------------
-
-    //    api 'com.alibaba:fastjson:1.2.46'
-
-    //    api 'com.alibaba:fastjson:1.1.68.android'
-
-    //    api 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
-
     //-----------------------------gson---------------------------------------
     api "com.google.code.gson:gson:$gson_version"
     api "com.google.android:flexbox:$flexbox_version"
@@ -178,8 +167,6 @@ dependencies {
     api "com.github.CymChad:BaseRecyclerViewAdapterHelper:$brvah_version"
 
     //-----------------------------glide--------------------------------------
-
-    //api 'com.github.bumptech.glide:glide:3.7.0'
     api "com.github.bumptech.glide:okhttp3-integration:$glide_version"
     api("com.github.bumptech.glide:glide:$glide_version") {
         exclude group: "com.android.support"
@@ -187,7 +174,6 @@ dependencies {
     api("com.github.bumptech.glide:recyclerview-integration:$glide_version") {
         transitive = false
     }
-    kapt "com.github.bumptech.glide:compiler:$glide_version"
     api "com.android.support:support-fragment:$android_support_version"
 
     //-----------------------------anko---------------------------------------
@@ -197,13 +183,9 @@ dependencies {
     api("com.alibaba:arouter-api:$arouter_version") {
         exclude group: "com.android.support"
     }
-    kapt "com.alibaba:arouter-compiler:$arouter_compiler_version"
 
     //-----------------------------kotlin-ktx---------------------------------
     api "androidx.core:core-ktx:$androidx_ktx_version"
-
-    //-----------------------------DataBinding--------------------------------
-    kapt "com.android.databinding:compiler:$gradle_plugin_version"
 
     //-----------------------------logger-------------------------------------
     api "com.orhanobut:logger:$logger_version"
@@ -214,8 +196,6 @@ dependencies {
     //dagger
     api "com.google.dagger:dagger:$dagger2_version"
     api "com.google.dagger:dagger-android-support:$dagger2_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger2_version"
-    kapt "com.google.dagger:dagger-android-processor:$dagger2_version"
 
     //android进程操作工具
     api 'com.jaredrummler:android-processes:1.1.1'
@@ -235,14 +215,9 @@ dependencies {
 
     //照片选择
     api 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
+    //google地图
+//    api 'com.google.android.gms:play-services-maps:15.0.1'
 
-    //-----------------------------Test---------------------------------------
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
-    //性能检测
-    androidTestImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
 }
 
 //apply from: '../mavenpush.gradle'

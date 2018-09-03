@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 27
@@ -32,23 +31,12 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "com.android.support:appcompat-v7:$android_support_version"
-    //-----------------------------Room---------------------------------------
-//    implementation "android.arch.persistence.room:runtime:$android_room_version"
-//    implementation "android.arch.persistence.room:rxjava2:$android_room_version"
-//    kapt "android.arch.persistence.room:compiler:$android_room_version"
-
-//    implementation("com.kaibo.common:common:1.0.2") {
-//        //依赖传递
-//        transitive = true
-//    }
-
-    implementation project(":Core")
-
-    annotationProcessor "android.arch.persistence.room:compiler:$android_room_version"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //-----------------------------Test---------------------------------------
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    //-----------------------------kotlin-------------------------------------
+    implementation project(":Core")
+    annotationProcessor "android.arch.persistence.room:compiler:$android_room_version"
 }

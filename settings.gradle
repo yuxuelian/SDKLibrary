@@ -7,8 +7,7 @@ include ':Share'
 //继承
 include ':Core'
 include ':BaseMvpLib'
-include ':SwipeBackLib'
-include ':SwipeMenuLib'
+include ':SwipeBackLib',':SwipeMenuLib'
 include ':app'
 //换肤
 include ':Skin:Core'

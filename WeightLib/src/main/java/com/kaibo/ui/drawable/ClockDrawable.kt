@@ -1,5 +1,6 @@
 package com.kaibo.ui.drawable
 
+import android.content.res.Resources
 import android.graphics.*
 import android.graphics.drawable.Animatable
 import android.graphics.drawable.Drawable
@@ -15,7 +16,7 @@ import java.util.*
  * @email:
  * @description:
  */
-class ClockDrawable : Drawable(), Animatable {
+class ClockDrawable(val resources: Resources) : Drawable(), Animatable {
 
     private val handler = DelayHandler(this)
 
@@ -32,19 +33,27 @@ class ClockDrawable : Drawable(), Animatable {
     }
 
     //表盘参数
-    private var plateRadius = 340F
-    private var plateLineLength = 30F
-    private var plateLineWith = 10F
+    private var plateRadius = dp(140F)
+    private var plateLineLength = dp(10F)
+    private var plateLineWith = dp(4F)
 
     //时针参数
-    private var hourLineLength = 140F
-    private var hourLineWidth = 20F
+    private var hourLineLength = dp(50F)
+    private var hourLineWidth = dp(10F)
     //分针参数
-    private var minuteLineLength = 210F
-    private var minuteLineWidth = 15F
+    private var minuteLineLength = dp(75F)
+    private var minuteLineWidth = dp(6F)
     //秒针参数
-    private var secondLineLength = 240F
-    private var secondLineWidth = 10F
+    private var secondLineLength = dp(100F)
+    private var secondLineWidth = dp(2F)
+
+    private fun dp(dp: Float): Float {
+        return resources.displayMetrics.density * dp
+    }
+
+    private fun sp(sp: Float): Float {
+        return resources.displayMetrics.scaledDensity * sp
+    }
 
     //画笔
     private val mPaint = Paint().apply {
@@ -59,7 +68,7 @@ class ClockDrawable : Drawable(), Animatable {
     private val mTextPaint = Paint().apply {
         set(mPaint)
         //字体大小
-        textSize = 50F
+        textSize = sp(20F)
     }
 
     /**
@@ -77,8 +86,8 @@ class ClockDrawable : Drawable(), Animatable {
             mTextPaint.getTextBounds(key, 0, key.length, rect)
 
             //坐标
-            val x = (cx + (plateRadius - 60F) * Math.cos(angle * it)).toFloat() - rect.exactCenterX()
-            val y = (cy + (plateRadius - 60F) * Math.sin(angle * it)).toFloat() - rect.exactCenterY()
+            val x = (cx + (plateRadius - dp(30F)) * Math.cos(angle * it)).toFloat() - rect.exactCenterX()
+            val y = (cy + (plateRadius - dp(30F)) * Math.sin(angle * it)).toFloat() - rect.exactCenterY()
 
             map[key] = Pair(x, y)
         }
@@ -119,8 +128,8 @@ class ClockDrawable : Drawable(), Animatable {
             mPaint.color = Color.BLACK
             if (it % 5 == 0) {
                 //整点的刻度加粗加长
-                mPaint.strokeWidth = plateLineWith + 6F
-                canvas.drawLine(cx + plateRadius - 20F, cy, cx + plateRadius + plateLineLength, cy, mPaint)
+                mPaint.strokeWidth = plateLineWith + dp(3F)
+                canvas.drawLine(cx + plateRadius - dp(10F), cy, cx + plateRadius + plateLineLength, cy, mPaint)
             } else {
                 //非整点的刻度
                 mPaint.strokeWidth = plateLineWith
@@ -142,7 +151,7 @@ class ClockDrawable : Drawable(), Animatable {
         mPaint.color = Color.BLACK
         canvas.save()
         canvas.rotate((hour * 60 * 60 + minute * 60 + second) * hourRangeStep - 90, cx, cy)
-        canvas.drawLine(cx - 40F, cy, cx + hourLineLength, cy, mPaint)
+        canvas.drawLine(cx - dp(20F), cy, cx + hourLineLength, cy, mPaint)
         canvas.restore()
 
         //画分
@@ -150,7 +159,7 @@ class ClockDrawable : Drawable(), Animatable {
         mPaint.color = Color.CYAN
         canvas.save()
         canvas.rotate((minute * 60 + second) * minuteRangeStep - 90, cx, cy)
-        canvas.drawLine(cx - 60F, cy, cx + minuteLineLength, cy, mPaint)
+        canvas.drawLine(cx - dp(30F), cy, cx + minuteLineLength, cy, mPaint)
         canvas.restore()
 
         //画秒
@@ -158,7 +167,7 @@ class ClockDrawable : Drawable(), Animatable {
         mPaint.color = Color.RED
         canvas.save()
         canvas.rotate(second * secondRangeStep - 90, cx, cy)
-        canvas.drawLine(cx - 80F, cy, cx + secondLineLength, cy, mPaint)
+        canvas.drawLine(cx - dp(40F), cy, cx + secondLineLength, cy, mPaint)
         canvas.restore()
     }
 
@@ -167,7 +176,7 @@ class ClockDrawable : Drawable(), Animatable {
         drawCursor(canvas)
 
         //画中心的圆点
-        canvas.drawCircle(bounds.exactCenterX(), bounds.exactCenterX(), 30F, mPaint.apply {
+        canvas.drawCircle(bounds.exactCenterX(), bounds.exactCenterX(), dp(10F), mPaint.apply {
             color = Color.RED
         })
     }

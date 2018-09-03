@@ -4,37 +4,31 @@ import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
-import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
-import android.view.View
-import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.RxView
-import com.jakewharton.rxbinding2.widget.RxTextView
 import com.jaredrummler.android.processes.AndroidProcesses
 import com.jaredrummler.android.processes.models.Statm
 import com.kaibo.core.toast.ToastUtils
-import com.kaibo.core.util.*
-import com.kaibo.demo.R
+import com.kaibo.core.util.statusBarHeight
+import com.kaibo.core.utl.hasExternalStorage
+import com.kaibo.core.utl.installApk
+import com.kaibo.core.utl.sign
 import com.kaibo.demo.adapter.LoopPagerAdapter
-import com.kaibo.demo.mvp.contract.MainContract
-import com.kaibo.demo.mvp.model.MainModel
-import com.kaibo.demo.mvp.presenter.MainPresenter
+import com.kaibo.demo.R
 import com.kaibo.ndklib.encrypt.EncryptUtils
 import com.kaibo.swipemenulib.activity.BaseSwipeMenuActivity
-import com.kaibo.swipemenulib.weight.CustomViewAbove
 import com.kaibo.ui.drawable.ClockDrawable
 import com.kaibo.ui.drawable.PolygonLapsDrawable
 import com.orhanobut.logger.Logger
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.BiFunction
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.menu_layout.*
 import java.io.File
 import java.util.concurrent.TimeUnit
 
-class MainActivity : BaseSwipeMenuActivity<MainPresenter, MainModel>(), MainContract.IView {
+class MainActivity : BaseSwipeMenuActivity() {
 
     override fun getLayoutRes(): Int {
         return R.layout.activity_main
@@ -61,28 +55,28 @@ class MainActivity : BaseSwipeMenuActivity<MainPresenter, MainModel>(), MainCont
 
         appBarLayout.setPadding(0, statusBarHeight, 0, 0)
 
-        val textChanges = RxTextView.textChanges(editText)
-        val textChanges2 = RxTextView.textChanges(editText2)
-        Observable
-                .combineLatest(textChanges, textChanges2, BiFunction<CharSequence, CharSequence, Boolean> { text1, text2 ->
-                    Logger.d("text1=$text1")
-                    Logger.d("text2=$text2")
-                    text1.isNotEmpty() && text2.isNotEmpty()
-                })
-                .subscribe {
-
-                }
+//        val textChanges = RxTextView.textChanges(editText)
+//        val textChanges2 = RxTextView.textChanges(editText2)
+//        Observable
+//                .combineLatest(textChanges, textChanges2, BiFunction<CharSequence, CharSequence, Boolean> { text1, text2 ->
+//                    Logger.d("text1=$text1")
+//                    Logger.d("text2=$text2")
+//                    text1.isNotEmpty() && text2.isNotEmpty()
+//                })
+//                .subscribe {
+//
+//                }
 
         RxView
                 .clicks(resume)
                 .subscribe {
-                    startFloatingService()
+//                    startFloatingService()
                 }
 
         RxView
                 .clicks(button)
                 .debounce(200L, TimeUnit.MILLISECONDS)
-                .subscribe {
+                .subscribe { _ ->
                     println(sign("SHA1"))
                     ToastUtils.showSuccess("123")
 //            mPresenter.queryOrderById(123L)
@@ -188,7 +182,7 @@ class MainActivity : BaseSwipeMenuActivity<MainPresenter, MainModel>(), MainCont
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        checkOverlayPermission(requestCode, resultCode, data)
+//        checkOverlayPermission(requestCode, resultCode, data)
     }
 
     private fun roundDrawableTest() {
@@ -207,7 +201,7 @@ class MainActivity : BaseSwipeMenuActivity<MainPresenter, MainModel>(), MainCont
 //        circularProgressDrawable.start()
 
         //时钟drawable
-        val clockDrawable = ClockDrawable()
+        val clockDrawable = ClockDrawable(resources)
         clockDrawable.start()
         imageView.setImageDrawable(clockDrawable)
     }

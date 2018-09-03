@@ -1,4 +1,4 @@
-package com.kaibo.core.util
+package com.kaibo.core.utl
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -15,6 +15,8 @@ import android.os.Environment
 import android.os.LocaleList
 import android.provider.Settings
 import android.support.v4.content.FileProvider
+import com.kaibo.core.util.toFile
+import com.kaibo.core.util.toUri
 import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.FileInputStream
@@ -181,23 +183,48 @@ fun Context.shareBitmap(bitmap: Bitmap) {
     val shareIntent = Intent(Intent.ACTION_SEND)
     shareIntent.type = type
     val intentList: MutableList<Intent> = ArrayList()
-    var lastPackage = ""
-    packageManager.queryIntentActivities(shareIntent, 0).forEach {
-        val activityName = it.activityInfo.name.toLowerCase()
-        val packageName = it.activityInfo.packageName
-        // 这里可以根据实际需要进行过滤
-        if (activityName.toLowerCase().contains("mobileqq") ||
-                activityName.toLowerCase().contains("tencent.mm") ||
-                activityName.toLowerCase().contains("tencent.pb") ||
-                activityName.toLowerCase().contains("mms") ||
-                activityName.toLowerCase().contains("messaging")) {
 
-            if (lastPackage != packageName) {
+    //记录一下上一次的包名
+    var lastPackage = ""
+
+    packageManager.queryIntentActivities(shareIntent, PackageManager.MATCH_DEFAULT_ONLY).forEach {
+        val packageName = it.activityInfo.packageName
+//			intent.setClassName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareImgUI");//微信朋友
+//			intent.setClassName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareToTimeLineUI");//微信朋友圈，仅支持分享图片
+//			intent.setClassName("com.tencent.mobileqq", "cooperation.qqfav.widget.QfavJumpActivity");//保存到QQ收藏
+//			intent.setClassName("com.tencent.mobileqq", "cooperation.qlink.QlinkShareJumpActivity");//QQ面对面快传
+//			intent.setClassName("com.tencent.mobileqq", "com.tencent.mobileqq.activity.qfileJumpActivity");//传给我的电脑
+//          intent.setClassName("com.tencent.mobileqq", "com.tencent.mobileqq.activity.JumpActivity");//QQ好友或QQ群
+        if (lastPackage != packageName) {
+            // 这里可以根据实际需要进行过滤
+            if (packageName.toLowerCase().contains("mms") || packageName.toLowerCase().contains("messaging")) {
+                //短信
                 val intent = Intent(Intent.ACTION_SEND)
                 shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 intent.type = type
                 intent.putExtra(Intent.EXTRA_STREAM, imgUri)
                 intent.setPackage(packageName)
+                intentList.add(intent)
+            } else if (packageName == "com.tencent.mm") {
+                //微信
+                val intent = Intent(Intent.ACTION_SEND)
+                shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                intent.type = type
+                intent.putExtra(Intent.EXTRA_STREAM, imgUri)
+                intent.setPackage(packageName)
+                //分享到微信好友
+                intent.setClassName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareImgUI")
+                intentList.add(intent)
+                lastPackage = packageName
+            } else if (packageName == "com.tencent.mobileqq") {
+                //手机qq
+                val intent = Intent(Intent.ACTION_SEND)
+                shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                intent.type = type
+                intent.putExtra(Intent.EXTRA_STREAM, imgUri)
+                intent.setPackage(packageName)
+                //分享到qq好友
+                intent.setClassName("com.tencent.mobileqq", "com.tencent.mobileqq.activity.JumpActivity")
                 intentList.add(intent)
                 lastPackage = packageName
             }
