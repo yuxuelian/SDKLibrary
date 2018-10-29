@@ -1,5 +1,5 @@
 //独立项目
-include ':WeightLib'
+include ':WeightLib', ':PullRefresh'
 include ':NdkLib'
 include ':IndicatrorManagerLib'
 include ':WheelView'

@@ -1,11 +1,12 @@
 package com.kaibo.core.util
 
+import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleOwner
+import com.kaibo.core.exception.DataException
+import com.kaibo.core.http.BaseBean
 import com.uber.autodispose.AutoDispose
 import com.uber.autodispose.AutoDisposeConverter
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
-import com.kaibo.core.exception.DataException
-import com.kaibo.core.http.BaseBean
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 
@@ -19,7 +20,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
  */
 
 fun <T> bindToAutoDispose(lifecycleOwner: LifecycleOwner): AutoDisposeConverter<T> {
-    return AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(lifecycleOwner))
+    return AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(lifecycleOwner, Lifecycle.Event.ON_DESTROY))
 }
 
 fun <T> Observable<T>.toMainThread(): Observable<T> {
