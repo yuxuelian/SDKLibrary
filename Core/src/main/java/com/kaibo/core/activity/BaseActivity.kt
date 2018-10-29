@@ -34,10 +34,13 @@ abstract class BaseActivity : AppCompatActivity() {
     /**
      * 封装一下权限申请后的处理逻辑
      */
-    protected fun easyRequestPermission(permissionName: String, invoke: () -> Unit) {
-        if (!rxPermissions.isGranted(permissionName)) {
-            rxPermissions
-                    .requestEach(permissionName)
+    protected fun easyRequestPermission(vararg permissionNames: String, invoke: () -> Unit) {
+        // 过滤出需没有授权的权限
+        val needRequest = permissionNames.filter { !rxPermissions.isGranted(it) }
+        if (needRequest.isNotEmpty()) {
+            // 请求权限
+            rxPermissions.requestEach(*needRequest.toTypedArray())
+                    .`as`(bindLifecycle())
                     .subscribe { permission: Permission ->
                         if (permission.granted) {
                             invoke.invoke()
