@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.provider.Settings
 import com.kaibo.core.R
 import com.kaibo.core.utl.installApk
-import org.jetbrains.anko.sp
+import java.io.File
 
 
 /**
@@ -38,11 +38,12 @@ class AppInstallApkActivity : BaseActivity() {
             if (!canInstall) {
                 rxPermissions
                         .request(Manifest.permission.REQUEST_INSTALL_PACKAGES)
+                        .`as`(bindLifecycle())
                         .subscribe { granted: Boolean ->
                             when {
                                 granted -> {
                                     //安装apk
-                                    installApk(apkPath)
+                                    installApk(File(apkPath))
                                 }
                                 shouldShowRequestPermissionRationale(Manifest.permission.REQUEST_INSTALL_PACKAGES) -> {
                                     //引导用户去打开权限
@@ -56,10 +57,10 @@ class AppInstallApkActivity : BaseActivity() {
                             }
                         }
             } else {
-                installApk(apkPath)
+                installApk(File(apkPath))
             }
         } else {
-            installApk(apkPath)
+            installApk(File(apkPath))
         }
     }
 
@@ -67,7 +68,7 @@ class AppInstallApkActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             GET_UNKNOWN_APP_SOURCES -> {
-                installApk(apkPath)
+                installApk(File(apkPath))
             }
         }
     }

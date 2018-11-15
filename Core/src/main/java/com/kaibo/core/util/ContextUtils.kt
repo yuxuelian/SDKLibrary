@@ -277,14 +277,14 @@ fun Context.shareMultipleBitmap(bitmapList: List<Bitmap>) {
  *
  * @param apkPath 安装包的路径
  */
-fun Context.installApk(apkPath: String) {
+fun Context.installApk(apkFile: File) {
     val intent = Intent(Intent.ACTION_VIEW)
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     val uri: Uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        FileProvider.getUriForFile(this, "${this.packageName}.fileProvider", apkPath.toFile())
+        FileProvider.getUriForFile(this, "${this.packageName}.fileProvider", apkFile)
     } else {
-        apkPath.toUri()
+        Uri.fromFile(apkFile)
     }
     intent.setDataAndType(uri, "application/vnd.android.package-archive")
     this.startActivity(intent)

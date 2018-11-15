@@ -33,6 +33,9 @@ android {
             abiFilters "armeabi-v7a", "x86"
         }
 
+        renderscriptTargetApi 18
+        renderscriptSupportModeEnabled true
+
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [moduleName: project.getName()]

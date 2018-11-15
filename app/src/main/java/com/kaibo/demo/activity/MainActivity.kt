@@ -69,6 +69,7 @@ class MainActivity : BaseSwipeMenuActivity() {
 
         RxView
                 .clicks(resume)
+                .`as`(bindLifecycle())
                 .subscribe {
 //                    startFloatingService()
                 }
@@ -76,6 +77,7 @@ class MainActivity : BaseSwipeMenuActivity() {
         RxView
                 .clicks(button)
                 .debounce(200L, TimeUnit.MILLISECONDS)
+                .`as`(bindLifecycle())
                 .subscribe { _ ->
                     println(sign("SHA1"))
                     ToastUtils.showSuccess("123")
@@ -102,13 +104,14 @@ class MainActivity : BaseSwipeMenuActivity() {
                     if (!rxPermissions.isGranted(Manifest.permission.READ_EXTERNAL_STORAGE)) {
                         rxPermissions
                                 .request(Manifest.permission.READ_EXTERNAL_STORAGE)
+                                .`as`(bindLifecycle())
                                 .subscribe {
                                     if (it) {
                                         //授权成功
                                         Logger.d("授权成功")
                                         if (hasExternalStorage()) {
                                             val apkPath = Environment.getExternalStorageDirectory().absolutePath + File.separator + "app-release.apk"
-                                            installApk(apkPath)
+                                            installApk(File(apkPath))
                                         }
                                     } else {
                                         Logger.d("权限被拒绝")
@@ -118,7 +121,7 @@ class MainActivity : BaseSwipeMenuActivity() {
                         Logger.d("已经授权过了")
                         if (hasExternalStorage()) {
                             val apkPath = Environment.getExternalStorageDirectory().absolutePath + File.separator + "app-release.apk"
-                            installApk(apkPath)
+                            installApk(File(apkPath))
                         }
                     }
 
@@ -175,6 +178,7 @@ class MainActivity : BaseSwipeMenuActivity() {
         Observable
                 .interval(2, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
+                .`as`(bindLifecycle())
                 .subscribe {
                     loopPager.currentItem = loopPager.currentItem + 1
                 }
