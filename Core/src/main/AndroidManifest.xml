@@ -31,6 +31,5 @@
         </provider>
         <!-- 7.0文件权限结束 -->
 
-        <activity android:name=".activity.AppInstallApkActivity" />
     </application>
 </manifest>

@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
 
-import com.kaibo.core.activity.BaseActivity;
+import com.kaibo.core.activity.SuperActivity;
 import com.kaibo.swipemenulib.R;
 import com.kaibo.swipemenulib.helper.SwipeActivityHelper;
 import com.kaibo.swipemenulib.weight.SwipeMenuLayout;
@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * @author:Administrator 继承这个View可以轻松实现侧滑菜单效果
  */
-public abstract class BaseSwipeMenuActivity extends BaseActivity {
+public abstract class BaseSwipeMenuActivity extends SuperActivity {
 
     private SwipeActivityHelper mHelper;
 

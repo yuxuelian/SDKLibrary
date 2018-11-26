@@ -89,7 +89,7 @@ abstract class BaseIndicatorManagerRvAdapter(private var allOption: MutableList<
         addItemType(OptionEntity.TAB_TITLE_TYPE, tabTitleLayoutRes)
         addItemType(OptionEntity.TAB_CENTER_TYPE, tabCenterLayoutRes)
 
-        this.setOnItemClickListener { adapter, view, position ->
+        this.setOnItemClickListener { _, _, position ->
             if (!recyclerView.itemAnimator.isRunning) {
                 when {
                     position == 0 -> {

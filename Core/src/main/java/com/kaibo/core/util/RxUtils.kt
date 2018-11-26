@@ -20,6 +20,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
  */
 
 fun <T> bindToAutoDispose(lifecycleOwner: LifecycleOwner): AutoDisposeConverter<T> {
+    // 在OnDestroy的时候解除绑定
     return AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(lifecycleOwner, Lifecycle.Event.ON_DESTROY))
 }
 

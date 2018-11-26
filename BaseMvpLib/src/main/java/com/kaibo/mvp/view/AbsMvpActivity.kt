@@ -3,7 +3,7 @@ package com.kaibo.mvp.view
 import android.os.Bundle
 import android.support.annotation.MainThread
 import android.support.v4.app.Fragment
-import com.kaibo.core.activity.BaseActivity
+import com.kaibo.core.activity.SuperActivity
 import com.kaibo.core.toast.ToastUtils
 import com.kaibo.mvp.presenter.BasePresenter
 import dagger.android.AndroidInjection
@@ -23,7 +23,7 @@ import javax.inject.Inject
  */
 
 @Beta
-abstract class AbsMvpActivity<P : BasePresenter> : BaseActivity(), BaseView,
+abstract class AbsMvpActivity<P : BasePresenter> : SuperActivity(), BaseView,
         HasFragmentInjector, HasSupportFragmentInjector {
 
     @Inject
@@ -75,13 +75,5 @@ abstract class AbsMvpActivity<P : BasePresenter> : BaseActivity(), BaseView,
 
     override fun showWarning(warning: String?) {
         ToastUtils.showWarning(warning)
-    }
-
-    override fun showLoading() {
-        super.showLoading()
-    }
-
-    override fun hideLoading() {
-        super.hideLoading()
     }
 }

@@ -1,6 +1,10 @@
 package com.kaibo.core.http
 
+import com.kaibo.core.BaseApplication
+import com.kaibo.core.BuildConfig
+import com.kaibo.core.http.interceptor.ProgressInterceptor
 import io.reactivex.schedulers.Schedulers
+import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
@@ -8,6 +12,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
 import java.util.concurrent.TimeUnit
 
 /**
@@ -25,21 +30,21 @@ object HttpRequestManager {
     //缓存大小   20M
     private const val CACHE_SIZE = 1024 * 1024 * 20L
 
-    //连接超时时间  30s
+    //连接超时时间  30L
     private const val CONNECT_TIMEOUT_TIME = 30L
-    //读超时时间  30s
+    //读超时时间  30L
     private const val READ_TIMEOUT_TIME = 30L
-    //写超时时间  30s
+    //写超时时间  30L
     private const val WRITE_TIMEOUT_TIME = 30L
 
     //上传图片
-    val IMAGE_MEDIA_TYPE: MediaType? = MediaType.parse("image/*")
+    val IMAGE_MEDIA_TYPE: MediaType = MediaType.get("image/*")
     //上传json
-    val JSON: MediaType? = MediaType.parse("application/json; charset=utf-8")
+    val JSON: MediaType = MediaType.get("application/json; charset=utf-8")
     //普通文本
-    val TEXT: MediaType? = MediaType.parse("text/plain; charset=utf-8")
+    val TEXT: MediaType = MediaType.get("text/plain; charset=utf-8")
     //文件
-    val FORM_DATA: MediaType? = MediaType.parse("multipart/form-data")
+    val FORM_DATA: MediaType = MediaType.get("multipart/form-data")
 
     private val interceptors: MutableList<Interceptor> = ArrayList()
 
@@ -47,7 +52,7 @@ object HttpRequestManager {
      * 此方法需要在  okHttpClient  第一次被使用之前调用   否则无效
      */
     fun setOtherInterceptor(vararg interceptors: Interceptor) {
-        this.interceptors.addAll(interceptors)
+        HttpRequestManager.interceptors.addAll(interceptors)
     }
 
     /**
@@ -56,9 +61,6 @@ object HttpRequestManager {
     val okHttpClient: OkHttpClient by lazy {
         val builder: OkHttpClient.Builder = OkHttpClient
                 .Builder()
-                //进度拦截器
-//                .addInterceptor(ProgressInterceptor())
-                .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                 .addInterceptor {
                     it.proceed(it.request()
                             .newBuilder()
@@ -70,7 +72,16 @@ object HttpRequestManager {
                 .connectTimeout(CONNECT_TIMEOUT_TIME, TimeUnit.SECONDS)
                 .readTimeout(READ_TIMEOUT_TIME, TimeUnit.SECONDS)
                 .writeTimeout(WRITE_TIMEOUT_TIME, TimeUnit.SECONDS)
-//           .cache(Cache(File("${BaseApplication.INSTANCE.cacheDir.absolutePath}${File.separator}okHttpCaches"), CACHE_SIZE))
+                .cache(Cache(File("${BaseApplication.INSTANCE.cacheDir.absolutePath}${File.separator}okHttpCaches"), CACHE_SIZE))
+
+        // 根据编译环境设置不同的拦截器
+        if (BuildConfig.DEBUG) {
+            // 请求日志拦截器
+            builder.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+        } else {
+            //进度拦截器
+            builder.addInterceptor(ProgressInterceptor())
+        }
 
         //添加别的拦截器
         interceptors.forEach {

@@ -4,7 +4,7 @@ package com.kaibo.swipebacklib.activity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.kaibo.core.activity.BaseActivity;
+import com.kaibo.core.activity.SuperActivity;
 import com.kaibo.swipebacklib.helper.SwipeBackActivityHelper;
 import com.kaibo.swipebacklib.util.Utils;
 import com.kaibo.swipebacklib.weight.SwipeBackLayout;
@@ -17,7 +17,7 @@ import com.kaibo.swipebacklib.weight.SwipeBackLayout;
  * description:继承这个Activity可以轻松实现  侧滑返回
  */
 
-public abstract class BaseSwipeBackActivity extends BaseActivity {
+public abstract class BaseSwipeBackActivity extends SuperActivity {
 
     private SwipeBackActivityHelper mHelper;
 

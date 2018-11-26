@@ -8,14 +8,13 @@ import android.support.annotation.LayoutRes
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.WindowManager
-import com.tbruyelle.rxpermissions2.Permission
-import com.tbruyelle.rxpermissions2.RxPermissions
-import com.uber.autodispose.AutoDisposeConverter
 import com.kaibo.core.R
-import com.kaibo.core.dialog.LoadingDialog
 import com.kaibo.core.toast.ToastUtils
 import com.kaibo.core.util.bindToAutoDispose
 import com.kaibo.core.util.immersive
+import com.tbruyelle.rxpermissions2.Permission
+import com.tbruyelle.rxpermissions2.RxPermissions
+import com.uber.autodispose.AutoDisposeConverter
 
 /**
  * @author:Administrator
@@ -25,9 +24,9 @@ import com.kaibo.core.util.immersive
  * description:
  */
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class SuperActivity : AppCompatActivity() {
 
-    protected val rxPermissions by lazy {
+    private val rxPermissions by lazy {
         RxPermissions(this)
     }
 
@@ -57,42 +56,33 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-    private val loadingDialog by lazy {
-        LoadingDialog()
-    }
-
-    protected open fun showLoading() {
-        if (!loadingDialog.isVisible) {
-            loadingDialog.show(supportFragmentManager)
-        }
-    }
-
-    protected open fun hideLoading() {
-        if (loadingDialog.isVisible) {
-            loadingDialog.hide()
-        }
-    }
+    /**
+     * 是否隐藏状态栏
+     */
+    protected open fun isHideStatusBar() = false
 
     /**
      * 是否沉浸式   Pair  的第一个参数表示是否沉浸式
      * 第二个参数    当第一个参数为true的时候  第二个参数才生效
      * 第二个参数表示是否使状态栏的颜色变成黑色
      */
-    protected open fun enableImmersive(): Pair<Boolean, Boolean> = Pair(true, false)
+    protected open fun enableImmersive() = Pair(true, false)
 
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //禁止应用内截屏
-        window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
-
-        //禁止横屏
+        // 禁止应用内截屏
+//        window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
+        // 禁止横屏
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-
-        //默认设置Activity为沉浸式
+        // 默认设置Activity为沉浸式
         val (enableImmersive, isLight) = enableImmersive()
         if (enableImmersive) {
-            immersive(isLight)
+            window.immersive(isLight)
+        }
+        // 设置为全屏
+        if (isHideStatusBar()) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         }
         setContentViewBefore(savedInstanceState)
         setContentView(getLayoutRes())
@@ -170,5 +160,5 @@ abstract class BaseActivity : AppCompatActivity() {
     /**
      * Rx绑定生命周期
      */
-    protected fun <T> bindLifecycle(): AutoDisposeConverter<T> = bindToAutoDispose(this)
+    fun <T> bindLifecycle(): AutoDisposeConverter<T> = bindToAutoDispose(this)
 }

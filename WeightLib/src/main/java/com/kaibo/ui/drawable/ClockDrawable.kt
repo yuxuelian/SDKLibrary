@@ -112,9 +112,9 @@ class ClockDrawable(val resources: Resources) : Drawable(), Animatable {
      * 绘制表盘上的数字
      */
     private fun drawText(canvas: Canvas) {
-        textMap.forEach { key, value ->
+        textMap.entries.forEach { entry: Map.Entry<String, Pair<Float, Float>> ->
             //绘制文字
-            canvas.drawText(key, value.first, value.second, mTextPaint)
+            canvas.drawText(entry.key, entry.value.first, entry.value.second, mTextPaint)
         }
     }
 

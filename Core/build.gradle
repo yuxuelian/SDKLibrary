@@ -132,7 +132,7 @@ dependencies {
     api "android.arch.persistence.room:rxjava2:$android_room_version"
 
     //6.0动态权限
-    api 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5'
+    api "com.github.tbruyelle:rxpermissions:$rxpermissions_version"
 
     //-----------------------------RxJava-------------------------------------
     api "io.reactivex.rxjava2:rxjava:$rxjava2_version"
