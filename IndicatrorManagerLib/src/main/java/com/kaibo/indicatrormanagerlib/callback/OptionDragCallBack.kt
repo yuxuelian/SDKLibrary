@@ -16,8 +16,8 @@ import com.kaibo.indicatrormanagerlib.BaseIndicatorManagerRvAdapter
  * email:
  * description:
  */
-class OptionDragCallBack(private val mAdapter: BaseIndicatorManagerRvAdapter) : ItemTouchHelper.Callback() {
 
+class OptionDragCallBack(private val mAdapter: BaseIndicatorManagerRvAdapter) : ItemTouchHelper.Callback() {
     /**
      * 绘制虚线的画笔
      */
@@ -69,9 +69,6 @@ class OptionDragCallBack(private val mAdapter: BaseIndicatorManagerRvAdapter) : 
         return true
     }
 
-    override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
-    }
-
     //长按时调用
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
         super.onSelectedChanged(viewHolder, actionState)
@@ -79,6 +76,10 @@ class OptionDragCallBack(private val mAdapter: BaseIndicatorManagerRvAdapter) : 
             //长按时调用
             mAdapter.onSelectedChanged(viewHolder as BaseViewHolder)
         }
+    }
+
+    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+
     }
 
     override fun onChildDrawOver(canvas: Canvas,

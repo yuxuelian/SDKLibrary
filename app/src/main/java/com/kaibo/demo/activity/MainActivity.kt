@@ -13,10 +13,9 @@ import com.kaibo.core.util.statusBarHeight
 import com.kaibo.core.utl.hasExternalStorage
 import com.kaibo.core.utl.installApk
 import com.kaibo.core.utl.sign
-import com.kaibo.demo.adapter.LoopPagerAdapter
 import com.kaibo.demo.R
-import com.kaibo.ndklib.encrypt.EncryptUtils
-import com.kaibo.swipemenulib.activity.BaseSwipeMenuActivity
+import com.kaibo.demo.adapter.LoopPagerAdapter
+import com.kaibo.swipebacklib.activity.BaseSwipeBackActivity
 import com.kaibo.ui.drawable.ClockDrawable
 import com.kaibo.ui.drawable.PolygonLapsDrawable
 import com.orhanobut.logger.Logger
@@ -24,23 +23,22 @@ import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.menu_layout.*
 import java.io.File
 import java.util.concurrent.TimeUnit
 
-class MainActivity : BaseSwipeMenuActivity() {
+class MainActivity : BaseSwipeBackActivity() {
 
     override fun getLayoutRes(): Int {
         return R.layout.activity_main
     }
 
-    override fun getSlideMenuLayout(): Int {
-        return R.layout.menu_layout
-    }
+//    override fun getSlideMenuLayout(): Int {
+//        return R.layout.menu_layout
+//    }
 
     override fun initOnCreate(savedInstanceState: Bundle?) {
-        text.text = EncryptUtils.getInstance().encrypt("123")
-        text.text = EncryptUtils.getInstance().decrypt("decrypt")
+//        text.text = EncryptUtils.getInstance().encrypt("123")
+//        text.text = EncryptUtils.getInstance().decrypt("decrypt")
 //        println(isRoot())
 //        println(isEmulator())
 //        println(hasExternalStorage())

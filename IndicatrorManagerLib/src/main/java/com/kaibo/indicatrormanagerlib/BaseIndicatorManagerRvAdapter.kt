@@ -8,8 +8,8 @@ import android.util.Log
 import android.view.View
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.kaibo.indicatrormanagerlib.callback.OptionDragCallBack
 import com.kaibo.indicatrormanagerlib.callback.OnOptionStateListener
+import com.kaibo.indicatrormanagerlib.callback.OptionDragCallBack
 import com.kaibo.indicatrormanagerlib.entity.OptionEntity
 import java.util.*
 
@@ -90,7 +90,8 @@ abstract class BaseIndicatorManagerRvAdapter(private var allOption: MutableList<
         addItemType(OptionEntity.TAB_CENTER_TYPE, tabCenterLayoutRes)
 
         this.setOnItemClickListener { _, _, position ->
-            if (!recyclerView.itemAnimator.isRunning) {
+            val isRunning = recyclerView.itemAnimator?.isRunning ?: false
+            if (!isRunning) {
                 when {
                     position == 0 -> {
                         //点击了标题TAB

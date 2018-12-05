@@ -10,7 +10,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 
 import skin.support.appcompat.R;
-import skin.support.content.res.SkinCompatResources;
 import skin.support.content.res.SkinCompatVectorResources;
 
 import static skin.support.widget.SkinCompatHelper.INVALID_ID;

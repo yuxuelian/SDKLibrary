@@ -3,19 +3,14 @@ package com.kaibo.wheelview.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.ColorInt;
-import android.support.annotation.FractionRes;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.kaibo.wheelview.R;
 import com.kaibo.wheelview.data.entity.BaseAddressBean;
-import com.orhanobut.logger.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.annotations.NonNull;

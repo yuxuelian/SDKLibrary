@@ -1,29 +1,28 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-allopen'
-apply plugin: 'kotlin-kapt'
+//apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-noarg'
-
+//apply plugin: 'kotlin-allopen'
 //apply plugin: 'kotlinx-serialization'
-
 noArg {
     annotation("com.kaibo.core.annotation.PoKo")
 }
-
-allOpen {
-    annotation("com.kaibo.core.annotation.PoKo")
-}
+//
+//allOpen {
+//    annotation("com.kaibo.core.annotation.PoKo")
+//}
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
 
     dataBinding.enabled true
 
     defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 27
-        versionCode 1
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode rootProject.versionCode
         versionName '1.0.0'
         multiDexEnabled true
 
@@ -110,12 +109,12 @@ dependencies {
     //序列化框架的重要部分：运行时库
 //    api 'org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.6.1'
 
-    kapt "com.github.bumptech.glide:compiler:$glide_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger2_version"
-    kapt "com.alibaba:arouter-compiler:$arouter_compiler_version"
-    kapt "com.android.databinding:compiler:$gradle_plugin_version"
-    kapt "com.google.dagger:dagger-android-processor:$dagger2_version"
-    kapt "android.arch.persistence.room:compiler:$android_room_version"
+//    kapt "com.github.bumptech.glide:compiler:$glide_version"
+//    kapt "com.google.dagger:dagger-compiler:$dagger2_version"
+//    kapt "com.alibaba:arouter-compiler:$arouter_compiler_version"
+//    kapt "com.android.databinding:compiler:$gradle_plugin_version"
+//    kapt "com.google.dagger:dagger-android-processor:$dagger2_version"
+//    kapt "android.arch.persistence.room:compiler:$android_room_version"
 
     //-----------------------------support------------------------------------
     api "com.android.support:design:$android_support_version"
@@ -218,6 +217,10 @@ dependencies {
 
     //照片选择
     api 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
+//    api 'com.github.yalantis:ucrop:2.2.2'
+
+    api 'me.jessyan:autosize:1.1.0'
+
     //google地图
 //    api 'com.google.android.gms:play-services-maps:15.0.1'
 

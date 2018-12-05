@@ -185,7 +185,7 @@ class ItemManager(private val delegated: MutableList<Item> = mutableListOf()) : 
         delegated.clear()
         delegated.addAll(elements)
         ensureControllers(elements)
-        result.dispatchUpdatesTo(observer)
+        observer?.let(result::dispatchUpdatesTo)
     }
 
     /**

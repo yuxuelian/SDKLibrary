@@ -7,11 +7,11 @@ import android.support.v4.app.FragmentActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.kaibo.core.toast.ToastUtils
+import com.kaibo.core.util.bindToAutoDispose
 import com.tbruyelle.rxpermissions2.Permission
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.uber.autodispose.AutoDisposeConverter
-import com.kaibo.core.toast.ToastUtils
-import com.kaibo.core.util.bindToAutoDispose
 
 /**
  * @author:Administrator

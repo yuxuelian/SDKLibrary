@@ -16,6 +16,7 @@
       <module fileurl="file://$PROJECT_DIR$/Skin/Skin.iml" filepath="$PROJECT_DIR$/Skin/Skin.iml" />
       <module fileurl="file://$PROJECT_DIR$/Skin/Core/Skin-Core.iml" filepath="$PROJECT_DIR$/Skin/Core/Skin-Core.iml" />
       <module fileurl="file://$PROJECT_DIR$/SwipeBackLib/SwipeBackLib.iml" filepath="$PROJECT_DIR$/SwipeBackLib/SwipeBackLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SwipeBackLib2/SwipeBackLib2.iml" filepath="$PROJECT_DIR$/SwipeBackLib2/SwipeBackLib2.iml" />
       <module fileurl="file://$PROJECT_DIR$/SwipeMenuLib/SwipeMenuLib.iml" filepath="$PROJECT_DIR$/SwipeMenuLib/SwipeMenuLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/WeightLib/WeightLib.iml" filepath="$PROJECT_DIR$/WeightLib/WeightLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/WheelView/WheelView.iml" filepath="$PROJECT_DIR$/WheelView/WheelView.iml" />

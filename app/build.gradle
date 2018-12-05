@@ -2,27 +2,26 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-noarg'
-apply plugin: 'kotlin-allopen'
-
+//apply plugin: 'kotlin-allopen'
 noArg {
     annotation("com.kaibo.core.annotation.PoKo")
 }
-
-allOpen {
-    annotation("com.kaibo.core.annotation.PoKo")
-}
+//allOpen {
+//    annotation("com.kaibo.core.annotation.PoKo")
+//}
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
 
     dataBinding.enabled true
 
     defaultConfig {
         applicationId "com.kaibo.demo"
-        minSdkVersion 19
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled true

@@ -1,8 +1,7 @@
 package com.kaibo.demo
 
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 import java.nio.charset.Charset
 import java.util.*
 

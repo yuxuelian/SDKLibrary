@@ -9,11 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.kaibo.wheelview.R;
-import com.kaibo.wheelview.adapter.WheelViewAdapter;
 import com.kaibo.wheelview.listener.OnWheelScrollListener;
 import com.kaibo.wheelview.weight.WheelView;
-
-import java.util.List;
 
 /**
  * @author:Administrator

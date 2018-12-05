@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import com.kaibo.core.fragment.BaseFragment
 import com.kaibo.core.toast.ToastUtils
-import com.kaibo.core.util.bindToAutoDispose
 import com.kaibo.mvp.presenter.BasePresenter
-import com.uber.autodispose.AutoDisposeConverter
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.AndroidSupportInjection

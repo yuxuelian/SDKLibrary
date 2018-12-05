@@ -2,23 +2,21 @@ package com.example.share
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import com.tencent.connect.share.QQShare
 import com.tencent.connect.share.QzoneShare
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX
+import com.tencent.mm.opensdk.modelmsg.WXImageObject
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage
+import com.tencent.mm.opensdk.openapi.IWXAPI
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import com.tencent.tauth.IUiListener
 import com.tencent.tauth.Tencent
-import com.tencent.tauth.UiError
-import java.util.*
-import com.tencent.mm.opensdk.openapi.IWXAPI
-import com.tencent.mm.opensdk.modelmsg.SendMessageToWX
-import android.graphics.Bitmap
-import com.tencent.mm.opensdk.modelmsg.WXMediaMessage
-import com.tencent.mm.opensdk.modelmsg.WXImageObject
-import android.graphics.BitmapFactory
-import java.io.File
-import android.R.attr.bitmap
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.util.*
 
 
 /**

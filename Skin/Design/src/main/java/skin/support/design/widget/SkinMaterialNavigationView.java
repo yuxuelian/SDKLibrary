@@ -11,13 +11,13 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 
 import skin.support.content.res.SkinCompatResources;
+import skin.support.content.res.SkinCompatThemeUtils;
 import skin.support.content.res.SkinCompatV7ThemeUtils;
 import skin.support.content.res.SkinCompatVectorResources;
 import skin.support.design.R;
 import skin.support.widget.SkinCompatBackgroundHelper;
 import skin.support.widget.SkinCompatHelper;
 import skin.support.widget.SkinCompatSupportable;
-import skin.support.content.res.SkinCompatThemeUtils;
 
 import static skin.support.widget.SkinCompatHelper.INVALID_ID;
 

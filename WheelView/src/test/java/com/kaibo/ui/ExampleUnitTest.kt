@@ -1,11 +1,8 @@
 package com.kaibo.ui
 
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import java.text.ParseException
 import java.text.SimpleDateFormat
-
-import org.junit.Assert.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).

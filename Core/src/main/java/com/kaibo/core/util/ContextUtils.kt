@@ -1,6 +1,7 @@
 package com.kaibo.core.utl
 
 import android.annotation.SuppressLint
+import android.app.ActivityManager
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
@@ -15,7 +16,6 @@ import android.os.Environment
 import android.os.LocaleList
 import android.provider.Settings
 import android.support.v4.content.FileProvider
-import com.kaibo.core.util.toFile
 import com.kaibo.core.util.toUri
 import java.io.ByteArrayInputStream
 import java.io.File
@@ -39,26 +39,55 @@ import kotlin.collections.ArrayList
 /**
  * 获取当前APP的版本号
  */
-val Context.versionCode get() = packageManager.getPackageInfo(packageName, 0).versionCode
+val Context.versionCode: Int
+    get() = packageManager.getPackageInfo(packageName, 0).versionCode
 
 /**
  * 获取当前APP的版本名
  */
-val Context.versionName: String get() = packageManager.getPackageInfo(packageName, 0).versionName
+val Context.versionName: String
+    get() = packageManager.getPackageInfo(packageName, 0).versionName
 
 /**
  * 判断是否开启gps定位.
  *
  * @return 如果开启gps定位返回true, 否则返回false
  */
-val Context.isGPSEnable get() = (getSystemService(Context.LOCATION_SERVICE) as LocationManager).isProviderEnabled(LocationManager.GPS_PROVIDER)
+val Context.isGPSEnable: Boolean
+    get() = (getSystemService(Context.LOCATION_SERVICE) as LocationManager).isProviderEnabled(LocationManager.GPS_PROVIDER)
 
 /**
  * 判断是否有网络连接.
  *
  * @return if the network is available, `false` otherwise
  */
-val Context.isNetworkConnected get() = (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo.isAvailable
+val Context.isNetworkConnected: Boolean
+    get() = (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo.isAvailable
+
+/**
+ * 判断App是否正在后台运行
+ * 在后台运行返回true
+ * 在前台运行返回false
+ *
+ * targetPack  需要判断哪个包
+ */
+fun Context.isAppInBackgroundInternal(targetPack: String): Boolean {
+    val manager = this.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+        manager.runningAppProcesses.forEach {
+            if (it.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                return false
+            }
+        }
+    } else {
+        val task: List<ActivityManager.RunningTaskInfo> = manager.getRunningTasks(1)
+        if (task.isNotEmpty()) {
+            // 判断顶部Activity的包名是否是当前指定包
+            return task[0].topActivity.packageName != targetPack
+        }
+    }
+    return true
+}
 
 /**
  * 检测是否有存在外部存储.
@@ -71,7 +100,8 @@ fun hasExternalStorage() = Environment.getExternalStorageState() == Environment.
  * 跳转到该app对应的设置界面.
  */
 fun Context.toAppSetting() {
-    this.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:$packageName")))
+    this.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+            Uri.parse("package:$packageName")))
 }
 
 /**

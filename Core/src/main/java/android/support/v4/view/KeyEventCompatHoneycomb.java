@@ -16,8 +16,8 @@
 
 package android.support.v4.view;
 
-import android.support.annotation.RequiresApi;
 import android.annotation.TargetApi;
+import android.support.annotation.RequiresApi;
 import android.view.KeyEvent;
 
 /**

@@ -1,7 +1,7 @@
 package com.kaibo.demo.activity
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import com.kaibo.demo.R
 import com.kaibo.demo.adapter.TestAdapter

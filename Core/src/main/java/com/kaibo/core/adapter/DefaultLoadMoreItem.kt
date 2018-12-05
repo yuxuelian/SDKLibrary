@@ -106,7 +106,7 @@ class DefaultLoadMoreItem : LoadMoreItem {
          * 在这里声明此Item所对应的ViewHolder，用来从OnCreateViewHolder传View到OnBindViewHolder中。
          * 这个ViewHolder类应该是私有的，只在这里用
          */
-        private class ViewHolder(itemView: View?, val progress: ProgressBar, val hintText: TextView) : RecyclerView.ViewHolder(itemView)
+        private class ViewHolder(itemView: View, val progress: ProgressBar, val hintText: TextView) : RecyclerView.ViewHolder(itemView)
     }
 
     /**

@@ -28,7 +28,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.GradientDrawable.Orientation;
 import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -36,12 +35,12 @@ import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
 
 import com.kaibo.wheelview.adapter.WheelViewAdapter;
-import com.kaibo.wheelview.listener.OnWheelChangedListener;
-import com.kaibo.wheelview.listener.OnWheelClickedListener;
-import com.kaibo.wheelview.listener.OnWheelScrollListener;
 import com.kaibo.wheelview.common.ItemsRange;
 import com.kaibo.wheelview.common.WheelRecycle;
 import com.kaibo.wheelview.common.WheelScroller;
+import com.kaibo.wheelview.listener.OnWheelChangedListener;
+import com.kaibo.wheelview.listener.OnWheelClickedListener;
+import com.kaibo.wheelview.listener.OnWheelScrollListener;
 
 import java.util.ArrayList;
 import java.util.List;

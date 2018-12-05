@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import android.support.multidex.MultiDex
 import android.support.v7.app.AppCompatDelegate
-import com.kaibo.core.http.HttpRequestManager
 import com.kaibo.core.toast.ToastUtils
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
@@ -53,9 +52,9 @@ abstract class BaseApplication : Application() {
 
     }
 
-    override fun attachBaseContext(base: Context?) {
-        MultiDex.install(this)
+    override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
+        MultiDex.install(base)
     }
 
     override fun onCreate() {
