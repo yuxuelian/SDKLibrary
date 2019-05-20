@@ -1,4 +1,4 @@
-package com.kaibo.badgeview;
+package com.kaibo.badge;
 
 import android.content.Context;
 import android.graphics.Bitmap;

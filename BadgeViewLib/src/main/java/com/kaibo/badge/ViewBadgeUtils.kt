@@ -1,6 +1,8 @@
 package com.kaibo.badgeview
 
 import android.view.View
+import com.kaibo.badge.Badge
+import com.kaibo.badge.BadgeView
 
 /**
  * @author kaibo

@@ -1,4 +1,4 @@
-package com.kaibo.badgeview;
+package com.kaibo.badge;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

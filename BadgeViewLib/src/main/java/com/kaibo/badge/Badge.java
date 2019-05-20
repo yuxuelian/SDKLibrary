@@ -1,4 +1,4 @@
-package com.kaibo.badgeview;
+package com.kaibo.badge;
 
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
