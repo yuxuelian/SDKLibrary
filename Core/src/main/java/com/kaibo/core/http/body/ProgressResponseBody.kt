@@ -37,14 +37,13 @@ class ProgressResponseBody(key: String, private val response: ResponseBody) : Re
     /**
      * 获取数据发射器
      */
-    private val observableEmitter: ObservableEmitter<ProgressMessage>? = ProgressObservable[key]
+    private val observableEmitter: ObservableEmitter<ProgressMessage>? = ProgressObservable.responseProgress[key]
 
     override fun contentType(): MediaType? = response.contentType()
 
     override fun contentLength(): Long {
+        // 记录一下总长度
         this.fillLength = response.contentLength()
-        this.step = fillLength / 100L
-        println("步长  $step")
         return fillLength
     }
 

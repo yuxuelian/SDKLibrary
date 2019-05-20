@@ -4,4 +4,5 @@
     <string name="cancel_text">取消</string>
     <string name="confirm_text">确定</string>
     <string name="share_qr_code_text">分享二维码</string>
+    <string name="next_show">以后再说</string>
 </resources>

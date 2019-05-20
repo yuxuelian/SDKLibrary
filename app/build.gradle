@@ -1,20 +1,44 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-noarg'
-//apply plugin: 'kotlin-allopen'
-noArg {
-    annotation("com.kaibo.core.annotation.PoKo")
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlinx-serialization'
+apply plugin: 'AndResGuard'
+
+// 资源文件混淆打包工具(只有发布版本的时候才用)
+andResGuard {
+    // mappingFile = file("./resource_mapping.txt")
+    mappingFile = null
+    use7zip = true
+    useSign = true
+    // 打开这个开关，会keep住所有资源的原始路径，只混淆资源的名字
+    keepRoot = false
+    // 白名单
+    whiteList = []
+    compressFilePattern = ["*.png", "*.jpg", "*.jpeg", "*.gif",]
+    sevenzip {
+        artifact = 'com.tencent.mm:SevenZip:1.2.15'
+        //path = "/usr/local/bin/7za"
+    }
+    // 可选： 如果不设置则会默认覆盖assemble输出的apk
+    finalApkBackupPath = "${project.rootDir}/final-release.apk"
+    // 可选: 指定v1签名时生成jar文件的摘要算法 默认值为“SHA-1”
+    digestalg = "SHA-256"
 }
-//allOpen {
-//    annotation("com.kaibo.core.annotation.PoKo")
-//}
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
-
-    dataBinding.enabled true
+//    enableD8.desugaring = true
+//    useDexArchive = false
+    signingConfigs {
+        configuration {
+            keyAlias "kaibo"
+            keyPassword "kaibo123"
+            storeFile file("../my1.jks")
+            storePassword "kaibo123"
+        }
+    }
 
     defaultConfig {
         applicationId "com.kaibo.demo"
@@ -22,60 +46,64 @@ android {
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.versionCode
         versionName rootProject.versionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
-
         ndk {
+//            abiFilters 'armeabi-v7a'
             abiFilters 'armeabi-v7a', 'x86'
         }
-
-        buildConfigField 'String', 'APP_HOST', '\"http://www.baidu.com\"'
-        buildConfigField 'int', 'COUNT', "${versionCode}"
-    }
-
-    signingConfigs {
-        configuration {
-            keyAlias "kaibo"
-            keyPassword "kaibo123"
-            storeFile file("my1.jks")
-            storePassword "kaibo123"
-        }
+        // 信鸽推送配置
+        manifestPlaceholders = [
+                XG_ACCESS_ID : "2100315778",
+                XG_ACCESS_KEY: "AFWZ7M129U4A",
+        ]
+        vectorDrawables.useSupportLibrary = true
+//        buildConfigField("String", "BASE_URL", "\"${baseUrl}\"")
     }
 
     buildTypes {
         release {
             minifyEnabled false
+            // 混淆规则
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // 签名
             signingConfig signingConfigs.configuration
         }
 
         debug {
+            minifyEnabled false
+            // 混淆规则
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // 签名
             signingConfig signingConfigs.configuration
         }
     }
 
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
+    lintOptions {
+        disable "MissingTranslation"
+        disable 'GoogleAppIndexingWarning'
+        abortOnError false
+    }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility rootProject.sourceCompatibility
+        targetCompatibility rootProject.targetCompatibility
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    //-----------------------------Test---------------------------------------
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    //性能检测
-    androidTestImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
+    testImplementation junit
+    androidTestImplementation androidx_test_runner
+    androidTestImplementation androidx_test_espresso_core
+    implementation kotlin_stdlib
 
     implementation project(':Core')
-    implementation project(':BaseMvpLib')
-    implementation project(':SwipeBackLib')
-    implementation project(':SwipeMenuLib')
-    implementation project(':NdkLib')
-    implementation project(':IndicatrorManagerLib')
-    implementation project(':WheelView')
-    implementation project(':WeightLib')
 }
+
+// 依赖插件脚本
+apply from: '../tinker-support.gradle'

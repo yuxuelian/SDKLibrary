@@ -246,8 +246,8 @@ public class SwipeMenuLayout extends RelativeLayout {
         // now style everything!
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SwipeMenuLayout);
         // set the above and behind views if defined in xml
-        int mode = ta.getInt(R.styleable.SwipeMenuLayout_mode, LEFT);
-        setMode(mode);
+//        int mode = ta.getInt(R.styleable.SwipeMenuLayout_mode, LEFT);
+//        setMode(mode);
         int viewAbove = ta.getResourceId(R.styleable.SwipeMenuLayout_viewAbove, -1);
         if (viewAbove != -1) {
             setContent(viewAbove);

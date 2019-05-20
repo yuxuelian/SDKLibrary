@@ -14,24 +14,41 @@ import java.util.concurrent.ConcurrentHashMap
 
 object ProgressObservable {
 
-    private val observableEmitters: MutableMap<String, ObservableEmitter<ProgressMessage>> by lazy {
+    val responseProgress: MutableMap<String, ObservableEmitter<ProgressMessage>> by lazy {
         ConcurrentHashMap<String, ObservableEmitter<ProgressMessage>>()
     }
 
-    fun listener(key: String): Observable<ProgressMessage> {
+    val requestProgress: MutableMap<String, ObservableEmitter<ProgressMessage>> by lazy {
+        ConcurrentHashMap<String, ObservableEmitter<ProgressMessage>>()
+    }
+
+    fun listenerResponse(key: String): Observable<ProgressMessage> {
         return Observable
                 .create<ProgressMessage> {
-                    observableEmitters[key] = it
+                    responseProgress[key] = it
                 }
                 .doOnComplete {
-                    observableEmitters.remove(key)
+                    responseProgress.remove(key)
                 }
                 .doOnError {
-                    observableEmitters.remove(key)
+                    responseProgress.remove(key)
                 }
 //                .toMainThread()
     }
 
-    operator fun get(key: String): ObservableEmitter<ProgressMessage>? = observableEmitters[key]
+    fun listenerRequest(key: String): Observable<ProgressMessage> {
+        return Observable
+                .create<ProgressMessage> {
+                    requestProgress[key] = it
+                }
+                .doOnComplete {
+                    requestProgress.remove(key)
+                }
+                .doOnError {
+                    requestProgress.remove(key)
+                }
+//                .toMainThread()
+    }
+
 }
 

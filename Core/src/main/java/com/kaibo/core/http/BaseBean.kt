@@ -1,7 +1,7 @@
 package com.kaibo.core.http
 
-import com.google.gson.annotations.SerializedName
-import com.kaibo.core.annotation.PoKo
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable as KSerializable
 
 /**
  * @author kaibo
@@ -11,9 +11,9 @@ import com.kaibo.core.annotation.PoKo
  * @description：Data是Object
  */
 
-@PoKo
+@KSerializable
 data class BaseBean<T>(
-        @SerializedName("code") val code: Int,
-        @SerializedName("msg") val msg: String,
-        @SerializedName("data") val data: T
+        @SerialName("code") val code: Int,
+        @SerialName("msg") val msg: String,
+        @SerialName("data") val data: T
 )

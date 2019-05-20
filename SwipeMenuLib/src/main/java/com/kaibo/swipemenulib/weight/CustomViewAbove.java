@@ -3,11 +3,6 @@ package com.kaibo.swipemenulib.weight;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.support.v4.view.KeyEventCompat;
-import android.support.v4.view.MotionEventCompat;
-import android.support.v4.view.VelocityTrackerCompat;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewConfigurationCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.FocusFinder;
@@ -20,6 +15,9 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 import android.widget.Scroller;
+
+import androidx.core.view.MotionEventCompat;
+import androidx.core.view.ViewConfigurationCompat;
 
 import com.kaibo.swipemenulib.BuildConfig;
 import com.kaibo.swipemenulib.weight.SwipeMenuLayout.OnClosedListener;
@@ -713,7 +711,7 @@ public class CustomViewAbove extends ViewGroup {
                 if (mIsBeingDragged) {
                     final VelocityTracker velocityTracker = mVelocityTracker;
                     velocityTracker.computeCurrentVelocity(1000, mMaximumVelocity);
-                    int initialVelocity = (int) VelocityTrackerCompat.getXVelocity(velocityTracker, mActivePointerId);
+                    int initialVelocity = (int) velocityTracker.getXVelocity(mActivePointerId);
                     final int scrollX = getScrollX();
                     final float pageOffset = (float) (scrollX - getDestScrollX(mCurItem)) / getBehindWidth();
                     final int activePointerIndex = getPointerIndex(ev, mActivePointerId);
@@ -871,15 +869,13 @@ public class CustomViewAbove extends ViewGroup {
     /**
      * Tests scrollability within child views of v given a delta of dx.
      *
-     * @param v      BaseView to test for horizontal scrollability
-     * @param checkV Whether the com.kaibo.mvp.view v passed should itself be checked for scrollability (true),
-     *               or just its children (false).
-     * @param dx     Delta scrolled in pixels
-     * @param x      X coordinate of the active touch point
-     * @param y      Y coordinate of the active touch point
+     * @param v  BaseView to test for horizontal scrollability
+     * @param dx Delta scrolled in pixels
+     * @param x  X coordinate of the active touch point
+     * @param y  Y coordinate of the active touch point
      * @return true if child views of v can be scrolled by delta of dx.
      */
-    protected boolean canScroll(View v, boolean checkV, int dx, int x, int y) {
+    protected boolean canScroll(View v, int dx, int x, int y) {
         if (v instanceof ViewGroup) {
             final ViewGroup group = (ViewGroup) v;
             final int scrollX = v.getScrollX();
@@ -890,14 +886,14 @@ public class CustomViewAbove extends ViewGroup {
                 final View child = group.getChildAt(i);
                 if (x + scrollX >= child.getLeft() && x + scrollX < child.getRight() &&
                         y + scrollY >= child.getTop() && y + scrollY < child.getBottom() &&
-                        canScroll(child, true, dx, x + scrollX - child.getLeft(),
+                        canScroll(child, dx, x + scrollX - child.getLeft(),
                                 y + scrollY - child.getTop())) {
                     return true;
                 }
             }
         }
 
-        return checkV && ViewCompat.canScrollHorizontally(v, -dx);
+        return v.canScrollHorizontally(-dx);
     }
 
 
@@ -928,9 +924,9 @@ public class CustomViewAbove extends ViewGroup {
                 case KeyEvent.KEYCODE_TAB:
                     // The focus finder had a bug handling FOCUS_FORWARD and FOCUS_BACKWARD
                     // before Android 3.0. Ignore the tab key on those devices.
-                    if (KeyEventCompat.hasNoModifiers(event)) {
+                    if (event.hasNoModifiers()) {
                         handled = arrowScroll(FOCUS_FORWARD);
-                    } else if (KeyEventCompat.hasModifiers(event, KeyEvent.META_SHIFT_ON)) {
+                    } else if (event.hasModifiers(KeyEvent.META_SHIFT_ON)) {
                         handled = arrowScroll(FOCUS_BACKWARD);
                     }
                     break;

@@ -3,18 +3,17 @@ package com.kaibo.core.activity
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.os.Bundle
-import android.support.annotation.CallSuper
-import android.support.annotation.LayoutRes
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.WindowManager
+import androidx.annotation.CallSuper
+import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.kaibo.core.R
-import com.kaibo.core.toast.ToastUtils
-import com.kaibo.core.util.bindToAutoDispose
+import com.kaibo.core.toast.showError
+import com.kaibo.core.util.bindLifecycle
 import com.kaibo.core.util.immersive
 import com.tbruyelle.rxpermissions2.Permission
 import com.tbruyelle.rxpermissions2.RxPermissions
-import com.uber.autodispose.AutoDisposeConverter
 
 /**
  * @author:Administrator
@@ -33,7 +32,7 @@ abstract class SuperActivity : AppCompatActivity() {
     /**
      * 封装一下权限申请后的处理逻辑
      */
-    protected fun easyRequestPermission(vararg permissionNames: String, invoke: () -> Unit) {
+    protected fun easyRequestPermission(vararg permissionNames: String, reject: (() -> Unit)? = null, resolve: () -> Unit) {
         // 过滤出需没有授权的权限
         val needRequest = permissionNames.filter { !rxPermissions.isGranted(it) }
         if (needRequest.isNotEmpty()) {
@@ -42,17 +41,18 @@ abstract class SuperActivity : AppCompatActivity() {
                     .`as`(bindLifecycle())
                     .subscribe { permission: Permission ->
                         if (permission.granted) {
-                            invoke.invoke()
+                            resolve.invoke()
                         } else {
-                            if (!permission.shouldShowRequestPermissionRationale) {
-                                ToastUtils.showError("所需权限被拒绝,无法进行相关操作")
-                            } else {
-                                ToastUtils.showError("所需权限被永久拒绝,请到安全中心开启")
-                            }
+                            reject?.invoke()
+                                    ?: if (!permission.shouldShowRequestPermissionRationale) {
+                                        this.showError("所需权限被拒绝,无法进行相关操作")
+                                    } else {
+                                        this.showError("所需权限被永久拒绝,请到安全中心开启")
+                                    }
                         }
                     }
         } else {
-            invoke.invoke()
+            resolve.invoke()
         }
     }
 
@@ -156,9 +156,4 @@ abstract class SuperActivity : AppCompatActivity() {
         }
         super.onConfigurationChanged(newConfig)
     }
-
-    /**
-     * Rx绑定生命周期
-     */
-    fun <T> bindLifecycle(): AutoDisposeConverter<T> = bindToAutoDispose(this)
 }

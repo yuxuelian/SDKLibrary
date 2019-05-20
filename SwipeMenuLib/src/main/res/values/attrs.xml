@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="SwipeMenuLayout">
-        <attr name="mode">
-            <enum name="left" value="0" />
-            <enum name="right" value="1" />
-        </attr>
+        <!--<attr name="swipeMode">-->
+            <!--<enum name="left" value="0" />-->
+            <!--<enum name="right" value="1" />-->
+            <!--<enum name="left_right" value="2" />-->
+        <!--</attr>-->
         <attr name="viewAbove" format="reference" />
         <attr name="viewBehind" format="reference" />
         <attr name="behindOffset" format="dimension" />

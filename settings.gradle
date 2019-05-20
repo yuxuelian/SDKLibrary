@@ -1,17 +1,11 @@
-//独立项目
-include ':WeightLib', ':PullRefresh', ':SwipeBackLib2'
-include ':NdkLib'
-include ':IndicatrorManagerLib'
-include ':WheelView'
-include ':Share'
-//继承
+include ':uCrop'
+include ':WeightLib'
+include ':PullRefresh'
+include ':SwipeBackLib'
+include ':SwipeMenuLib'
+include ':BadgeViewLib'
+include ':RxPermissions'
+
 include ':Core'
-include ':BaseMvpLib'
-include ':SwipeMenuLib', ':SwipeBackLib'
 include ':app'
-//换肤
-include ':Skin:Core'
-include ':Skin:Design'
-include ':Skin:Cardview'
-include ':Skin:Appcompat'
-include ':Skin:ConstraintLayout'
+

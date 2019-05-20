@@ -11,9 +11,6 @@ android {
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.versionCode
         versionName rootProject.versionName
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
@@ -23,14 +20,20 @@ android {
         }
     }
 
+    lintOptions {
+        abortOnError false
+    }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility rootProject.sourceCompatibility
+        targetCompatibility rootProject.targetCompatibility
     }
 }
 
-
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':Core')
+    testImplementation junit
+    androidTestImplementation androidx_test_runner
+    androidTestImplementation androidx_test_espresso_core
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation kotlin_stdlib
+    implementation androidx_appcompat
 }

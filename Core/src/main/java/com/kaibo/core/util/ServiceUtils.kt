@@ -2,6 +2,7 @@ package com.kaibo.core.util
 
 import android.app.Service
 import android.content.Context
+import com.kaibo.core.util.createIntent
 
 /**
  * @author kaibo
@@ -12,4 +13,4 @@ import android.content.Context
  */
 
 inline fun <reified T : Service> Context.startService(vararg params: Pair<String, Any?>) =
-        startActivity(this.createIntent(T::class.java, params))
+        startActivity(createIntent(T::class.java, params))

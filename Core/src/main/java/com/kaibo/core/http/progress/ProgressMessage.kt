@@ -13,5 +13,10 @@ data class ProgressMessage(
         val fillLength: Long,
         val done: Boolean = false
 ) {
-    val rate: Double = (currentLength / fillLength).toDouble()
+    /**
+     * 这个比例只有在使用的时候才进行计算,不使用的话不必计算
+     */
+    val rate by lazy {
+        currentLength / fillLength.toDouble()
+    }
 }

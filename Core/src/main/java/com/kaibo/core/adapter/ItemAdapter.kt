@@ -1,8 +1,8 @@
 package com.kaibo.core.adapter
 
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 
 interface Item {
     val controller: ItemController

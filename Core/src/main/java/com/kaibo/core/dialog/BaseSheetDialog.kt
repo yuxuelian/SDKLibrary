@@ -2,6 +2,7 @@ package com.kaibo.core.dialog
 
 import android.os.Bundle
 import android.view.Gravity
+import androidx.fragment.app.BaseDialogFragment
 import com.kaibo.core.R
 
 /**
@@ -11,13 +12,13 @@ import com.kaibo.core.R
  * @email：kaibo1hao@gmail.com
  * @description：
  */
-abstract class BaseSheetDialog : BaseDialog() {
+abstract class BaseSheetDialog : BaseDialogFragment() {
 
     override fun initViewCreated(savedInstanceState: Bundle?) {
         //弹出动画
-        dialog.window.setWindowAnimations(R.style.dialogBottomSheet)
+        dialog?.window?.setWindowAnimations(R.style.dialogBottomSheet)
         //设置Dialog的位置在底部显示
-        dialog.window.attributes.gravity = Gravity.BOTTOM
+        dialog?.window?.attributes?.gravity = Gravity.BOTTOM
     }
 
 }

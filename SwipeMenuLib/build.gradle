@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -9,9 +11,6 @@ android {
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.versionCode
         versionName rootProject.versionName
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
@@ -21,17 +20,20 @@ android {
         }
     }
 
+    lintOptions {
+        abortOnError false
+    }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility rootProject.sourceCompatibility
+        targetCompatibility rootProject.targetCompatibility
     }
 }
 
 dependencies {
+    testImplementation junit
+    androidTestImplementation androidx_test_runner
+    androidTestImplementation androidx_test_espresso_core
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    //-----------------------------Test---------------------------------------
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation project(':Core')
+    implementation kotlin_stdlib
+    implementation androidx_appcompat
 }

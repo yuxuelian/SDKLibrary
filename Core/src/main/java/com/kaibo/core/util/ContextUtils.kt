@@ -1,26 +1,29 @@
-package com.kaibo.core.utl
+package com.kaibo.core.util
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.Point
 import android.graphics.Typeface
 import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.net.Uri
-import android.os.Build
-import android.os.Environment
-import android.os.LocaleList
+import android.os.*
+import android.preference.PreferenceManager
 import android.provider.Settings
-import android.support.v4.content.FileProvider
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import com.kaibo.core.util.toUri
-import java.io.ByteArrayInputStream
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
+import com.orhanobut.logger.Logger
+import java.io.*
 import java.security.MessageDigest
 import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
@@ -36,58 +39,30 @@ import kotlin.collections.ArrayList
  * description:
  */
 
+
 /**
  * 获取当前APP的版本号
  */
-val Context.versionCode: Int
-    get() = packageManager.getPackageInfo(packageName, 0).versionCode
+val Context.versionCode get() = packageManager.getPackageInfo(packageName, 0).versionCode
 
 /**
  * 获取当前APP的版本名
  */
-val Context.versionName: String
-    get() = packageManager.getPackageInfo(packageName, 0).versionName
+val Context.versionName: String get() = packageManager.getPackageInfo(packageName, 0).versionName
 
 /**
  * 判断是否开启gps定位.
  *
  * @return 如果开启gps定位返回true, 否则返回false
  */
-val Context.isGPSEnable: Boolean
-    get() = (getSystemService(Context.LOCATION_SERVICE) as LocationManager).isProviderEnabled(LocationManager.GPS_PROVIDER)
+val Context.isGPSEnable get() = (getSystemService(Context.LOCATION_SERVICE) as LocationManager).isProviderEnabled(LocationManager.GPS_PROVIDER)
 
 /**
  * 判断是否有网络连接.
  *
  * @return if the network is available, `false` otherwise
  */
-val Context.isNetworkConnected: Boolean
-    get() = (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo.isAvailable
-
-/**
- * 判断App是否正在后台运行
- * 在后台运行返回true
- * 在前台运行返回false
- *
- * targetPack  需要判断哪个包
- */
-fun Context.isAppInBackgroundInternal(targetPack: String): Boolean {
-    val manager = this.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-        manager.runningAppProcesses.forEach {
-            if (it.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
-                return false
-            }
-        }
-    } else {
-        val task: List<ActivityManager.RunningTaskInfo> = manager.getRunningTasks(1)
-        if (task.isNotEmpty()) {
-            // 判断顶部Activity的包名是否是当前指定包
-            return task[0].topActivity.packageName != targetPack
-        }
-    }
-    return true
-}
+val Context.isNetworkConnected get() = (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo.isAvailable
 
 /**
  * 检测是否有存在外部存储.
@@ -96,12 +71,19 @@ fun Context.isAppInBackgroundInternal(targetPack: String): Boolean {
  */
 fun hasExternalStorage() = Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
 
-/**
- * 跳转到该app对应的设置界面.
- */
-fun Context.toAppSetting() {
-    this.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-            Uri.parse("package:$packageName")))
+
+@SuppressLint("HardwareIds")
+fun Context.getAndroidId(): String {
+    val androidId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
+    return androidId
+}
+
+fun Activity.hasNavigationBar() = windowManager.defaultDisplay.run {
+    val point1 = Point()
+    val point2 = Point()
+    getSize(point1)
+    getRealSize(point2)
+    point1.y != point2.y
 }
 
 /**
@@ -109,7 +91,7 @@ fun Context.toAppSetting() {
  *
  * @return true表示模拟器
  */
-fun isEmulator(): Boolean {
+fun Context.isEmulator(): Boolean {
     val driverFile = File("/proc/tty/drivers")
     if (driverFile.exists() && driverFile.canRead()) {
         val data = ByteArray(driverFile.length().toInt())
@@ -131,7 +113,7 @@ fun isEmulator(): Boolean {
  *
  * @return
  */
-fun isRoot() = !(!File("/system/bin/su").exists() && !File("/system/xbin/su").exists())
+fun Context.isRoot() = File("/system/bin/su").exists() || File("/system/xbin/su").exists()
 
 /**
  * 获取当前APP的SHA1签名信息
@@ -225,9 +207,12 @@ fun Context.shareBitmap(bitmap: Bitmap) {
 //			intent.setClassName("com.tencent.mobileqq", "cooperation.qlink.QlinkShareJumpActivity");//QQ面对面快传
 //			intent.setClassName("com.tencent.mobileqq", "com.tencent.mobileqq.activity.qfileJumpActivity");//传给我的电脑
 //          intent.setClassName("com.tencent.mobileqq", "com.tencent.mobileqq.activity.JumpActivity");//QQ好友或QQ群
+
         if (lastPackage != packageName) {
             // 这里可以根据实际需要进行过滤
-            if (packageName.toLowerCase().contains("mms") || packageName.toLowerCase().contains("messaging")) {
+            if (packageName.toLowerCase().contains("mms") ||
+                    packageName.toLowerCase().contains("messaging") ||
+                    packageName.toLowerCase().contains("contacts")) {
                 //短信
                 val intent = Intent(Intent.ACTION_SEND)
                 shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -361,4 +346,186 @@ fun Context.callPhone(phoneNum: String) {
     this.startActivity(intent)
 }
 
+@ColorInt
+fun Context.getCompatColor(@ColorRes colorRes: Int): Int {
+    return ContextCompat.getColor(this, colorRes)
+}
 
+
+private const val IS_FIRST_LUNCH = "IS_FIRST_LUNCH"
+private const val IS_NEW_VERSION = "IS_NEW_VERSION"
+
+var Context.isNewVersion: Boolean
+    get() {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        // 检查是否有新版本  默认返回false即没有新版本
+        return sharedPreferences.getBoolean(IS_NEW_VERSION, false)
+    }
+    set(value) {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        sharedPreferences.edit().putBoolean(IS_NEW_VERSION, value).apply()
+    }
+
+/**
+ * 判断是否是首次启动
+ * 这个方法只有在第一次调用的时候才会返回true
+ * 以后都会返回false
+ */
+fun Context.isFirstLunch(): Boolean {
+    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+    val lunch = sharedPreferences.getBoolean(IS_FIRST_LUNCH, true)
+    sharedPreferences.edit().putBoolean(IS_FIRST_LUNCH, false).apply()
+    return lunch
+}
+
+/**
+ * 清除所有数据
+ */
+@SuppressLint("ApplySharedPref")
+fun Context.clearAll() {
+    File("/data/data/${this.packageName}").listFiles().forEach {
+        if (
+                it.absolutePath.endsWith("/files") ||
+                it.absolutePath.endsWith("/cache") ||
+                it.absolutePath.endsWith("/shared_prefs")
+        ) {
+            deleteAllFile(it)
+        }
+    }
+    PreferenceManager
+            .getDefaultSharedPreferences(this)
+            .edit()
+            .clear()
+            .commit()
+}
+
+private fun deleteAllFile(file: File) {
+    if (file.isDirectory) {
+        file.listFiles().forEach {
+            deleteAllFile(it)
+        }
+    }
+    file.delete()
+}
+
+fun <T> Context.createIntent(clazz: Class<out T>, params: Array<out Pair<String, Any?>>): Intent {
+    val intent = Intent(this, clazz)
+    if (params.isNotEmpty()) fillIntentArguments(intent, params)
+    return intent
+}
+
+private fun fillIntentArguments(intent: Intent, params: Array<out Pair<String, Any?>>) {
+    params.forEach {
+        val value = it.second
+        when (value) {
+            null -> intent.putExtra(it.first, null as Serializable?)
+            is Int -> intent.putExtra(it.first, value)
+            is Long -> intent.putExtra(it.first, value)
+            is CharSequence -> intent.putExtra(it.first, value)
+            is String -> intent.putExtra(it.first, value)
+            is Float -> intent.putExtra(it.first, value)
+            is Double -> intent.putExtra(it.first, value)
+            is Char -> intent.putExtra(it.first, value)
+            is Short -> intent.putExtra(it.first, value)
+            is Boolean -> intent.putExtra(it.first, value)
+            is Serializable -> intent.putExtra(it.first, value)
+            is Bundle -> intent.putExtra(it.first, value)
+            is Parcelable -> intent.putExtra(it.first, value)
+            is Array<*> -> when {
+                value.isArrayOf<CharSequence>() -> intent.putExtra(it.first, value)
+                value.isArrayOf<String>() -> intent.putExtra(it.first, value)
+                value.isArrayOf<Parcelable>() -> intent.putExtra(it.first, value)
+                else -> throw RuntimeException("Intent extra ${it.first} has wrong type ${value.javaClass.name}")
+            }
+            is IntArray -> intent.putExtra(it.first, value)
+            is LongArray -> intent.putExtra(it.first, value)
+            is FloatArray -> intent.putExtra(it.first, value)
+            is DoubleArray -> intent.putExtra(it.first, value)
+            is CharArray -> intent.putExtra(it.first, value)
+            is ShortArray -> intent.putExtra(it.first, value)
+            is BooleanArray -> intent.putExtra(it.first, value)
+            else -> throw RuntimeException("Intent extra ${it.first} has wrong type ${value.javaClass.name}")
+        }
+        return@forEach
+    }
+}
+
+// 启动将当前应用添加到电源白名单对话框
+fun Context.ignoreBatteryOptimization() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+        val hasIgnored = powerManager.isIgnoringBatteryOptimizations(packageName)
+        if (!hasIgnored) {
+            val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
+            intent.data = Uri.parse("package:$packageName")
+            startActivity(intent)
+        } else {
+            Logger.d("已经被允许在后台运行")
+        }
+    }
+}
+
+// 跳转到电源白名单页面
+fun Context.startIgnoreBattery() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        val intent = Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
+        startActivity(intent)
+    }
+}
+
+// 是否开启通知权限
+fun Context.enableNotification(): Boolean {
+    val notificationManagerCompat = NotificationManagerCompat.from(this)
+    return notificationManagerCompat.areNotificationsEnabled()
+}
+
+// 不关闭返回桌面
+fun Context.gotoHome() {
+    val intent = Intent(Intent.ACTION_MAIN)
+    intent.addCategory(Intent.CATEGORY_HOME)
+    startActivity(intent)
+}
+
+
+/**
+ * 获取进程号对应的进程名
+ *
+ * @param pid 进程号
+ * @return 进程名
+ */
+fun Context.getProcessName(pid: Int): String {
+    val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+    activityManager.runningAppProcesses.forEach {
+        if (it.pid == pid) {
+            return it.processName
+        }
+    }
+    return ""
+}
+
+
+/**
+ * 判断某个进程是否正在运行
+ */
+fun Context.isRunningProcess(processKey: String): Boolean {
+    val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+    activityManager.runningAppProcesses.forEach {
+        if (it.processName.contains(processKey, true)) {
+            return true
+        }
+    }
+    return false
+}
+
+/**
+ * 判断某个服务是否正在运行
+ */
+fun Context.isRunningService(serviceKey: String): Boolean {
+    val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+    activityManager.getRunningServices(1000).forEach {
+        if (it.service.className.contains(serviceKey, true)) {
+            return true
+        }
+    }
+    return false
+}

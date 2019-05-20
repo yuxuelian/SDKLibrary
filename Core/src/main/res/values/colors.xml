@@ -11,4 +11,7 @@
     <color name="color_909090">#909090</color>
     <color name="color_d9d9d9">#d9d9d9</color>
     <color name="theme_blue">#00FF00</color>
+    <color name="color_d0d0d0">#d0d0d0</color>
+    <color name="color_606060">#606060</color>
+    <color name="color_orange">#FE8750</color>
 </resources>

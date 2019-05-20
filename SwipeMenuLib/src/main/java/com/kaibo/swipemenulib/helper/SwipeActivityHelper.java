@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 
-import com.kaibo.swipemenulib.R;
 import com.kaibo.swipemenulib.weight.SwipeMenuLayout;
 
 
@@ -30,7 +29,7 @@ public class SwipeActivityHelper {
      */
     public SwipeActivityHelper(Activity activity) {
         mActivity = activity;
-        mSwipeMenuLayout = (SwipeMenuLayout) mActivity.getLayoutInflater().inflate(R.layout.swipe_menu_main, null);
+        mSwipeMenuLayout = new SwipeMenuLayout(activity);
     }
 
     /**

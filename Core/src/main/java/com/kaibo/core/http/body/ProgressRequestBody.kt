@@ -33,14 +33,14 @@ class ProgressRequestBody(key: String, private val requestBody: RequestBody) : R
     /**
      * 数据发射器
      */
-    private val observableEmitter: ObservableEmitter<ProgressMessage>? = ProgressObservable[key]
+    private val observableEmitter: ObservableEmitter<ProgressMessage>? = ProgressObservable.requestProgress[key]
 
     private var wrapperBufferedSink: BufferedSink? = null
 
     /**
      * 委派到主构造函数
      */
-    constructor(key: String, file: File) : this(key, RequestBody.create(HttpRequestManager.FORM_DATA, file))
+    constructor(key: String, file: File) : this(key, create(HttpRequestManager.FORM_DATA, file))
 
     /**
      * 返回了requestBody的类型，像什么form-data/MP3/MP4/png等等等格式
