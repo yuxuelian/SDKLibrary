@@ -45,13 +45,21 @@
 -keep public class * extends android.com.kaibo.mvp.view.View
 -keep public class com.android.vending.licensing.ILicensingService
 
-# 保留support下的所有类及其内部类
+# google相关均不混淆
+-keep class androidx.** {*;}
+-keep class kotlin.** {*;}
+-keep class kotlinx.** {*;}
 -keep class android.support.** {*;}
+-keep class com.google.** {*;}
+-keep class com.squareup.** {*;}
 
 # 保留继承的
--keep public class * extends android.support.v4.**
--keep public class * extends android.support.v7.**
--keep public class * extends android.support.annotation.**
+-keep public class * extends androidx.**
+-keep public class * extends kotlin.**
+-keep public class * extends kotlinx.**
+-keep public class * extends android.support.**
+-keep public class * extends com.google.**
+-keep public class * extends com.squareup.**
 
 # 保留R下面的资源
 -keep class **.R$* {*;}
@@ -123,110 +131,58 @@
 # 自定义混淆配置
 #
 #############################################
+# 不混淆 linphone
+-dontwarn org.linphone.**
+-keep class org.linphone.** {*;}
+-keep interface org.linphone.** {*;}
+-keep public class * extends org.linphone.** {*;}
 
-#不混淆JavaBean
--keep class bean.** { *; }
+# easyguideview引导层
+-dontwarn com.yuyh.library.**
+-keep class com.yuyh.library.** {*;}
+-keep interface com.yuyh.library.** {*;}
+-keep public class * extends com.yuyh.library.** {*;}
 
-#ButterKnife
--keep class butterknife.** { *; }
--dontwarn butterknife.internal.**
--keep class **$$ViewBinder { *; }
--keepclasseswithmembernames class * {
-    @butterknife.* <fields>;
-}
--keepclasseswithmembernames class * {
-    @butterknife.* <methods>;
-}
+# android_spin_kit加载动画库
+-dontwarn com.github.ybq.android.spinkit.**
+-keep class com.github.ybq.android.spinkit.** {*;}
+-keep interface com.github.ybq.android.spinkit.** {*;}
+-keep public class * extends com.github.ybq.android.spinkit.** {*;}
 
-#RSA不混淆
--dontwarn org.bouncycastle.**
--keep class org.bouncycastle.**{*;}
+# 桌面角标
+-dontwarn me.leolin.shortcutbadger.**
+-keep class me.leolin.shortcutbadger.** {*;}
+-keep interface me.leolin.shortcutbadger.** {*;}
+-keep public class * extends me.leolin.shortcutbadger.** {*;}
 
-#tbs不混淆
-#-dontwarn com.tencent.**
-#-keep class com.tencent.**{*;}
+# 屏幕适配
+-dontwarn me.jessyan.autosize.**
+-keep class me.jessyan.autosize.** {*;}
+-keep interface me.jessyan.autosize.** {*;}
+-keep public class * extends me.jessyan.autosize.** {*;}
 
-#高徳地图
--dontwarn com.amap.api.**
--dontwarn com.a.a.**
--dontwarn com.autonavi.**
--keep class com.amap.api.**  {*;}
--keep class com.autonavi.**  {*;}
--keep class com.a.a.**  {*;}
-
-#EventBus
--keepattributes *Annotation*
--keepclassmembers class ** {
-    @org.greenrobot.eventbus.Subscribe <methods>;
-}
--keep enum org.greenrobot.eventbus.ThreadMode { *; }
-
-# FastJson
--dontwarn com.alibaba.fastjson.**
--keep class com.alibaba.fastjson.** { *; }
--keepattributes Signature -keepattributes *Annotation*
-
-# Facebook
-#-dontwarn com.facebook.**
-#-keep class com.facebook.** {*;}
-#-keep interface com.facebook.** {*;}
-#-keep enum com.facebook.** {*;}
-
-# Glide
--dontwarn com.bumptech.glide.**
--keep class com.bumptech.glide.**{*;}
--keep public class * implements com.bumptech.glide.module.GlideModule
--keep public class * extends com.bumptech.glide.AppGlideModule
--keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
-  **[] $VALUES;
-  public *;
-}
-
-#ucrop 裁剪混淆
+# ucrop 裁剪混淆
 -dontwarn com.yalantis.ucrop**
 -keep class com.yalantis.ucrop** { *; }
 -keep interface com.yalantis.ucrop** { *; }
+-keep public class * extends com.yalantis.ucrop.** {*;}
 
-#BaseRecyclerViewAdapterHelper
--keep class com.chad.library.adapter.** {*;}
--keep public class * extends com.chad.library.adapter.base.BaseQuickAdapter
--keep public class * extends com.chad.library.adapter.base.BaseViewHolder
--keepclassmembers public class * extends com.chad.library.adapter.base.BaseViewHolder {
-     <init>(android.com.kaibo.mvp.view.View);
-}
+# jakewharton相关开源库均不混淆
+-dontwarn com.jakewharton.**
+-keep class com.jakewharton.** {*;}
+-keep interface com.jakewharton.** {*;}
+-keep public class * extends com.jakewharton.** {*;}
 
-# nohttp
--dontwarn com.yanzhenjie.nohttp.**
--keep class com.yanzhenjie.nohttp.**{*;}
-
-#greendao3.2.0
--dontwarn org.greenrobot.greendao.**
--keep class org.greenrobot.greendao.**{*;}
-
-# OkHttp3
--dontwarn com.squareup.okhttp3.**
--keep class com.squareup.okhttp3.** { *;}
--dontwarn okio.**
--keep class okio.** {*;}
--dontwarn javax.annotation.Nullable
--dontwarn javax.annotation.ParametersAreNonnullByDefault
-
-# Retrofit
--dontwarn okio.**
--dontwarn retrofit2.**
--dontwarn javax.inject.**
--dontwarn javax.annotation.**
--keep class retrofit2.** { *; }
-
-#okhttp
+# okhttp3
 -dontwarn okhttp3.**
 -dontwarn okio.**
 -dontwarn javax.annotation.**
 
-#arouter
--keep public class com.alibaba.android.arouter.**{*;}
--keep class * implements com.alibaba.android.arouter.facade.template.ISyringe{*;}
--dontwarn com.alibaba.android.arouter.**
+# Retrofit
+-dontwarn retrofit2.**
+-dontwarn javax.inject.**
+-dontwarn javax.annotation.**
+-keep class retrofit2.** { *; }
 
 # RxJava RxAndroid
 -dontwarn sun.misc.**
@@ -241,82 +197,97 @@
     rx.internal.util.atomic.LinkedQueueNode consumerNode;
 }
 
-#极光推送
--dontoptimize
--dontpreverify
--keepattributes  EnclosingMethod,Signature
--dontwarn cn.jpush.**
--keep class cn.jpush.** { *; }
--dontwarn cn.jiguang.**
--keep class cn.jiguang.** { *; }
--keepclassmembers class ** {
-    public void onEvent*(**);
-}
--keep public class cn.jiguang.analytics.android.api.** {
-    *;
-}
-
-#gson
--dontwarn com.google.**
--keep class com.google.gson.** {*;}
-
--keep class com.google.protobuf.* {*;}
-
-#腾讯bugly
+# 腾讯bugly
 -dontwarn com.tencent.bugly.**
 -keep class com.tencent.bugly.**{*;}
 
-#gif加载不混淆
--dontwarn pl.droidsonroids.gif.**
--keep class pl.droidsonroids.gif.* {*;}
-
-#百度
--keep class com.baidu.** {*;}
--keep class vi.com.** {*;}
--dontwarn com.baidu.**
-
-#微信
--keep class com.tencent.mm.opensdk.** {*;}
--keep class com.tencent.wxop.** {*;}
--keep class com.tencent.mm.sdk.** {*;}
-
-#支付宝支付
-#-dontwarn com.alipay.**
-#-keep class com.alipay.** { *;}
-#支付宝
--dontwarn android.net.**
--keep class com.alipay.android.app.IAlixPay{*;}
--keep class com.alipay.android.app.IAlixPay$Stub{*;}
--keep class com.alipay.android.app.IRemoteServiceCallback{*;}
--keep class com.alipay.android.app.IRemoteServiceCallback$Stub{*;}
--keep class com.alipay.sdk.app.PayTask{ public *;}
--keep class com.alipay.sdk.app.AuthTask{ public *;}
--keep class com.alipay.sdk.app.H5PayCallback {
-    <fields>;
-    <methods>;
-}
--keep class com.alipay.android.phone.mrpc.core.** { *; }
--keep class com.alipay.apmobilesecuritysdk.** { *; }
--keep class com.alipay.mobile.framework.service.annotation.** { *; }
--keep class com.alipay.mobilesecuritysdk.face.** { *; }
--keep class com.alipay.tscenter.biz.rpc.** { *; }
--keep class org.json.alipay.** { *; }
--keep class com.alipay.tscenter.** { *; }
--keep class com.ta.utdid2.** { *;}
--keep class com.ut.device.** { *;}
--keep class android.net.SSLCertificateSocketFactory{*;}
-
-#zxing
+# zxing
 -dontwarn com.google.zxing.**
 -keep class com.google.zxing.**{*;}
 -keep interface com.google.zxing.**{*;}
 
-#union
--keep class com.unionpay.**{*;}
--keep interface com.unionpay.**{*;}
--keep interface cn.gov.pbc.tsm.client.mobile.android.bank.service.**{*;}
--keep class UCMobile.PayPlugin.**{*;}
--keep class unionpay.**{*;}
--keep interface unionpay.**{*;}
--dontwarn com.unionpay.**
+# 信鸽推送
+-keep class com.tencent.android.tpush.** {* ;}
+-keep class com.tencent.mid.** {* ;}
+-keep class com.qq.taf.jce.** {*;}
+-keep class com.tencent.bigdata.** {* ;}
+# 华为通道
+-ignorewarning
+-keepattributes *Annotation*
+-keepattributes Exceptions
+-keepattributes InnerClasses
+-keepattributes Signature
+-keepattributes SourceFile,LineNumberTable
+-keep class com.hianalytics.android.**{*;}
+-keep class com.huawei.updatesdk.**{*;}
+-keep class com.huawei.hms.**{*;}
+-keep class com.huawei.android.hms.agent.**{*;}
+# 小米通道
+-keep class com.xiaomi.**{*;}
+-keep public class * extends com.xiaomi.mipush.sdk.PushMessageReceiver
+# 魅族通道
+-dontwarn com.meizu.cloud.pushsdk.**
+-keep class com.meizu.cloud.pushsdk.**{*;}
 
+# gson
+#-dontwarn com.google.**
+#-keep class com.google.gson.** {*;}
+#-keep class com.google.protobuf.* {*;}
+
+# RSA不混淆
+#-dontwarn org.bouncycastle.**
+#-keep class org.bouncycastle.**{*;}
+
+# tbs不混淆
+#-dontwarn com.tencent.**
+#-keep class com.tencent.**{*;}
+
+# 高徳地图
+#-dontwarn com.amap.api.**
+#-dontwarn com.a.a.**
+#-dontwarn com.autonavi.**
+#-keep class com.amap.api.**  {*;}
+#-keep class com.autonavi.**  {*;}
+#-keep class com.a.a.**  {*;}
+
+# Glide
+#-dontwarn com.bumptech.glide.**
+#-keep class com.bumptech.glide.**{*;}
+#-keep public class * implements com.bumptech.glide.module.GlideModule
+#-keep public class * extends com.bumptech.glide.AppGlideModule
+#-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+#  **[] $VALUES;
+#  public *;
+#}
+
+# gif加载不混淆
+#-dontwarn pl.droidsonroids.gif.**
+#-keep class pl.droidsonroids.gif.* {*;}
+
+# 微信
+#-keep class com.tencent.mm.opensdk.** {*;}
+#-keep class com.tencent.wxop.** {*;}
+#-keep class com.tencent.mm.sdk.** {*;}
+
+# 支付宝
+#-dontwarn android.net.**
+#-keep class com.alipay.android.app.IAlixPay{*;}
+#-keep class com.alipay.android.app.IAlixPay$Stub{*;}
+#-keep class com.alipay.android.app.IRemoteServiceCallback{*;}
+#-keep class com.alipay.android.app.IRemoteServiceCallback$Stub{*;}
+#-keep class com.alipay.sdk.app.PayTask{ public *;}
+#-keep class com.alipay.sdk.app.AuthTask{ public *;}
+#-keep class com.alipay.sdk.app.H5PayCallback {
+#    <fields>;
+#    <methods>;
+#}
+#-keep class com.alipay.android.phone.mrpc.core.** { *; }
+#-keep class com.alipay.apmobilesecuritysdk.** { *; }
+#-keep class com.alipay.mobile.framework.service.annotation.** { *; }
+#-keep class com.alipay.mobilesecuritysdk.face.** { *; }
+#-keep class com.alipay.tscenter.biz.rpc.** { *; }
+#-keep class org.json.alipay.** { *; }
+#-keep class com.alipay.tscenter.** { *; }
+#-keep class com.ta.utdid2.** { *;}
+#-keep class com.ut.device.** { *;}
+#-keep class android.net.SSLCertificateSocketFactory{*;}

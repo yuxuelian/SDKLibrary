@@ -120,8 +120,8 @@ buildscript {
         // 资源文件混淆插件
         classpath 'com.tencent.mm:AndResGuard-gradle-plugin:1.2.15'
 
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+//        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
     }
 }
 
